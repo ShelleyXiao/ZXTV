@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context="com.zx.zx2000tvfileexploer.ui.FileListActivity">
+
+
+    <com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"
+        android:layout_margin="@dimen/px20"/>
+
+    <RelativeLayout
+        android:id="@+id/title_bar__"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px80"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/px56"
+            android:layout_height="@dimen/px56"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px15"
+            android:scaleType="fitCenter"
+            android:src="@drawable/title_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px15"
+            android:textColor="@color/titleTextColor"
+            android:textSize="18sp"/>
+
+
+        <com.zx.zx2000tvfileexploer.view.StatusTitleView
+            android:id="@+id/title_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px10"/>
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/file_path_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_margin="@dimen/px20"
+        android:numColumns="auto_fit"
+        android:columnWidth="@dimen/px260"
+        android:verticalSpacing="@dimen/px15"
+        android:horizontalSpacing="@dimen/px15"
+        android:cacheColorHint="@null"
+        android:listSelector="@drawable/grid_item_bg"
+        />
+
+    <include layout="@layout/content_empty_layout"
+             android:layout_centerInParent="true"
+             android:id="@+id/empty_view_layout"
+        />
+
+    <ProgressBar android:id="@+id/refresh_progress"
+        android:layout_width="@dimen/px100"
+        android:layout_height="@dimen/px100"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/rotate_loading"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px45"
+        android:background="#9588a8d4"
+        android:layout_alignParentBottom="true">
+
+
+        <TextView
+            android:id="@+id/menu_promat_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#c3f9f9f9"
+            android:textSize="@dimen/px25"
+            android:text="@string/menu_promate_msg"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px25"
+            />
+
+        <TextView
+            android:id="@+id/select_promat_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#c3fdfdfd"
+            android:textSize="@dimen/px25"
+            android:text="@string/multi_select_title"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px25"
+            />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

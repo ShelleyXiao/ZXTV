@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="ShowCategory">
+        <item>资讯</item>
+        <item>电影</item>
+        <item>电视剧</item>
+        <item>综艺</item>
+        <item>音乐</item>
+        <item>动漫</item>
+        <item>纪录片</item>
+        <item>教育</item>
+        <item>游戏</item>
+        <item>体育</item>
+    </string-array>
+
+    <string-array name="VideoPeriod">
+        <item>今日</item>
+        <item>本周</item>
+        <item>本月</item>
+        <item>历史</item>
+    </string-array>
+
+    <string-array name="VideoOrder">
+        <item>发布时间</item>
+        <item>总播放数</item>
+        <item>最多评论</item>
+        <item>最多收藏</item>
+        <item>总引用</item>
+        <item>收藏时间</item>
+    </string-array>
+
+
+    <string-array name="ProgramOrder">
+        <item>最新发布</item>
+        <item>按评分</item>
+        <item>最多观看</item>
+        <item>今日最热</item>
+        <item>本周最热</item>
+        <item>最多评论</item>
+        <item>最多收藏</item>
+        <item>最多引用</item>
+        <item>发布时间</item>
+    </string-array>
+
+
+</resources>

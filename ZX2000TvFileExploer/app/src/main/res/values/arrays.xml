@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="filter_category">
+        <item>所有文件</item>
+        <item>音频</item>
+        <item>视频</item>
+        <item>图片</item>
+        <item>安装包</item>
+        <item>文档</item>
+    </string-array>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px420"
+    android:layout_height="@dimen/px320"
+    android:paddingTop="@dimen/px24"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="@dimen/px400"
+        android:layout_height="@dimen/px224">
+
+        <ImageView
+            android:id="@+id/lemon_grid_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/lemon_details_small_def" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lemon_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px50"
+            android:background="#b00b0505"
+            android:textColor="#dcdcdc"
+            android:paddingLeft="@dimen/px10"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/px36"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:id="@+id/lemon_grid_textView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px72"
+        android:layout_gravity="bottom|center"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="#dcdcdc"
+        android:textSize="@dimen/px36" />
+
+</LinearLayout>

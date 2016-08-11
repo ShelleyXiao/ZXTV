@@ -1,0 +1,108 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">在线视频</string>
+    <string name="search">搜索</string>
+
+    <string name="genre_life">生活资讯</string>
+    <string name="genre_social">社会资讯</string>
+    <string name="genre_tech">科技资讯</string>
+    <string name="genre_gov">时政资讯</string>
+    <string name="genre_military">军事资讯</string>
+    <string name="genre_finance">财经资讯</string>
+    <string name="genre_legal">法制</string>
+
+    <string name="program_genre_romance">言情</string>
+    <string name="program_genre_fashon">时装</string>
+    <string name="program_genre_metrodrama">都市</string>
+    <string name="program_genre_drama">剧情</string>
+    <string name="program_genre_family">家庭</string>
+    <string name="program_genre_historical">古装</string>
+    <string name="program_genre_cmdedy">搞笑</string>
+    <string name="program_genre_soapopera">偶像</string>
+    <string name="program_genre_police">警匪</string>
+    <string name="program_genre_mystery">悬疑</string>
+    <string name="program_genre_history">历史</string>
+    <string name="program_genre_military">军事</string>
+    <string name="program_genre_martial">武侠</string>
+    <string name="program_genre_science">科幻</string>
+    <string name="program_genre_rural">农村</string>
+    <string name="program_genre_fantasy">神话</string>
+    <string name="program_genre_other">其他</string>
+
+    <string name="movice_genre_drama">剧情</string>
+    <string name="movice_genre_comedy">喜剧</string>
+    <string name="movice_genre_romance">爱情</string>
+    <string name="movice_genre_action">动作</string>
+    <string name="movice_genre_thriller">惊悚</string>
+    <string name="movice_genre_crime">犯罪</string>
+    <string name="movice_genre_horror">恐怖</string>
+    <string name="movice_genre_animation">动画</string>
+    <string name="movice_genre_fantasy">奇幻</string>
+    <string name="movice_genre_adventure">冒险</string>
+    <string name="movice_genre_mystery">悬疑</string>
+    <string name="movice_genre_sciencefiction">科幻</string>
+    <string name="movice_genre_biography">传记</string>
+    <string name="movice_genre_martial">悬疑</string>
+    <string name="movice_genre_policedrama">警匪</string>
+    <string name="movice_genre_war">战争</string>
+    <string name="movice_genre_sports">运动</string>
+
+    <string name="show_period">发布日期</string>
+    <string name="show_orderby">排序</string>
+
+    <string name="show_period_today">今日 </string>
+    <string name="show_period_week">本周</string>
+    <string name="show_period_month">本月 </string>
+    <string name="show_period_history">历史</string>
+
+    <string name="show_orderby_published">发布时间</string>
+    <string name="show_orderby_viewcount">总播放数</string>
+    <string name="show_orderby_commentcount">总评论数</string>
+    <string name="show_orderby_referencecount">总引用</string>
+    <string name="show_orderby_fravoritetime">收藏时间</string>
+    <string name="show_orderby_favoritecount">总收藏数</string>
+
+    <string name="show_total_str">总共<xliff:g id="number">%1$d</xliff:g>部</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="zx_hot_search">热门搜索</string>
+    <string name="zx_play_re">播放记录</string>
+    <string name="zx_sc">收藏记录</string>
+    <string name="zx_movie">电影</string>
+    <string name="zx_movie_details_msg">看此影片的还在看</string>
+    <string name="zx_play">立即播放</string>
+    <string name="zx_sc_add">添加收藏</string>
+    <string name="zx_rm_movie">热门播放</string>
+    <string name="zx_serial">选择剧集</string>
+    <string name="zx_serial_all">全部剧集</string>
+    <string name="load">加载中...</string>
+
+    <string name="episode_count"><xliff:g id="number">%1$d</xliff:g>集全</string>
+    <string name="episode_upload">已更新<xliff:g id="number">%1$d</xliff:g>集</string>
+
+    <string name="program_detail_type">类型：</string>
+    <string name="program_detail_grade">评分：</string>
+    <string name="program_detail_director">导演：</string>
+    <string name="program_detail_actors">演员：</string>
+    <string name="program_detail_descrpition">详情：</string>
+
+    <string name="lemon_serial">选择剧集</string>
+    <string name="lemon95_serial_all">全部剧集</string>
+
+    <string name="exit_app_promat">您确定退出应用?</string>
+    <string name="dialog_cancle">取消</string>
+    <string name="dialog_confirm">确定</string>
+    <string name="dialog_title">提示</string>
+
+    <string name="no_network_promat">网络断开，请检查网络连接！</string>
+    <string name="netwrok_dialog_net_ok">检测网络!</string>
+    
+    <string name="variety_crosstal">相声</string>
+    <string name="variety_sketch">小品</string>
+    <string name="variety_reality">真人秀</string>
+    <string name="variety_talkshow">脱口秀</string>
+    <string name="variety_interview">访谈</string>
+    <string name="variety_food">美食</string>
+    <string name="variety_opera">曲艺</string>
+
+
+</resources>

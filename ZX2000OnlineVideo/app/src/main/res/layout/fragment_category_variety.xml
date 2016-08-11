@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+    <com.open.androidtvwidget.view.SmoothHorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
+
+        <com.open.androidtvwidget.view.RelativeMainLayout
+            android:id="@+id/main_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="150dp">
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_crosstal"
+                android:layout_width="@dimen/px460"
+                android:layout_height="@dimen/px860"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_crosstal"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_sketch"
+                android:layout_width="@dimen/px460"
+                android:layout_height="@dimen/px860"
+                android:layout_alignTop="@+id/variety_crosstal"
+                android:layout_toRightOf="@+id/variety_crosstal"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a07"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_sketch"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_reality"
+                android:layout_width="@dimen/px460"
+                android:layout_height="@dimen/px860"
+                android:layout_alignTop="@+id/variety_crosstal"
+                android:layout_toRightOf="@+id/variety_sketch"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_reality"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_talkshow"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/variety_reality"
+                android:layout_toRightOf="@+id/variety_reality"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a04"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_talkshow"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_food"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/variety_talkshow"
+                android:layout_toRightOf="@+id/variety_reality"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_food"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_interview"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/variety_food"
+                android:layout_toRightOf="@+id/variety_reality"
+                android:layout_alignBottom="@+id/variety_reality"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_interview"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/variety_opera"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px400"
+                android:layout_alignTop="@+id/variety_talkshow"
+                android:layout_toRightOf="@+id/variety_talkshow"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a03"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/variety_opera"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+
+
+        </com.open.androidtvwidget.view.RelativeMainLayout>
+    </com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/test_rectangle"/>
+
+</RelativeLayout>

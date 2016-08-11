@@ -1,0 +1,3 @@
+include ':app'
+include ':vodPlayerRelease'
+project(':vodPlayerRelease').projectDir = new File('vodPlayerRelease')

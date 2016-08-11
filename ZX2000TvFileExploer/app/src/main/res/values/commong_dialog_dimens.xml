@@ -1,0 +1,11 @@
+<resources>
+
+    <dimen name="dialog_margin">7.0dip</dimen>
+    <dimen name="global_padding">8.0dip</dimen>
+    <dimen name="global_dialog_padding">25.0dip</dimen>
+    
+    <dimen name="text_regular_primary_size">20.0dip</dimen>
+    <dimen name="text_large_secondary_size">12.0dip</dimen>
+    <dimen name="text_large_primary_size">28.0dip</dimen>
+    
+</resources>

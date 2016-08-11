@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main_bg"
+                android:padding="@dimen/px20"
+                tools:context=".ui.MainActivity">
+
+    <com.zx.zx2000tvfileexploer.view.StatusTitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"/>
+
+
+    <com.open.androidtvwidget.view.RelativeMainLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+
+        <com.open.androidtvwidget.view.ReflectItemView
+            android:id="@+id/main_allfile_lay"
+            android:layout_width="@dimen/px560"
+            android:layout_height="@dimen/px860"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/px10"
+            android:background="@drawable/b_02"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:isReflect="true"
+            app:isShape="true">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/local_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="@dimen/px25"
+                        android:layout_marginRight="@dimen/px25"
+                        android:layout_marginTop="@dimen/px50"
+                        android:text="@string/main_all_local_device"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/local_device_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/px25"
+                        android:layout_marginTop="@dimen/px50"
+                        android:text="12GB"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/local_device_size_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px25"
+                        android:layout_below="@+id/local_device_size"
+                        android:layout_marginLeft="@dimen/px25"
+                        android:layout_marginRight="@dimen/px25"
+                        android:background="@drawable/device_space_size_progress"
+                        android:indeterminate="false"
+                        android:indeterminateOnly="false"
+                        android:max="100"
+                        android:maxHeight="@dimen/px25"
+                        android:minHeight="@dimen/px25"
+                        android:progress="40"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tf_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/local_device">
+
+
+                    <TextView
+                        android:id="@+id/tf_device_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="@dimen/px25"
+                        android:layout_marginRight="@dimen/px25"
+                        android:layout_marginTop="@dimen/px50"
+                        android:text="@string/main_all_tf_device"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/tf_device_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/px25"
+                        android:layout_marginTop="@dimen/px50"
+                        android:text="7.8GB"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/tf_device_size_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px25"
+                        android:layout_below="@+id/tf_device_size"
+                        android:layout_marginLeft="@dimen/px25"
+                        android:layout_marginRight="@dimen/px25"
+                        android:background="@drawable/device_space_size_progress"
+                        android:indeterminate="false"
+                        android:indeterminateOnly="false"
+                        android:max="100"
+                        android:maxHeight="@dimen/px25"
+                        android:minHeight="@dimen/px25"
+                        android:progress="10"
+
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/usb_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tf_device">
+
+
+                    <TextView
+                        android:id="@+id/usb_device_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="@dimen/px25"
+                        android:layout_marginRight="@dimen/px25"
+                        android:layout_marginTop="@dimen/px50"
+                        android:text="@string/main_all_usb_device"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/usb_device_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/px25"
+                        android:layout_marginTop="@dimen/px50"
+                        android:text="7.8GB"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/usb_device_size_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px25"
+                        android:layout_below="@+id/usb_device_size"
+                        android:layout_marginLeft="@dimen/px25"
+                        android:layout_marginRight="@dimen/px25"
+                        android:background="@drawable/device_space_size_progress"
+                        android:indeterminate="false"
+                        android:indeterminateOnly="false"
+                        android:max="100"
+                        android:maxHeight="@dimen/px25"
+                        android:minHeight="@dimen/px25"
+                        android:progress="10"
+
+                        />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/px20"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_menu_all"
+                    android:textColor="#ffffff"
+                    android:textSize="24sp"/>
+
+            </RelativeLayout>
+
+
+        </com.open.androidtvwidget.view.ReflectItemView>
+
+        <com.open.androidtvwidget.view.ReflectItemView
+            android:id="@+id/main_apk_lay"
+            android:layout_width="@dimen/px512"
+            android:layout_height="@dimen/px260"
+            android:layout_alignTop="@+id/main_allfile_lay"
+            android:layout_margin="@dimen/px10"
+            android:layout_toLeftOf="@+id/main_allfile_lay"
+            android:background="@drawable/b_05"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:isReflect="false"
+            app:isShape="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/apk_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/main_apk"/>
+
+                <TextView
+                    android:id="@+id/apk_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/apk_img"
+                    android:layout_marginTop="@dimen/px40"
+                    android:layout_toRightOf="@+id/apk_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_menu_apk"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/apk_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/apk_title"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/apk_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_apk_nums"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+            </RelativeLayout>
+
+        </com.open.androidtvwidget.view.ReflectItemView>
+
+        <com.open.androidtvwidget.view.ReflectItemView
+            android:id="@+id/main_video_lay"
+            android:layout_width="@dimen/px512"
+            android:layout_height="@dimen/px260"
+            android:layout_below="@+id/main_apk_lay"
+            android:layout_margin="@dimen/px10"
+            android:layout_toLeftOf="@+id/main_allfile_lay"
+            android:background="@drawable/a01"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:isReflect="false"
+            app:isShape="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/video_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/main_video"/>
+
+                <TextView
+                    android:id="@+id/video_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/video_img"
+                    android:layout_marginTop="@dimen/px40"
+                    android:layout_toRightOf="@+id/video_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_menu_video"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/video_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/video_title"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/video_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_vidio_nums"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+            </RelativeLayout>
+        </com.open.androidtvwidget.view.ReflectItemView>
+
+        <com.open.androidtvwidget.view.ReflectItemView
+            android:id="@+id/main_search_lay"
+            android:layout_width="@dimen/px512"
+            android:layout_height="@dimen/px260"
+            android:layout_alignBottom="@+id/main_allfile_lay"
+            android:layout_below="@+id/main_video_lay"
+            android:layout_margin="@dimen/px10"
+            android:layout_toLeftOf="@+id/main_allfile_lay"
+            android:background="@drawable/b_06"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:isReflect="true"
+            app:isShape="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/search_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/main_video"/>
+
+                <TextView
+                    android:id="@+id/search_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/px40"
+                    android:layout_toRightOf="@+id/search_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_menu_search"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"/>
+
+
+            </RelativeLayout>
+        </com.open.androidtvwidget.view.ReflectItemView>
+
+        <com.open.androidtvwidget.view.ReflectItemView
+            android:id="@+id/main_image_lay"
+            android:layout_width="@dimen/px512"
+            android:layout_height="@dimen/px400"
+            android:layout_alignTop="@+id/main_allfile_lay"
+            android:layout_margin="@dimen/px10"
+            android:layout_toRightOf="@+id/main_allfile_lay"
+            android:background="@drawable/a04"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:isReflect="false"
+            app:isShape="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/image_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/main_image"/>
+
+                <TextView
+                    android:id="@+id/image_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/image_img"
+                    android:layout_marginTop="@dimen/px20"
+                    android:layout_toRightOf="@+id/image_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_menu_image"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/picture_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/image_title"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/image_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_image_nums"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+            </RelativeLayout>
+        </com.open.androidtvwidget.view.ReflectItemView>
+
+        <com.open.androidtvwidget.view.ReflectItemView
+            android:id="@+id/main_music_lay"
+            android:layout_width="@dimen/px512"
+            android:layout_height="@dimen/px400"
+            android:layout_alignBottom="@+id/main_allfile_lay"
+            android:layout_below="@+id/main_image_lay"
+            android:layout_margin="@dimen/px10"
+            android:layout_toRightOf="@+id/main_allfile_lay"
+            android:background="@drawable/a07"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:isReflect="true"
+            app:isShape="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/music_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px40"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/main_music"/>
+
+                <TextView
+                    android:id="@+id/music_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/music_img"
+                    android:layout_marginTop="@dimen/px20"
+                    android:layout_toRightOf="@+id/music_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_menu_music"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/music_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/music_title"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/music_img"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_music_nums"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+            </RelativeLayout>
+        </com.open.androidtvwidget.view.ReflectItemView>
+
+    </com.open.androidtvwidget.view.RelativeMainLayout>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/main_up_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/top_rectangle"/>
+
+</RelativeLayout>

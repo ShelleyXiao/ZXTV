@@ -1,0 +1,188 @@
+<resources  xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">文件管理</string>
+    <string name="main_menu_all">全部文件</string>
+    <string name="main_menu_apk">安装</string>
+    <string name="main_menu_video">视频</string>
+    <string name="main_menu_search">搜索</string>
+    <string name="main_menu_image">图片</string>
+    <string name="main_menu_music">音乐</string>
+
+    <string name="main_apk_nums">个安装包</string>
+    <string name="main_vidio_nums">个视频</string>
+    <string name="main_image_nums">个相册</string>
+    <string name="main_music_nums">个音乐</string>
+
+    <string name="main_all_tf_device">TF卡</string>
+    <string name="main_all_local_device">本地设备</string>
+    <string name="main_all_usb_device">移动设备</string>
+
+    <string name="category_all">所有</string>
+    <string name="category_music">音乐</string>
+    <string name="category_video">视频</string>
+    <string name="category_picture">图片</string>
+    <string name="category_apk">安装包</string>
+    <string name="category_other">其它</string>
+    <string name="category_favorite">收藏夹</string>
+
+    <string name="select_all">全选</string>
+    <string name="deselect_all">取消全选</string>
+    <string name="cancle">取消</string>
+    <string name="delete">删除</string>
+    <string name="copy">复制</string>
+    <string name="cut">剪切</string>
+    <string name="paste">粘贴</string>
+    <string name="share">分享</string>
+    <string name="favorite">收藏</string>
+    <string name="rename">重命名</string>
+    <string name="detail">详情</string>
+    <string name="compress">压缩</string>
+    <string name="create_folder">文件夹</string>
+    <string name="create_file">文件</string>
+    <string name="create_photo">拍照</string>
+    <string name="create_folder_name">文件夹名称</string>
+    <string name="create_file_name">文件名称</string>
+    <string name="create_photo_name">照片名称</string>
+    <string name="my_device">我的设备</string>
+    <string name="star">已加星标</string>
+    <string name="wifi">Wi-Fi远程管理</string>
+    <string name="category">分类查看</string>
+    <string name="music">音乐</string>
+    <string name="video">视频</string>
+    <string name="image">图片</string>
+    <string name="document">文档</string>
+    <string name="zip">压缩包</string>
+    <string name="apk">安装包</string>
+
+    <string name="operation_favorite">添加星标</string>
+    <string name="operation_unfavorite">取消星标</string>
+    <string name="operation_copy">复制</string>
+    <string name="operation_copy_path">复制路径</string>
+    <string name="operation_send">发送</string>
+    <string name="operation_rename">重命名</string>
+    <string name="operation_compress">压缩</string>
+    <string name="operation_delete">删除选择项</string>
+    <string name="operation_info">详情</string>
+    <string name="operation_cancel">取消</string>
+    <string name="operation_refresh">刷新</string>
+    <string name="operation_search">搜索</string>
+    <string name="operation_selectall">全部选择</string>
+    <string name="operation_selectall_cancle">取消全选</string>
+    <string name="operatiion_select">选择</string>
+    <string name="operation_create_folder">新建文件夹</string>
+    <string name="operation_create_file">新建文件</string>
+    <string name="opearation_copy">拷贝选择项</string>
+    <string name="operation_paste">粘贴选择项</string>
+    <string name="operation_move">移动选择项</string>
+    <string name="operation_move_cancel">取消移动</string>
+    <string name="opeartion_delete">删除选择项</string>
+    <string name="operation_coping_cancel">取消拷贝</string>
+
+    <string name="dialog_select_type">选择文件类型</string>
+    <string name="dialog_type_text">文本</string>
+    <string name="dialog_type_audio">音频</string>
+    <string name="dialog_type_video">视频</string>
+    <string name="dialog_type_image">图像</string>
+
+    <string name="no_file">没有文件</string>
+
+    <string name="disk_select_promat">请选择磁盘</string>
+
+    <string name="disk_flash">本机</string>
+    <string name="disk_tf_sd">TF卡</string>
+    <string name="disk_usb">USB</string>
+    <string name="disk_umount">未挂载</string>
+
+    <string name="disk_size_total">总共:</string>
+    <string name="disk_size_use">已用:</string>
+
+    <string name="disk_unmounted_msg">磁盘已拔出</string>
+
+    <string name="file_nums">项</string>
+
+    <string name="menu_promate_msg">按菜单键可以有更多操作</string>
+    <string name="multi_select_title">已选择<xliff:g id="number">%1$d</xliff:g>项</string>
+    
+    <string name="menu_title">操作</string>
+
+    <string name="create_new_folder">新建文件夹</string>
+    <string name="folder_name">文件夹名称</string>
+    <string name="this_folder_is_empty">该文件夹为空。</string>
+    <string name="really_delete">确实要删除 %s 吗？</string>
+    <string name="title_warning_some_may_not_work">警告</string>
+    <string name="warning_some_may_not_work">下列选项中的某些可能不起作用。</string>
+    <string name="show_warning_again">再次显示警告</string>
+
+    <!-- Strings for a multi select feature -->
+    <string name="really_delete_multiselect">确定要删除文件%d？</string>
+    <string name="multiselect_title">选择多个文件</string>
+    <string name="pick_title">文件采集</string>
+
+    <!-- Strings for details table -->
+    <string name="details_type">类型</string>
+    <string name="details_type_folder">文件夹</string>
+    <string name="details_type_file">文件</string>
+    <string name="details_type_other">其他</string>
+    <string name="details_size">大小</string>
+    <string name="details_permissions">权限</string>
+    <string name="details_hidden">隐藏</string>
+    <string name="details_lastmodified">最近修改</string>
+    <string name="details_yes">是</string>
+    <string name="details_no">否</string>
+
+    <string name="delete_success">删除成功</string>
+    <string name="delete_failure">有一些文件未被删除</string>
+    <string name="deleting">正在删除…</string>
+    <string name="rename_success">重命名成功</string>
+    <string name="rename_failure">未能重命名</string>
+    <string name="loading">正在加载...</string>
+    <string name="create_dir_success">创建目录成功</string>
+    <string name="create_dir_failure">未能创建目录</string>
+    <string name="compressed_file_name">Zip 文件名</string>
+    <string name="file_exists">文件已存在</string>
+    <string name="overwrite_question">覆盖旧文件？</string>
+    <string name="directory_pick">选择当前目录</string>
+    <string name="filename_hint">File name</string>
+    <string name="choose_filename">File name can\'t be empty!</string>
+    <string name="pick_button_default">Pick file</string>
+
+    <!-- Construct a unique file name of a file called %s. -->
+    <string name="copied_file_name">%s的副本</string>
+
+    <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
+    <string name="copied_file_name_2">%2$s的副本%1$d</string>
+    <string name="media_scan_included">该文件夹将包含在下次媒体扫描中。</string>
+    <string name="media_scan_excluded">该文件夹将从下次媒体扫描中排除。</string>
+    <string name="error_generic">出错：</string>
+    <string name="error_media_scan">无法更改媒体扫描设置。</string>
+    <string name="send_not_available">无法找到用于发送的应用程序。</string>
+    <string name="application_not_available">应用程序不可用</string>
+
+    <!-- CopyHelper statuses -->
+    <string name="copying">正在复制…</string>
+    <string name="copied">复制成功</string>
+    <string name="copy_error">有一些或者所有项目无法被复制！</string>
+    <string name="moving">正在移动…</string>
+    <string name="moved">移动成功</string>
+    <string name="move_error">有一些或者全部项目无法被移动！</string>
+    <string name="nothing_to_paste">没有可以粘贴的内容。请先复制或者剪切文件。</string>
+    <string name="nothing_to_delete">没有可以删除的内容。请先选择需删除的文件。</string>
+
+
+    <string name="wrong_rename_msg">重命名只能选择一个文件夹或文件</string>
+    <string name="copy_no_selection_msg">请选择需拷贝的文件</string>
+    <string name="move_no_selection_msg">请选择需移动的文件</string>
+
+    <string name="search_hint">搜索字词</string>
+    <string name="search_title">搜索</string>
+    <string name="search_info">请输入搜索关键字</string>
+
+    <string name="search_filter_menu_title">搜索过滤</string>
+    <string name="search_filter_menu_all_item">所有</string>
+    <string name="search_filter_menu_music_item">音乐</string>
+    <string name="search_filter_menu_video_item">视频</string>
+    <string name="search_filter_menu_picture_item">图片</string>
+    <string name="search_filter_menu_apk_item">安装包</string>
+
+
+
+</resources>

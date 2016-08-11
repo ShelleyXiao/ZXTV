@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.zx.zx2000onlinevideo">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- TV SDK所需权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!-- FOR YUNZHISHENG BEGIN -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- FOR YUNZHISHENG END -->
+
+
+    <!-- 修复二维码扫描bug所需权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!-- 第三方监测加码新增权限 -->
+
+    <!--  <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> -->
+
+    <!-- 第三方监测加码新增权限 -->
+
+
+    <!-- 支付宝sdk新增权限 -->
+    <uses-permission android:name="android.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- 高德地图新增权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
+    <!-- 小米Push新增权限 -->
+    <permission
+        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
+
+    <meta-data
+        android:name="client_id"
+        android:value="8645c3062b918e02"/>
+    <meta-data
+        android:name="client_secret"
+        android:value="28e7ff34f4d2dd888ccb9f1bd7c502ee"/>
+
+    <application
+        android:name=".OnlineVideoApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.VideoSetActivity">
+        </activity>
+
+        <activity android:name=".ui.activity.VideoDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.ProgramSetActivity"></activity>
+
+        <activity android:name=".ui.activity.SearchActivity"></activity>
+
+        <activity
+            android:name=".ui.activity.PlayYoukuActivity"
+            android:configChanges="orientation|keyboard|locale|screenSize|layoutDirection"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".ui.activity.PlayVodActivity"
+            android:configChanges="orientation|keyboard|locale|screenSize|layoutDirection"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"/>
+    </application>
+
+</manifest>

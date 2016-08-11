@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lemon95_main_bg"
+    android:orientation="vertical"
+    tools:context="com.zx.zx2000onlinevideo.ui.activity.VideoSetActivity"
+    >
+
+    <com.zx.zx2000onlinevideo.ui.view.ViewStatusTitleView
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"
+        android:layout_margin="@dimen/px20"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@drawable/lemon_video_menu_bg"
+            android:orientation="vertical">
+
+            <com.zx.zx2000onlinevideo.ui.view.widget.BrandTextView
+                android:id="@+id/show_category_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px10"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/show_period"
+                android:textColor="#77b1ef"
+                android:textSize="28sp"
+                />
+
+            <com.open.androidtvwidget.view.ListViewTV
+                android:id="@+id/video_menu_period_id"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px620"
+                android:scrollbars="none"
+                android:descendantFocusability="afterDescendants"
+                android:layout_gravity="center"
+                android:focusableInTouchMode="true"
+                android:nextFocusRight="@+id/gridView"
+                android:nextFocusDown="@+id/video_menu_orderby_id"
+                android:focusable="true"
+                android:listSelector="@drawable/lemon_liangguang_03">
+
+            </com.open.androidtvwidget.view.ListViewTV>
+
+            <com.zx.zx2000onlinevideo.ui.view.widget.BrandTextView
+                android:id="@+id/show_category_orderby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px10"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/show_orderby"
+                android:textColor="#77b1ef"
+                android:textSize="26sp"
+                />
+
+            <com.open.androidtvwidget.view.ListViewTV
+                android:id="@+id/video_menu_orderby_id"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px620"
+                android:scrollbars="none"
+                android:descendantFocusability="afterDescendants"
+                android:layout_gravity="center"
+                android:focusableInTouchMode="true"
+                android:nextFocusRight="@+id/gridView"
+                android:nextFocusUp="@+id/video_menu_period_id"
+                android:focusable="true"
+                android:listSelector="@drawable/lemon_liangguang_03">
+
+            </com.open.androidtvwidget.view.ListViewTV>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8">
+
+            <TextView
+                android:id="@+id/show_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/px10"
+                android:text="@string/show_total_str"
+                android:textColor="#9b9bf1"
+                android:textSize="24sp"
+                android:focusable="false"
+                />
+
+            <com.open.androidtvwidget.view.GridViewTV
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/show_total"
+                android:layout_gravity="center"
+                android:clipChildren="false"
+                android:columnWidth="@dimen/px249"
+                android:descendantFocusability="afterDescendants"
+                android:gravity="center_vertical"
+                android:horizontalSpacing="@dimen/px48"
+                android:nextFocusLeft="@+id/period_group"
+                android:numColumns="auto_fit"
+                android:paddingLeft="@dimen/px48"
+                android:paddingRight="@dimen/px6"
+                android:scrollbars="none"/>
+
+            <ProgressBar
+                android:id="@+id/sz_movie_set_pro"
+                android:layout_width="@dimen/px150"
+                android:layout_height="@dimen/px150"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:indeterminateDrawable="@anim/progressbar_anim"
+                />
+
+            <com.open.androidtvwidget.view.MainUpView
+                android:id="@+id/mainUpView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

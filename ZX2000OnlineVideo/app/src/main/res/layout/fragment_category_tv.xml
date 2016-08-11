@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+    <com.open.androidtvwidget.view.SmoothHorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
+
+        <com.open.androidtvwidget.view.RelativeMainLayout
+            android:id="@+id/main_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="80dp"
+            android:paddingLeft="80dp">
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_metrodrama"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px860"
+                android:layout_margin="@dimen/px10"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px100"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_metrodrama"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_family"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/program_genre_metrodrama"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_metrodrama"
+                android:background="@drawable/a04"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_family"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_drama"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_family"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_metrodrama"
+                android:background="@drawable/a07"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_drama"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_rural"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_drama"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_metrodrama"
+                android:layout_alignBottom="@+id/program_genre_metrodrama"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_rural"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_historical"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/program_genre_metrodrama"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_family"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_historical"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_martial"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_historical"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_drama"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_martial"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_history"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_martial"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_rural"
+                android:layout_alignBottom="@+id/program_genre_metrodrama"
+                android:background="@drawable/a07"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_history"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_soapopera"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/program_genre_historical"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_historical"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_soapopera"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_romance"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_soapopera"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_martial"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_romance"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_fashon"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_romance"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_history"
+                android:layout_alignBottom="@+id/program_genre_metrodrama"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_fashon"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_cmdedy"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/program_genre_soapopera"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_soapopera"
+                android:background="@drawable/a03"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_cmdedy"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_police"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_cmdedy"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_romance"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_police"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_mystery"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_police"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_fashon"
+                android:layout_alignBottom="@+id/program_genre_metrodrama"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_mystery"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_military"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/program_genre_cmdedy"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_cmdedy"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_military"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_science"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_military"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_police"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_science"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_fantasy"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/program_genre_science"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_mystery"
+                android:layout_alignBottom="@+id/program_genre_metrodrama"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_fantasy"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/program_genre_other"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/program_genre_military"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/program_genre_military"
+                android:background="@drawable/a07"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/program_genre_other"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+        </com.open.androidtvwidget.view.RelativeMainLayout>
+    </com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/test_rectangle"/>
+
+</RelativeLayout>

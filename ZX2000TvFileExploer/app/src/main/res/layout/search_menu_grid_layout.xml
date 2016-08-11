@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+    android:background="@drawable/background_sentgift">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/search_filter_menu_title"
+        android:layout_margin="@dimen/px15"
+        android:textColor="#3fb8f1"
+        android:textSize="@dimen/px60"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#629cff"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/menu_filter_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/meun_item_select_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/search_filter_menu_all_item"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px48"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="#a1a1a1"
+            android:layout_marginBottom="@dimen/px10"
+            android:layout_marginTop="@dimen/px10"
+            />
+
+        <LinearLayout
+            android:id="@+id/menu_filter_music"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/meun_item_select_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/search_filter_menu_music_item"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px48"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#a1a1a1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/menu_filter_video"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/meun_item_select_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/search_filter_menu_video_item"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px48"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="#a1a1a1"
+            android:layout_marginBottom="@dimen/px10"
+            android:layout_marginTop="@dimen/px10"
+            />
+
+        <LinearLayout
+            android:id="@+id/menu_filter_picture"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/meun_item_select_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/search_filter_menu_picture_item"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px48"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#a1a1a1"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/menu_filter_apk"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/meun_item_select_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/search_filter_menu_apk_item"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px48"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="#a1a1a1"
+            android:layout_marginBottom="@dimen/px10"
+            android:layout_marginTop="@dimen/px10"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#a1a1a1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:background="@drawable/meun_item_select_bg"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:id="@+id/menu_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/cancle"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px48"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

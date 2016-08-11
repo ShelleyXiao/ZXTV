@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.open.androidtvwidget.view.RelativeMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/tools"
+                xmlns:pv="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg"
+                android:orientation="vertical">
+
+    <com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"
+        android:layout_margin="@dimen/px20"/>
+
+    <com.open.androidtvwidget.view.RelativeMainLayout
+        android:id="@+id/disk_tf"
+        android:layout_width="@dimen/px560"
+        android:layout_height="@dimen/px860"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/px10"
+        android:background="@drawable/b_02"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:isReflect="true"
+        app:isShape="true"
+        >
+
+        <RelativeLayout
+            android:id="@+id/tf_progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px400"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/px30"
+            >
+
+            <com.zx.zx2000tvfileexploer.view.RoundProgressBar
+                android:id="@+id/tf_progress"
+                android:layout_width="@dimen/px400"
+                android:layout_height="@dimen/px400"
+                android:layout_centerInParent="true"
+                pv:max="100"
+                pv:progress="10"
+                pv:ringColor="#4d95dc"
+                pv:ringProgressColor="#cfe1f4"
+                pv:ringWidth="@dimen/px20"
+                pv:textIsDisplayable="false"/>
+
+            <ImageView
+                android:id="@+id/tf_logo"
+                android:layout_width="@dimen/px168"
+                android:layout_height="@dimen/px194"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/sd_item_icon"/>
+
+            <TextView android:id="@+id/disk_tf_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tf_logo"
+                android:layout_centerHorizontal="true"
+                android:text="@string/disk_umount"
+                android:textColor="@color/diskViewTextColor"
+                android:textSize="@dimen/px44"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/disk_tf_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tf_progress_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px20"
+            android:text="@string/disk_size_use"
+            android:textColor="@color/diskViewTextColor"
+            android:textSize="@dimen/px44"/>
+
+        <TextView
+            android:id="@+id/disk_tf_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/disk_tf_use"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px20"
+            android:text="@string/disk_size_total"
+            android:textColor="@color/diskViewTextColor"
+            android:textSize="@dimen/px44"/>
+
+        <TextView
+            android:id="@+id/disk_tf_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/px20"
+            android:text="@string/disk_tf_sd"
+            android:textColor="@color/diskViewDiskNameColor"
+            android:textSize="@dimen/px56"/>
+
+    </com.open.androidtvwidget.view.RelativeMainLayout>
+
+    <com.open.androidtvwidget.view.RelativeMainLayout
+        android:id="@+id/disk_flash"
+        android:layout_width="@dimen/px560"
+        android:layout_height="@dimen/px860"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/px10"
+        android:layout_marginLeft="@dimen/px200"
+        android:layout_toLeftOf="@+id/disk_tf"
+        android:background="@drawable/b_07"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:isReflect="true"
+        app:isShape="true"
+        >
+
+        <RelativeLayout
+            android:id="@+id/flash_progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px400"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/px30"
+            >
+
+            <com.zx.zx2000tvfileexploer.view.RoundProgressBar
+                android:id="@+id/flash_progress"
+                android:layout_width="@dimen/px400"
+                android:layout_height="@dimen/px400"
+                android:layout_centerInParent="true"
+                pv:max="100"
+                pv:progress="10"
+                pv:ringColor="#4d95dc"
+                pv:ringProgressColor="#cfe1f4"
+                pv:ringWidth="@dimen/px20"
+                pv:textIsDisplayable="false"/>
+
+            <ImageView
+                android:id="@+id/flash_logo"
+                android:layout_width="@dimen/px168"
+                android:layout_height="@dimen/px194"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/flash_item_icon"/>
+
+            <TextView android:id="@+id/disk_flash_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flash_logo"
+                android:layout_centerHorizontal="true"
+                android:text="@string/disk_umount"
+                android:textColor="@color/diskViewTextColor"
+                android:textSize="@dimen/px44"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/disk_flash_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/flash_progress_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px20"
+            android:text="@string/disk_size_use"
+            android:textColor="@color/diskViewTextColor"
+            android:textSize="@dimen/px44"/>
+
+        <TextView
+            android:id="@+id/disk_flash_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/disk_flash_use"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px20"
+            android:text="@string/disk_size_total"
+            android:textColor="@color/diskViewTextColor"
+            android:textSize="@dimen/px44"/>
+
+        <TextView
+            android:id="@+id/disk_flash_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/px20"
+            android:text="@string/disk_flash"
+            android:textColor="@color/diskViewDiskNameColor"
+            android:textSize="@dimen/px56"/>
+
+    </com.open.androidtvwidget.view.RelativeMainLayout>
+
+    <com.open.androidtvwidget.view.RelativeMainLayout
+        android:id="@+id/disk_usb"
+        android:layout_width="@dimen/px560"
+        android:layout_height="@dimen/px860"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/px10"
+        android:layout_marginLeft="@dimen/px200"
+        android:layout_toRightOf="@+id/disk_tf"
+        android:background="@drawable/a07"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:isReflect="true"
+        app:isShape="true"
+        >
+
+        <RelativeLayout
+            android:id="@+id/usb_progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px400"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/px30"
+            >
+
+            <com.zx.zx2000tvfileexploer.view.RoundProgressBar
+                android:id="@+id/usb_progress"
+                android:layout_width="@dimen/px400"
+                android:layout_height="@dimen/px400"
+                android:layout_centerInParent="true"
+                pv:max="100"
+                pv:progress="10"
+                pv:ringColor="#4d95dc"
+                pv:ringProgressColor="#cfe1f4"
+                pv:ringWidth="@dimen/px20"
+                pv:textIsDisplayable="false"/>
+
+            <ImageView
+                android:id="@+id/usb_logo"
+                android:layout_width="@dimen/px168"
+                android:layout_height="@dimen/px194"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ota_item_icon"/>
+
+            <TextView android:id="@+id/disk_usb_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/usb_logo"
+                android:layout_centerHorizontal="true"
+                android:text="@string/disk_umount"
+                android:textColor="@color/diskViewTextColor"
+                android:textSize="@dimen/px44"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/disk_usb_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/usb_progress_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px20"
+            android:text="@string/disk_size_use"
+            android:textColor="@color/diskViewTextColor"
+            android:textSize="@dimen/px44"/>
+
+        <TextView
+            android:id="@+id/disk_usb_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/disk_usb_use"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px20"
+            android:text="@string/disk_size_total"
+            android:textColor="@color/diskViewTextColor"
+            android:textSize="@dimen/px44"/>
+
+        <TextView
+            android:id="@+id/disk_usb_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/px20"
+            android:text="@string/disk_usb"
+            android:textColor="@color/diskViewDiskNameColor"
+            android:textSize="@dimen/px56"/>
+
+    </com.open.androidtvwidget.view.RelativeMainLayout>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/main_up_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/top_rectangle"/>
+
+</com.open.androidtvwidget.view.RelativeMainLayout>

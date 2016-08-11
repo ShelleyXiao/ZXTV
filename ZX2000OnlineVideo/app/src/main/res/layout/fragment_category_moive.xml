@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+    <com.open.androidtvwidget.view.SmoothHorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
+
+        <com.open.androidtvwidget.view.RelativeMainLayout
+            android:id="@+id/main_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="80dp"
+            android:paddingLeft="80dp">
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_action"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px860"
+                android:layout_margin="@dimen/px10"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px100"
+                android:background="@drawable/a04"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_action"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_drama"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/movie_genre_action"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_action"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_drama"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_comedy"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_drama"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_action"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_comedy"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_romance"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_comedy"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_action"
+                android:layout_alignBottom="@+id/movie_genre_action"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_romance"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_thriller"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/movie_genre_action"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_drama"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_thriller"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_war"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_thriller"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_comedy"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_war"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_animation"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_war"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_romance"
+                android:layout_alignBottom="@+id/movie_genre_action"
+                android:background="@drawable/a07"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_animation"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_sciencefiction"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/movie_genre_action"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_thriller"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_sciencefiction"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_martial"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_sciencefiction"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_war"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_martial"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_policedrama"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_martial"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_war"
+                android:layout_alignBottom="@+id/movie_genre_action"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_policedrama"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_sports"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/movie_genre_action"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_sciencefiction"
+                android:background="@drawable/a03"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_sports"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/movie_genre_crime"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/movie_genre_sports"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/movie_genre_martial"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/movice_genre_crime"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+        </com.open.androidtvwidget.view.RelativeMainLayout>
+    </com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/test_rectangle"/>
+
+</RelativeLayout>
