@@ -12,7 +12,7 @@ import com.open.androidtvwidget.view.RelativeMainLayout;
 import com.open.androidtvwidget.view.SmoothHorizontalScrollView;
 import com.zx.zx2000onlinevideo.R;
 import com.zx.zx2000onlinevideo.config.YoukuConfig;
-import com.zx.zx2000onlinevideo.ui.activity.VideoSetActivity;
+import com.zx.zx2000onlinevideo.ui.activity.ProgramSetActivity;
 import com.zx.zx2000onlinevideo.ui.fragment.LazyFragment;
 
 import butterknife.BindView;
@@ -29,24 +29,27 @@ import butterknife.Unbinder;
  * FIXME
  */
 
-public class NewsFragments extends LazyFragment {
+public class AnimFragments extends LazyFragment {
 
-    public static final String CATEGORY = "资讯";
+    public static final String CATEGORY = "动漫";
 
-    @BindView(R.id.genre_life)
-    ReflectItemView mGenreLife;
-    @BindView(R.id.genre_social)
-    ReflectItemView mGenreSocial;
-    @BindView(R.id.genre_finance)
-    ReflectItemView mGenreFinance;
-    @BindView(R.id.genre_gov)
-    ReflectItemView mGenreGov;
-    @BindView(R.id.genre_tech)
-    ReflectItemView mGenreTech;
-    @BindView(R.id.genre_military)
-    ReflectItemView mGenreMilitary;
-    @BindView(R.id.genre_legal)
-    ReflectItemView mGenreLegal;
+
+    OpenEffectBridge mOpenEffectBridge;
+    Unbinder mUnbinder;
+    @BindView(R.id.anime_family)
+    ReflectItemView mAnimeFamily;
+    @BindView(R.id.anime_intelligence)
+    ReflectItemView mAnimeIntelligence;
+    @BindView(R.id.anime_fairytales)
+    ReflectItemView mAnimeFairytales;
+    @BindView(R.id.anime_history)
+    ReflectItemView mAnimeHistory;
+    @BindView(R.id.anime_adventure)
+    ReflectItemView mAnimeAdventure;
+    @BindView(R.id.anime_sciencefiction)
+    ReflectItemView mGenreMilanimeSciencefictionitary;
+    @BindView(R.id.anime_srw)
+    ReflectItemView mAnimeSrw;
     @BindView(R.id.main_lay)
     RelativeMainLayout mMainLay;
     @BindView(R.id.hscroll_view)
@@ -54,14 +57,11 @@ public class NewsFragments extends LazyFragment {
     @BindView(R.id.mainUpView1)
     MainUpView mMainUpView1;
 
-    OpenEffectBridge mOpenEffectBridge;
-    Unbinder mUnbinder;
-
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_category_news, layout, false);
+        View view = inflater.inflate(R.layout.fragment_category_anim, layout, false);
         setContentView(view);
         mUnbinder = ButterKnife.bind(this, view);
 
@@ -76,8 +76,8 @@ public class NewsFragments extends LazyFragment {
                 if (newFocus != null)
                     newFocus.bringToFront();
                 float scale = 1.2f;
-                if(mMainUpView1 != null) {
-                    if(newFocus instanceof  ReflectItemView) {
+                if (mMainUpView1 != null) {
+                    if (newFocus instanceof ReflectItemView) {
                         mOpenEffectBridge.setVisibleWidget(false);
                         mMainUpView1.setFocusView(newFocus, oldFocus, scale);
                     } else {
@@ -103,37 +103,36 @@ public class NewsFragments extends LazyFragment {
 
     }
 
-    @OnClick({R.id.genre_life, R.id.genre_social, R.id.genre_finance, R.id.genre_gov, R.id.genre_tech, R.id.genre_military, R.id.genre_legal})
+
+    @OnClick({R.id.anime_family, R.id.anime_intelligence, R.id.anime_fairytales, R.id.anime_history, R.id.anime_adventure, R.id.anime_sciencefiction, R.id.anime_srw})
     public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), VideoSetActivity.class);
+        Intent intent = new Intent(getActivity(), ProgramSetActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(YoukuConfig.INTENT_CATEGROY_KEY, CATEGORY);
         switch (view.getId()) {
-            case R.id.genre_life:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_life));
+            case R.id.anime_family:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_family));
                 break;
-            case R.id.genre_social:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_social));
+            case R.id.anime_intelligence:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_intelligence));
                 break;
-            case R.id.genre_finance:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_finance));
+            case R.id.anime_fairytales:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_fairytales));
                 break;
-            case R.id.genre_gov:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_gov));
+            case R.id.anime_history:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_history));
                 break;
-            case R.id.genre_tech:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_tech));
+            case R.id.anime_adventure:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_adventure));
                 break;
-            case R.id.genre_military:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_military));
+            case R.id.anime_sciencefiction:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_sciencefiction));
                 break;
-            case R.id.genre_legal:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_legal));
+            case R.id.anime_srw:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.anime_srw));
                 break;
-
         }
         intent.putExtras(bundle);
         startActivity(intent);
-
     }
 }

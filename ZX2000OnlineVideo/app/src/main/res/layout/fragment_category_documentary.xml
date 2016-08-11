@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+    <com.open.androidtvwidget.view.SmoothHorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
+
+        <com.open.androidtvwidget.view.RelativeMainLayout
+            android:id="@+id/main_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="80dp"
+            android:paddingLeft="80dp">
+
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_nature"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px860"
+                android:layout_margin="@dimen/px10"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px100"
+                android:background="@drawable/a04"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_nature"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_biography"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/documentary_nature"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_nature"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_biography"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_cosmos"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/documentary_biography"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_nature"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_cosmos"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_history"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/documentary_cosmos"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_nature"
+                android:layout_alignBottom="@+id/documentary_nature"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_history"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_culture"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/documentary_nature"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_biography"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_culture"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_military"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/documentary_culture"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_cosmos"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_military"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_scienceandtechnology"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/documentary_military"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_history"
+                android:layout_alignBottom="@+id/documentary_nature"
+                android:background="@drawable/a07"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_scienceandtechnology"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_adventure"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/documentary_nature"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_culture"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_adventure"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_travel"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/documentary_adventure"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_military"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_travel"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_crime"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/documentary_travel"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_military"
+                android:layout_alignBottom="@+id/documentary_nature"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_crime"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/documentary_historical"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/documentary_nature"
+                android:layout_margin="@dimen/px10"
+                android:layout_toRightOf="@+id/documentary_adventure"
+                android:background="@drawable/a03"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/documentary_historical"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+        </com.open.androidtvwidget.view.RelativeMainLayout>
+    </com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/test_rectangle"/>
+
+</RelativeLayout>

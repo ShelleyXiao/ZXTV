@@ -51,12 +51,6 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
 
-    <meta-data
-        android:name="client_id"
-        android:value="8645c3062b918e02"/>
-    <meta-data
-        android:name="client_secret"
-        android:value="28e7ff34f4d2dd888ccb9f1bd7c502ee"/>
 
     <application
         android:name=".OnlineVideoApp"

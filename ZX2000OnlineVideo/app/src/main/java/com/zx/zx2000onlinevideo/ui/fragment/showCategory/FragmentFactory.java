@@ -20,6 +20,10 @@ public class FragmentFactory {
     public static final int MOVIVE = 1;
     public static final int TV = 2;
     public static final int VARITEY = 3;
+    public static final int SPORTS = 4;
+    public static final int ANIMS = 5;
+    public static final int DOCUMENTARY = 6;
+
 
     private static Map<Integer, LazyFragment> mFragmentCache = new HashMap<>();
 
@@ -38,6 +42,15 @@ public class FragmentFactory {
                     break;
                 case VARITEY:
                     fragment = new VarietyFragment();
+                    break;
+                case SPORTS:
+                    fragment = new SportFragment();
+                    break;
+                case ANIMS:
+                    fragment = new AnimFragments();
+                    break;
+                case DOCUMENTARY:
+                    fragment = new DocumentaryFragment();
                     break;
                 default:
                     fragment = new NewsFragments();

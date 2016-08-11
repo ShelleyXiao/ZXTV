@@ -12,5 +12,5 @@ import com.zx.zx2000onlinevideo.bean.youku.ProgramQueryConditions;
  */
 
 public interface IProgramSetPresenter extends BasePresenter {
-    public  void getProgramSetByCategory(String category, String genre, ProgramQueryConditions conditions, int page, int count);
+    void getProgramSetByCategory(String category, String genre, ProgramQueryConditions conditions, int page, int count);
 }

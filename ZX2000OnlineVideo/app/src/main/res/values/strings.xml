@@ -104,5 +104,43 @@
     <string name="variety_food">美食</string>
     <string name="variety_opera">曲艺</string>
 
+    <string name="sports_info">体育资讯</string>
+    <string name="sports_olympic">奥运会</string>
+    <string name="sports_basketball">篮球</string>
+    <string name="sports_cba">CBA</string>
+    <string name="sports_football">足球</string>
+    <string name="sports_extremesports">极限运动</string>
+    <string name="sports_tennis">网球</string>
+    <string name="sports_fitness">健身</string>
+    <string name="sports_other">其他</string>
+
+    <string name="anime_adventure">冒险</string>
+    <string name="anime_sciencefiction">科幻</string>
+    <string name="anime_family">亲子</string>
+    <string name="anime_intelligence">益智</string>
+    <string name="anime_fairytales">童话</string>
+    <string name="anime_srw">机战</string>
+    <string name="anime_history">历史</string>
+    
+    <string name="documentary_nature">自然</string>
+    <string name="documentary_biography">人物</string>
+    <string name="documentary_cosmos">宇宙</string>
+    <string name="documentary_history">历史</string>
+    <string name="documentary_culture">文化</string>
+    <string name="documentary_military">军事</string>
+    <string name="documentary_scienceandtechnology">科技</string>
+    <string name="documentary_adventure">探险</string>
+    <string name="documentary_travel">旅游</string>
+    <string name="documentary_crime">刑侦</string>
+    <string name="documentary_historical">古迹</string>
+
+    <string name="games_info">游戏资讯</string>
+    <string name="games_onlinegame">网络游戏</string>
+    <string name="games_gamemusic">游戏音乐</string>
+    <string name="games_esports">电子竞技</string>
+    <string name="games_pcgame">单机游戏</string>
+    <string name="games_mobilegame">手机游戏</string>
+
+
 
 </resources>

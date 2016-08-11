@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IProgramShowItemInfoActivity  extends IBaseActivity{
 
-    public void updateProgramShowInfo(ProgramShow data);
+    void updateProgramShowInfo(ProgramShow data);
 
-    public void updateRelatedProgramShowDatas(List<RelatedProgram.ShowsBean> datas);
+    void updateRelatedProgramShowDatas(List<RelatedProgram.ShowsBean> datas);
 }

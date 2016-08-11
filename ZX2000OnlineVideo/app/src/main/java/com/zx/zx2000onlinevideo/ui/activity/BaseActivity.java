@@ -77,6 +77,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
+    }
+
     /**
      * 向用户展示信息前的准备工作在这个方法里处理
      */
@@ -252,12 +258,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         BaseActivity.this.startActivity(intent);
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
-    }
 
     @Override
     public void onLowMemory() {

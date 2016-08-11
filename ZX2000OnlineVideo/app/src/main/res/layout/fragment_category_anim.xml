@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+
+    <com.open.androidtvwidget.view.SmoothHorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
+
+        <com.open.androidtvwidget.view.RelativeMainLayout
+            android:id="@+id/main_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="80dp">
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_family"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px860"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_family"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_intelligence"
+                android:layout_width="@dimen/px660"
+                android:layout_height="@dimen/px400"
+                android:layout_alignTop="@+id/anime_family"
+                android:layout_toLeftOf="@+id/anime_family"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a02"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_intelligence"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_fairytales"
+                android:layout_width="@dimen/px300"
+                android:layout_height="@dimen/px400"
+                android:layout_below="@+id/anime_intelligence"
+                android:layout_alignLeft="@+id/anime_intelligence"
+                android:layout_alignBottom="@+id/anime_family"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a01"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_fairytales"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_history"
+                android:layout_width="@dimen/px300"
+                android:layout_height="@dimen/px400"
+                android:layout_below="@+id/anime_intelligence"
+                android:layout_alignRight="@+id/anime_intelligence"
+                android:layout_alignBottom="@+id/anime_family"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a05"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_history"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_adventure"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_alignTop="@+id/anime_family"
+                android:layout_toRightOf="@+id/anime_family"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a04"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_adventure"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_sciencefiction"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/anime_adventure"
+                android:layout_toRightOf="@+id/anime_family"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="false"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_sciencefiction"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/anime_srw"
+                android:layout_width="@dimen/px560"
+                android:layout_height="@dimen/px250"
+                android:layout_below="@+id/anime_sciencefiction"
+                android:layout_toRightOf="@+id/anime_family"
+                android:layout_alignBottom="@+id/anime_family"
+                android:layout_margin="@dimen/px10"
+                android:background="@drawable/a06"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isReflect="true"
+                app:isShape="true">
+
+                <TextView
+                    style="@style/genreTextTitleStyle"
+                    android:text="@string/anime_srw"/>
+
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+        </com.open.androidtvwidget.view.RelativeMainLayout>
+    </com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:upImageRes="@drawable/test_rectangle"/>
+
+</RelativeLayout>

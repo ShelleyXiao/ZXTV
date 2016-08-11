@@ -81,8 +81,6 @@ public class ProgramSetActivity extends BaseActivity implements IProgramSetActiv
         mGridView.setAdapter(mGridViewAdapter);
         mGridView.setFocusable(false);
 
-        mStatusBar.setCategory(category);
-
         mGridView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -142,6 +140,7 @@ public class ProgramSetActivity extends BaseActivity implements IProgramSetActiv
         });
 
         initListMenu();
+        initSearchBtn();
     }
 
     @Override
@@ -161,6 +160,11 @@ public class ProgramSetActivity extends BaseActivity implements IProgramSetActiv
     public void initViewMove() {
         mOpenEffectBridge = (OpenEffectBridge) mMainUpView1.getEffectBridge();
         switchNoDrawBridgeVersion();
+    }
+
+    private void initSearchBtn() {
+        mStatusBar.setCategory(category);
+        mStatusBar.setBtnSearchVisibility(false);
     }
 
     private void initListMenu() {

@@ -5,6 +5,6 @@ package com.zx.zx2000onlinevideo.presenter;
  */
 public interface IProgramRelatedPresenter {
 
-    public void getRelatedProgram(String videoId);
+    void getRelatedProgram(String videoId);
 
 }

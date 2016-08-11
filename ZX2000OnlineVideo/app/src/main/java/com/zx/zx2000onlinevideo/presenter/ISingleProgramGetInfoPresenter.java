@@ -6,5 +6,5 @@ package com.zx.zx2000onlinevideo.presenter;
 public interface ISingleProgramGetInfoPresenter extends  BasePresenter{
 
     // 用优酷v2版本接口
-    public void getSingleProgramInfo(String videoId);
+    void getSingleProgramInfo(String videoId);
 }

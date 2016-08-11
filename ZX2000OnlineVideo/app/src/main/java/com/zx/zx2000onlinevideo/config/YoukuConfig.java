@@ -28,7 +28,7 @@ public class YoukuConfig {
     public static final String SERIALS = "电视剧"; // 电视剧
     public static final String VIDEO = "video";
 
-    public static enum  TYPE {
+    public enum  TYPE {
         Moive, Serails, other
     };
 

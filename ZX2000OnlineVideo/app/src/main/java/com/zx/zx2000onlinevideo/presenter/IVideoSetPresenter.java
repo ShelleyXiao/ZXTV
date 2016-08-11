@@ -13,5 +13,5 @@ import com.zx.zx2000onlinevideo.bean.youku.QueryConditions;
 
 public interface IVideoSetPresenter extends BasePresenter{
 
-    public  void getVideoSetByCategory(String category, String genre, QueryConditions conditions, int page, int count);
+    void getVideoSetByCategory(String category, String genre, QueryConditions conditions, int page, int count);
 }

@@ -65,7 +65,7 @@ public class ProgramGridViewAdapter extends BaseAdapter {
         int episodUpload = videoBriefs.getEpisode_updated();
         holder.tvName.setText(videoBriefs.getName());
 
-        if(type == YoukuConfig.TYPE.Serails) {
+        if(type != YoukuConfig.TYPE.Moive) {
             if (episodeCount >= episodUpload && episodeCount != 0) {
                 if(episodeCount == episodUpload) {
                     holder.lemon_title.setText(context.getResources().getString(R.string.episode_count, episodeCount));

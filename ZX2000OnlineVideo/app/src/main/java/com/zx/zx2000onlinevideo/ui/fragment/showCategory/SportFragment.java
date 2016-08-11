@@ -22,31 +22,37 @@ import butterknife.Unbinder;
 
 /**
  * User: ShaudXiao
- * Date: 2016-08-03
- * Time: 10:27
+ * Date: 2016-08-11
+ * Time: 10:52
  * Company: zx
  * Description:
  * FIXME
  */
 
-public class NewsFragments extends LazyFragment {
+public class SportFragment extends LazyFragment {
 
-    public static final String CATEGORY = "资讯";
+    private static final String CATEGORY = "体育";
 
-    @BindView(R.id.genre_life)
-    ReflectItemView mGenreLife;
-    @BindView(R.id.genre_social)
-    ReflectItemView mGenreSocial;
-    @BindView(R.id.genre_finance)
-    ReflectItemView mGenreFinance;
-    @BindView(R.id.genre_gov)
-    ReflectItemView mGenreGov;
-    @BindView(R.id.genre_tech)
-    ReflectItemView mGenreTech;
-    @BindView(R.id.genre_military)
-    ReflectItemView mGenreMilitary;
-    @BindView(R.id.genre_legal)
-    ReflectItemView mGenreLegal;
+    OpenEffectBridge mOpenEffectBridge;
+    Unbinder mUnbinder;
+    @BindView(R.id.sports_info)
+    ReflectItemView mSportsInfo;
+    @BindView(R.id.sports_olympic)
+    ReflectItemView mSportsOlympic;
+    @BindView(R.id.sports_basketball)
+    ReflectItemView mSportsBasketball;
+    @BindView(R.id.sports_cba)
+    ReflectItemView mSportsCba;
+    @BindView(R.id.sports_football)
+    ReflectItemView mSportsFootball;
+    @BindView(R.id.sports_extremesports)
+    ReflectItemView mSportsExtremesports;
+    @BindView(R.id.sports_tennis)
+    ReflectItemView mSportsTennis;
+    @BindView(R.id.sports_fitness)
+    ReflectItemView mSportsFitness;
+    @BindView(R.id.sports_other)
+    ReflectItemView mSportsOther;
     @BindView(R.id.main_lay)
     RelativeMainLayout mMainLay;
     @BindView(R.id.hscroll_view)
@@ -54,14 +60,18 @@ public class NewsFragments extends LazyFragment {
     @BindView(R.id.mainUpView1)
     MainUpView mMainUpView1;
 
-    OpenEffectBridge mOpenEffectBridge;
-    Unbinder mUnbinder;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_category_news, layout, false);
+        View view = inflater.inflate(R.layout.fragment_category_sports, layout, false);
         setContentView(view);
         mUnbinder = ButterKnife.bind(this, view);
 
@@ -76,14 +86,14 @@ public class NewsFragments extends LazyFragment {
                 if (newFocus != null)
                     newFocus.bringToFront();
                 float scale = 1.2f;
-                if(mMainUpView1 != null) {
-                    if(newFocus instanceof  ReflectItemView) {
+                if (mMainUpView1 != null) {
+//                    MLog.d("id = " + newFocus.getId());
+                    if (newFocus instanceof ReflectItemView) {
                         mOpenEffectBridge.setVisibleWidget(false);
                         mMainUpView1.setFocusView(newFocus, oldFocus, scale);
                     } else {
                         mOpenEffectBridge.setVisibleWidget(true);
                     }
-
                 }
             }
         });
@@ -97,43 +107,43 @@ public class NewsFragments extends LazyFragment {
         mUnbinder.unbind();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
 
-    }
-
-    @OnClick({R.id.genre_life, R.id.genre_social, R.id.genre_finance, R.id.genre_gov, R.id.genre_tech, R.id.genre_military, R.id.genre_legal})
+    @OnClick({R.id.sports_info, R.id.sports_olympic, R.id.sports_basketball, R.id.sports_cba, R.id.sports_football, R.id.sports_extremesports, R.id.sports_tennis, R.id.sports_fitness, R.id.sports_other})
     public void onClick(View view) {
         Intent intent = new Intent(getActivity(), VideoSetActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(YoukuConfig.INTENT_CATEGROY_KEY, CATEGORY);
         switch (view.getId()) {
-            case R.id.genre_life:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_life));
+            case R.id.sports_info:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_info));
                 break;
-            case R.id.genre_social:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_social));
+            case R.id.sports_olympic:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_olympic));
                 break;
-            case R.id.genre_finance:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_finance));
+            case R.id.sports_basketball:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_basketball));
                 break;
-            case R.id.genre_gov:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_gov));
+            case R.id.sports_cba:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_cba));
                 break;
-            case R.id.genre_tech:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_tech));
+            case R.id.sports_football:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_football));
                 break;
-            case R.id.genre_military:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_military));
+            case R.id.sports_extremesports:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_extremesports));
                 break;
-            case R.id.genre_legal:
-                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.genre_legal));
+            case R.id.sports_tennis:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_tennis));
                 break;
-
+            case R.id.sports_fitness:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_fitness));
+                break;
+            case R.id.sports_other:
+                bundle.putString(YoukuConfig.INTENT_GENRE_KEY, getString(R.string.sports_other));
+                break;
         }
         intent.putExtras(bundle);
         startActivity(intent);
-
     }
+
 }
