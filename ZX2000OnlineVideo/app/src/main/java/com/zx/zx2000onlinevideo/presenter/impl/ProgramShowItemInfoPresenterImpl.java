@@ -2,13 +2,18 @@ package com.zx.zx2000onlinevideo.presenter.impl;
 
 import android.content.Context;
 
+import com.example.aaron.library.MLog;
 import com.zx.zx2000onlinevideo.api.youku.YoukuRequest;
 import com.zx.zx2000onlinevideo.bean.youku.program.ProgramShow;
+import com.zx.zx2000onlinevideo.bean.youku.program.SerialBean;
 import com.zx.zx2000onlinevideo.config.YoukuConfig;
 import com.zx.zx2000onlinevideo.presenter.ISingleProgramGetInfoPresenter;
 import com.zx.zx2000onlinevideo.ui.IView.IProgramShowItemInfoActivity;
 import com.zx.zx2000onlinevideo.utils.CacheUtil;
 import com.zx.zx2000onlinevideo.utils.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observer;
 import rx.Subscription;
@@ -22,6 +27,7 @@ public class ProgramShowItemInfoPresenterImpl extends BasePresenterImpl implemen
 
     private IProgramShowItemInfoActivity mProgramShowItemInfoActivity;
     private CacheUtil mCacheUtil;
+
 
     public ProgramShowItemInfoPresenterImpl(IProgramShowItemInfoActivity iProgramSetActivity, Context context) {
         if(iProgramSetActivity == null) {
@@ -66,4 +72,5 @@ public class ProgramShowItemInfoPresenterImpl extends BasePresenterImpl implemen
 
         addSubscription(subscription);
     }
+
 }

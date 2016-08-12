@@ -4,6 +4,7 @@ import com.zx.zx2000onlinevideo.bean.youku.category.ProgramByCategory;
 import com.zx.zx2000onlinevideo.bean.youku.category.VideoByCategory;
 import com.zx.zx2000onlinevideo.bean.youku.program.ProgramShow;
 import com.zx.zx2000onlinevideo.bean.youku.program.RelatedProgram;
+import com.zx.zx2000onlinevideo.bean.youku.program.SerialBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -65,7 +66,7 @@ public interface YoukuApi {
      * youku单条视频相节目信息
      *
      * @param client_id
-     * @param show_id
+     * @param video_id
      * @return
      */
 
@@ -73,5 +74,17 @@ public interface YoukuApi {
     Observable<RelatedProgram> getRelatedProgram(@Query("client_id")String client_id,
                                                  @Query("show_id") String video_id,
                                                  @Query("ext") String count);
+
+    /**
+     * youku电视剧节目信息
+     *
+     * @param clientId
+     * @param video_id
+     * @return
+     */
+    @GET("https://openapi.youku.com/v2/shows/videos.json")
+    Observable<SerialBean> getSerailProgramData(@Query("client_id") String clientId,
+                                                @Query("show_id") String video_id,
+                                                @Query("count") int count);
 
 }

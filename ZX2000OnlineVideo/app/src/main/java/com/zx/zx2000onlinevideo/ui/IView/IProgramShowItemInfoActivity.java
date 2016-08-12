@@ -13,4 +13,5 @@ public interface IProgramShowItemInfoActivity  extends IBaseActivity{
     void updateProgramShowInfo(ProgramShow data);
 
     void updateRelatedProgramShowDatas(List<RelatedProgram.ShowsBean> datas);
+
 }

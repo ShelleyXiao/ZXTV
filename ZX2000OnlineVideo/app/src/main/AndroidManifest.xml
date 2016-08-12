@@ -75,6 +75,7 @@
         <activity android:name=".ui.activity.ProgramSetActivity"></activity>
 
         <activity android:name=".ui.activity.SearchActivity"></activity>
+        <activity android:name=".ui.activity.SerialActivity"></activity>
 
         <activity
             android:name=".ui.activity.PlayYoukuActivity"

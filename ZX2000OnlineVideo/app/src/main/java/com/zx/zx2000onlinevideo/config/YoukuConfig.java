@@ -22,10 +22,15 @@ public class YoukuConfig {
     public static final String INTENT_GENRE_KEY = "genre";
     public static final String INTENT_VIDEO_TYPE = "type";
     public static final String INTENT_VIDEO_ID = "videoId";
+    public static final String INTENT_THUMB_URL = "thumbUrl";
+    public static final String INTENT_EMPOID_COUNT = "empoidCount";
+
 
     // show 类型
     public static final String MOVIE = "电影"; // 电影
     public static final String SERIALS = "电视剧"; // 电视剧
+    public static final String DOCUMENTARY = "记录片";
+    public static final String ANIM = "动漫";
     public static final String VIDEO = "video";
 
     public enum  TYPE {

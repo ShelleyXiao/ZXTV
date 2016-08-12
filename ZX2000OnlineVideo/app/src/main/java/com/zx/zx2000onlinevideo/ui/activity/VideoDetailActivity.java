@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.aaron.library.MLog;
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.bridge.OpenEffectBridge;
 import com.open.androidtvwidget.bridge.RecyclerViewBridge;
@@ -69,8 +70,8 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
     TextView mMovieDetailsDescri;
     @BindView(R.id.details_play)
     ReflectItemView mDetailsPlay;
-    @BindView(R.id.details_sc)
-    ReflectItemView mDetailsSc;
+//    @BindView(R.id.details_sc)
+//    ReflectItemView mDetailsSc;
     @BindView(R.id.details_serial_xq)
     ReflectItemView mDetailsSerialXq;
     @BindView(R.id.main_lay)
@@ -94,11 +95,15 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
     private IProgramRelatedPresenter mProgramRelatedPresenter;
     private String showId;
     private String category;
+    private String thumUrl;
+    private int eposidCount;
 
     private RelatedProgramRecyclerViewAdapter mRelatedProgramRecyclerViewAdapter;
     private List<RelatedProgram.ShowsBean> mRelatedProgrameDatas = new ArrayList<>();
     private RecyclerViewBridge mRecyclerViewBridge;
     private View oldView;
+
+    private boolean updated = false;
 
     @Override
     protected int getLayoutId() {
@@ -109,6 +114,7 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
     protected void setupViews() {
         initViewMove();
         initRelatedRecyleView();
+        initSearchBtn();
     }
 
     @Override
@@ -121,7 +127,7 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
 
         if(YoukuConfig.MOVIE.equals(category)) {
             mDetailsSerialXq.setVisibility(View.GONE);
-        } else if(YoukuConfig.SERIALS.equals(category)) {
+        } else /*if(YoukuConfig.SERIALS.equals(category))*/ {
             mDetailsSerialXq.setVisibility(View.VISIBLE);
         }
 
@@ -141,10 +147,16 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
         singleProgramGetInfoPresenter.unsubcrible();
     }
 
+    private void initSearchBtn() {
+        mStatusBar.setCategory(category);
+        mStatusBar.setBtnSearchVisibility(false);
+    }
+
     @Override
     public void updateProgramShowInfo(ProgramShow data) {
-
-        mStatusBar.setCategory(data.getCategory());
+        if(data == null) {
+            return;
+        }
 
 
         ImageLoader.loadVideoThumbImage(this, data.getThumbnail(), mMovieDetailsImgId);
@@ -172,6 +184,12 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
         }
         mMovieDetailsAct.setText(getString(R.string.program_detail_actors) + actor.toString());
         mMovieDetailsDescri.setText(getString(R.string.program_detail_descrpition) + data.getDescription());
+
+        thumUrl = data.getThumbnail();
+        MLog.e(" " + data.getEpisode_count() + " " + data.getEpisode_updated() );
+        eposidCount = Integer.valueOf(data.getEpisode_updated());
+
+        updated = true;
     }
 
     /**
@@ -186,6 +204,7 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
             mRelatedProgramRecyclerViewAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     public void showProgressDialog() {
@@ -205,7 +224,7 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
 
     }
 
-    @OnClick({R.id.details_play, R.id.details_sc, R.id.details_serial_xq})
+    @OnClick({R.id.details_play,  R.id.details_serial_xq})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.details_play:
@@ -215,9 +234,22 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
                     startActivity(intent);
                 }
                 break;
-            case R.id.details_sc:
-                break;
+
             case R.id.details_serial_xq:
+                if(!updated) return;
+
+                if(YoukuConfig.SERIALS.equals(category)
+                        || YoukuConfig.ANIM.equals(category)
+                        || YoukuConfig.DOCUMENTARY.equals(category)) {
+                    Intent intent = new Intent(this, SerialActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(YoukuConfig.INTENT_VIDEO_ID, showId);
+                    bundle.putString(YoukuConfig.INTENT_THUMB_URL, thumUrl);
+                    bundle.putInt(YoukuConfig.INTENT_EMPOID_COUNT, eposidCount);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    MLog.e(thumUrl);
+                }
                 break;
         }
     }
@@ -288,7 +320,7 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
     }
 
     public void topDemo(View newView, float scale) {
-        if (newView.getId() == R.id.details_play || newView.getId() == R.id.details_sc || newView.getId() == R.id.details_serial_xq) { // 小人在外面的测试.
+        if (newView.getId() == R.id.details_play ||  newView.getId() == R.id.details_serial_xq) { // 小人在外面的测试.
             mOpenEffectBridge.setVisibleWidget(false);
             mainUpView2.setUpRectResource(R.drawable.test_rectangle); // 设置移动边框的图片.
         } else {

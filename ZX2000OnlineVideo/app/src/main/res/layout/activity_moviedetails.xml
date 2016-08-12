@@ -164,7 +164,7 @@
                     </com.open.androidtvwidget.view.ReflectItemView>
 
                     <com.open.androidtvwidget.view.ReflectItemView
-                        android:id="@+id/details_sc"
+                        android:id="@+id/details_serial_xq"
                         android:layout_width="@dimen/px279"
                         android:layout_height="@dimen/px78"
                         android:layout_marginLeft="@dimen/px344"
@@ -175,7 +175,8 @@
                         android:focusable="true"
                         android:nextFocusDown="@+id/details_item1"
                         app:isShape="true"
-                        app:radius="@dimen/px8">
+                        app:radius="@dimen/px8"
+                        android:visibility="gone">
 
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -204,7 +205,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:text="@string/zx_sc_add"
+                                    android:text="@string/zx_serial"
                                     android:textColor="#FFFFFF"
                                     android:layout_marginLeft="@dimen/px12"
                                     android:layout_gravity="center_vertical"
@@ -214,7 +215,7 @@
                             </LinearLayout>
                         </FrameLayout>
                     </com.open.androidtvwidget.view.ReflectItemView>
-
+<!--
                     <com.open.androidtvwidget.view.ReflectItemView
                         android:id="@+id/details_serial_xq"
                         android:layout_width="@dimen/px279"
@@ -268,6 +269,8 @@
                             </LinearLayout>
                         </FrameLayout>
                     </com.open.androidtvwidget.view.ReflectItemView>
+
+                    -->
 
                 </com.open.androidtvwidget.view.MainLayout>
             </LinearLayout>

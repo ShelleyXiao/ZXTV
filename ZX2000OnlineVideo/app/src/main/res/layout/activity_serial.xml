@@ -13,7 +13,7 @@
         android:layout_height="@dimen/px60"
         android:layout_margin="@dimen/px20"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/serial_movie_details_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,25 +27,30 @@
             android:layout_width="@dimen/px357"
             android:layout_height="@dimen/px482"
             android:scaleType="fitXY"
-            android:src="@drawable/lemon_details_def"/>
+            android:src="@drawable/lemon_details_def"
+            android:visibility="gone"/>
 
-        <LinearLayout
+
+        <com.open.androidtvwidget.view.GridViewTV
+            android:id="@+id/serial_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px36"
-            android:orientation="vertical">
+            android:layout_toRightOf="@+id/movie_details_img_id"
+            android:numColumns="6"
+            android:scrollbars="none"
+            android:verticalSpacing="@dimen/px36"
+            android:visibility="gone">
 
-            <com.open.androidtvwidget.view.GridViewTV
-                android:id="@+id/serial_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="6"
-                android:scrollbars="none"
-                android:verticalSpacing="@dimen/px36">
+        </com.open.androidtvwidget.view.GridViewTV>
 
-            </com.open.androidtvwidget.view.GridViewTV>
+        <ProgressBar
+            android:id="@+id/zx_pro"
+            android:layout_width="@dimen/px150"
+            android:layout_height="@dimen/px150"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@anim/progressbar_anim"
+            />
 
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -7,4 +7,5 @@ public interface ISingleProgramGetInfoPresenter extends  BasePresenter{
 
     // 用优酷v2版本接口
     void getSingleProgramInfo(String videoId);
+
 }
