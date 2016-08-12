@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/px249"
-    android:layout_height="@dimen/px426"
-    android:paddingTop="@dimen/px24"
+    android:layout_width="@dimen/px448"
+    android:layout_height="@dimen/px326"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="@dimen/px249"
-        android:layout_height="@dimen/px336">
+        android:layout_width="@dimen/px448"
+        android:layout_height="@dimen/px252">
 
         <ImageView
             android:id="@+id/lemon_grid_img"
-            android:layout_width="@dimen/px249"
-            android:layout_height="@dimen/px336"
+            android:layout_width="@dimen/px448"
+            android:layout_height="@dimen/px252"
             android:scaleType="fitXY"
             android:src="@drawable/lemon_details_small_def" >
         </ImageView>
@@ -34,7 +33,7 @@
 
     <TextView
         android:id="@+id/grid_tv_name"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/px400"
         android:layout_height="@dimen/px72"
         android:layout_gravity="bottom|center"
         android:gravity="center"

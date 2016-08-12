@@ -98,6 +98,7 @@
                 android:textColor="#9b9bf1"
                 android:textSize="24sp"
                 android:focusable="false"
+                android:visibility="gone"
                 />
 
             <com.open.androidtvwidget.view.GridViewTV
@@ -107,14 +108,16 @@
                 android:layout_below="@+id/show_total"
                 android:layout_gravity="center"
                 android:clipChildren="false"
-                android:columnWidth="@dimen/px249"
+                android:columnWidth="@dimen/px448"
                 android:descendantFocusability="afterDescendants"
                 android:gravity="center_vertical"
                 android:horizontalSpacing="@dimen/px48"
+                android:verticalSpacing="@dimen/px48"
                 android:nextFocusLeft="@+id/period_group"
                 android:numColumns="auto_fit"
-                android:paddingLeft="@dimen/px48"
-                android:paddingRight="@dimen/px6"
+                android:paddingLeft="@dimen/px42"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px40"
                 android:scrollbars="none"/>
 
             <ProgressBar

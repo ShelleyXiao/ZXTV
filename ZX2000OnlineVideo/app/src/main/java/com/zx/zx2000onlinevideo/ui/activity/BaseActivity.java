@@ -14,7 +14,9 @@ import android.widget.Toast;
 import com.zx.zx2000onlinevideo.R;
 import com.zx.zx2000onlinevideo.config.YoukuConfig;
 import com.zx.zx2000onlinevideo.ui.view.widget.ConfirmDialog;
+import com.zx.zx2000onlinevideo.utils.ImageLoader;
 import com.zx.zx2000onlinevideo.utils.Logger;
+import com.zx.zx2000onlinevideo.utils.NetWorkUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -71,6 +73,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
+
+        if(!NetWorkUtil.isNetWorkAvailable(this)) {
+            netWorkNo();
+        }
     }
 
     public void onPause() {
@@ -274,6 +280,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             //UI组件不可见时
             case TRIM_MEMORY_UI_HIDDEN:
                 Logger.getLogger().e("clear cache");
+                ImageLoader.clearImageMemoryCache();
                 break;
         }
 

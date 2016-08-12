@@ -33,6 +33,7 @@ public class ViewStatusTitleView extends RelativeLayout {
     private TextView tvCategory;
     private TextView tvFileNums;
     private ImageView ivNetStatus;
+    private ImageView imLogo;
 
     private Button btnSearch;
 
@@ -66,6 +67,7 @@ public class ViewStatusTitleView extends RelativeLayout {
         tvFileNums = (TextView) lyContainerView.findViewById(R.id.title_file_num);
         ivNetStatus = (ImageView) lyContainerView.findViewById(R.id.home_networkstate);
         btnSearch = (Button) lyContainerView.findViewById(R.id.bt_search);
+        imLogo = (ImageView) lyContainerView.findViewById(R.id.zx_logo);
 
         typeface = Typeface.createFromAsset(context.getAssets(),
                 "font/helvetica_neueltpro_thex.otf");
@@ -89,6 +91,10 @@ public class ViewStatusTitleView extends RelativeLayout {
     public void setBtnSearchVisibility (boolean Visibility) {
         btnSearch.setVisibility(Visibility ? View.VISIBLE : View.GONE);
         tvCategory.setVisibility(Visibility ? View.GONE : View.VISIBLE);
+    }
+
+    public void setLogoVisibilty(boolean visibilty) {
+        imLogo.setVisibility(visibilty ? View.VISIBLE : View.GONE);
     }
 
     public Button getBtnSearchView() {

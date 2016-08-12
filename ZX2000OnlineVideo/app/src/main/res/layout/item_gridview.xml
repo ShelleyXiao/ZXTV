@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/px420"
-    android:layout_height="@dimen/px320"
+    android:layout_width="@dimen/px448"
+    android:layout_height="@dimen/px326"
     android:paddingTop="@dimen/px24"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="@dimen/px400"
-        android:layout_height="@dimen/px224">
+        android:layout_width="@dimen/px448"
+        android:layout_height="@dimen/px252">
 
         <ImageView
             android:id="@+id/lemon_grid_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/px448"
+            android:layout_height="@dimen/px252"
             android:scaleType="fitXY"
             android:src="@drawable/lemon_details_small_def" >
         </ImageView>
 
         <TextView
             android:id="@+id/lemon_title"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/px400"
             android:layout_height="@dimen/px50"
             android:background="#b00b0505"
             android:textColor="#dcdcdc"

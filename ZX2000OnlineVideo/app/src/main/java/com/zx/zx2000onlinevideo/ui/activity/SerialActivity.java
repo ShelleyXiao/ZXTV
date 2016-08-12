@@ -133,6 +133,7 @@ public class SerialActivity extends BaseActivity implements ISerialActivity {
     private void initSearchBtn() {
         mStatusBar.setCategory(getString(R.string.serail_title));
         mStatusBar.setBtnSearchVisibility(false);
+        mStatusBar.setLogoVisibilty(false);
     }
 
     @Override

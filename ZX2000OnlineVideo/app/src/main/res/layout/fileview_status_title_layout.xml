@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/zx_logo"
+        android:layout_width="@dimen/px170"
+        android:layout_height="@dimen/px87"
+        android:gravity="center_vertical|center_horizontal"
+        android:src="@drawable/logonew"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px15" />
+
 
     <Button
         android:id="@+id/bt_search"
@@ -16,7 +25,7 @@
         android:text="@string/search"
         android:textColor="@color/zx_color2"
         android:textSize="@dimen/px30"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
 
     <TextView
@@ -27,9 +36,7 @@
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:layout_marginLeft="@dimen/px15"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/search"
-        android:text="@string/search"/>
+        android:layout_centerVertical="true"/>
 
     <TextView
         android:id="@+id/title_file_num"

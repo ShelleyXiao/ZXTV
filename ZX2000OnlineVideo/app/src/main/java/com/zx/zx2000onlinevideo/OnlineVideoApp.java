@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.aaron.library.MLog;
+import com.youku.player.base.YoukuPlayerInit;
 
 
 /**
@@ -38,7 +39,7 @@ public class OnlineVideoApp extends Application {
         onlineVideoApp = this;
 
         context = getApplicationContext();
-//        YoukuPlayerInit.init(context);
+        YoukuPlayerInit.init(context);
 
         if(BuildConfig.LOG_DEBUG == true) {
             MLog.init(true);

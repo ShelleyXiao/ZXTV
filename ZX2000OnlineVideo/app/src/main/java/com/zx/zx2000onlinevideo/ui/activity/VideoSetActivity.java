@@ -315,7 +315,8 @@ public class VideoSetActivity extends BaseActivity implements IVideoSetActivity,
         effectNoDrawBridge.setTranDurAnimTime(20);
         mMainUpView1.setEffectBridge(effectNoDrawBridge); // 4.3以下版本边框移动.
         mMainUpView1.setUpRectResource(R.drawable.health_focus_border); // 设置移动边框的图片.
-        mMainUpView1.setDrawUpRectPadding(new Rect(25, 15, 40, -35)); // 边框图片设置间距.
+//        mMainUpView1.setDrawUpRectPadding(new Rect(25, 15, 40, -35)); // 边框图片设置间距.
+        mMainUpView1.setDrawUpRectPadding(new Rect(25, 15, -20, -50)); // 边框图片设置间距.
     }
 
 
@@ -344,13 +345,14 @@ public class VideoSetActivity extends BaseActivity implements IVideoSetActivity,
             mVideoDatas.addAll(videos);
             mVideoGridViewAdapter.notifyDataSetChanged();
         }
-
     }
 
     @Override
     public void updateVideoTotal(int total) {
         mShowTotal.setText(getString(R.string.show_total_str, total));
         mTotalCount = total;
+        mShowTotal.setVisibility(View.VISIBLE);
+        mStatusBar.setLogoVisibilty(false);
     }
 
     @Override

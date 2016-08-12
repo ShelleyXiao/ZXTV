@@ -163,13 +163,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initSearchBtn() {
-        mStatusBar.setBtnSearchVisibility(true);
-        mStatusBar.getBtnSearchView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        mStatusBar.setBtnSearchVisibility(false);
+//        mStatusBar.getBtnSearchView().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+        mStatusBar.setLogoVisibilty(true);
     }
 
     private class MyAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {

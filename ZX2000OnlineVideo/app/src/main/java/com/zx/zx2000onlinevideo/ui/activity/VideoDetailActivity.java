@@ -150,6 +150,7 @@ public class VideoDetailActivity extends BaseActivity implements IProgramShowIte
     private void initSearchBtn() {
         mStatusBar.setCategory(category);
         mStatusBar.setBtnSearchVisibility(false);
+        mStatusBar.setLogoVisibilty(false);
     }
 
     @Override

@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/movie_details_img_id"
-            android:layout_width="@dimen/px357"
-            android:layout_height="@dimen/px482"
+            android:layout_width="@dimen/px448"
+            android:layout_height="@dimen/px252"
             android:scaleType="fitXY"
             android:src="@drawable/lemon_details_def"
             android:visibility="gone"/>
