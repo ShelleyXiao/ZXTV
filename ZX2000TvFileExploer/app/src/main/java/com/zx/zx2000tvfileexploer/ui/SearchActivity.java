@@ -81,6 +81,11 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     }
 
     @Override
+    public void updateDiskInfo() {
+
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         if (parent.getAdapter() == mAdapter) {

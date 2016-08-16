@@ -1,9 +1,6 @@
 package com.zx.zx2000tvfileexploer.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
@@ -11,6 +8,7 @@ import android.widget.TextView;
 import com.open.androidtvwidget.bridge.OpenEffectBridge;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.RelativeMainLayout;
+import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
@@ -42,37 +40,19 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
     private TextView tvUSBUseSpace;
     private TextView tvUSBTotalSpace;
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
 
-            String action = intent.getAction();
-            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initInfo();
-                    }
-                });
-            } else if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-                initInfo();
-            } else if (action.equals(Intent.ACTION_MEDIA_BAD_REMOVAL)) {
-                initInfo();
-            }
-        }
-    };
 
     @Override
     public void onResume() {
         super.onResume();
 
         initInfo();
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();;
-        unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -86,38 +66,60 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
 
         initView();
 
-        initReceiver();
+    }
+
+    @Override
+    public void updateDiskInfo() {
+        initInfo();
     }
 
     @Override
     public void onClick(View view) {
         super.onClick(view);
 
+        boolean isMounted = false;
         String path = null;
         Intent intent = new Intent(DiskSelectActivity.this, FileListActivity.class);
         intent.putExtra("category", GlobalConsts.INTENT_EXTRA_ALL_VLAUE);
         switch (view.getId()) {
             case R.id.disk_flash:
-                path = SDCardUtils.getFlashDirectory();
-                if(path != null && SDCardUtils.isMounted(path)) {
-                    intent.putExtra("path", path);
+//                path = SDCardUtils.getFlashDirectory();
+//                if(path != null && SDCardUtils.isMounted(path)) {
+//                    intent.putExtra("path", path);
+//                }
+                SDCardUtils.StorageInfo flashInfo = FileManagerApplication.getInstance().getFlash();
+                if(null != flashInfo && flashInfo.isMounted()) {
+                    intent.putExtra("path", flashInfo.path);
+                    isMounted = true;
                 }
                 break;
             case R.id.disk_tf:
-                path = SDCardUtils.getSdcardDirectory();
-                if(path != null && SDCardUtils.isMounted(path)) {
-                    intent.putExtra("path", path);
+//                path = SDCardUtils.getSdcardDirectory();
+//                if(path != null && SDCardUtils.isMounted(path)) {
+//                    intent.putExtra("path", path);
+//                }
+
+                SDCardUtils.StorageInfo tfInfo = FileManagerApplication.getInstance().getTF();
+                if(null != tfInfo && tfInfo.isMounted()) {
+                    intent.putExtra("path", tfInfo.path);
+                    isMounted = true;
                 }
                 break;
             case R.id.disk_usb:
-                path = SDCardUtils.getOTADirectory();
-                if(path != null && SDCardUtils.isMounted(path)) {
-                    intent.putExtra("path", path);
+//                path = SDCardUtils.getOTADirectory();
+//                if(path != null && SDCardUtils.isMounted(path)) {
+//                    intent.putExtra("path", path);
+//                }
+
+                SDCardUtils.StorageInfo usbInfo = FileManagerApplication.getInstance().getUSB();
+                if(null != usbInfo && usbInfo.isMounted()) {
+                    intent.putExtra("path", usbInfo.path);
+                    isMounted = true;
                 }
                 break;
         }
 
-        if(path != null) {
+        if(isMounted) {
             startActivity(intent);
         } else {
             showToast(getString(R.string.disk_unmounted_msg));
@@ -167,18 +169,22 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
     }
 
     private void initInfo() {
-        String flashPath = SDCardUtils.getFlashDirectory();
-        String TFSDPath = SDCardUtils.getSdcardDirectory();
-        String USBPath = SDCardUtils.getOTADirectory();
+//        String flashPath = SDCardUtils.getFlashDirectory();
+//        String TFSDPath = SDCardUtils.getSdcardDirectory();
+//        String USBPath = SDCardUtils.getOTADirectory();
+
+        String flashPath = FileManagerApplication.getInstance().getFlashAbsolutePath();
+        String TFSDPath = FileManagerApplication.getInstance().getTFAbsolutePath();
+        String USBPath = FileManagerApplication.getInstance().getUSBAbsolutePath();
 
 //        Logger.getLogger().d("flashPath: " + flashPath + " " + TFSDPath + " " + USBPath);
 
-        SDCardUtils.SDCardInfo unmountInfo = new SDCardUtils.SDCardInfo();
+        SDCardUtils.StorageInfo unmountInfo = new SDCardUtils.StorageInfo();
         unmountInfo.free = 0;
         unmountInfo.total = 0;
 
         if(SDCardUtils.isMounted(flashPath)) {
-            SDCardUtils.SDCardInfo Info = SDCardUtils.getDiskInfo(flashPath);
+            SDCardUtils.StorageInfo Info = SDCardUtils.getDiskInfo(flashPath);
             Logger.getLogger().d("Info: " + Info.free + " " + Info.total);
             setProgress(mFlashProgress, Info);
             setDiskUseInfo(tvFlashTotalSpace, tvFlashUseSpace, Info);
@@ -190,7 +196,7 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
         }
 
         if(SDCardUtils.isMounted(TFSDPath)) {
-            SDCardUtils.SDCardInfo Info = SDCardUtils.getDiskInfo(TFSDPath);
+            SDCardUtils.StorageInfo Info = SDCardUtils.getDiskInfo(TFSDPath);
             setProgress(mTFSDProgress, Info);
             setDiskUseInfo(tvTFSDTotalSpace, tvTFSDUseSpace, Info);
             setDiskMountInfo(tvTFSDStatus, true);
@@ -201,7 +207,7 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
         }
 
         if(SDCardUtils.isMounted(USBPath)) {
-            SDCardUtils.SDCardInfo Info = SDCardUtils.getDiskInfo(USBPath);
+            SDCardUtils.StorageInfo Info = SDCardUtils.getDiskInfo(USBPath);
             setProgress(mUSBProgess, Info);
             setDiskUseInfo(tvUSBTotalSpace, tvUSBUseSpace, Info);
             setDiskMountInfo(tvUSBStatus, true);
@@ -212,16 +218,7 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
         }
     }
 
-    private void initReceiver() {
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-        intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-        intentFilter.addAction(Intent.ACTION_MEDIA_BAD_REMOVAL);
-        intentFilter.addDataScheme("file");
-        this.registerReceiver(mReceiver, intentFilter);
-    }
-
-    private void setProgress(RoundProgressBar bar, SDCardUtils.SDCardInfo info) {
+    private void setProgress(RoundProgressBar bar, SDCardUtils.StorageInfo info) {
         if(null == bar) {
             return;
         }
@@ -237,7 +234,7 @@ public class DiskSelectActivity extends BaseActivity  implements View.OnClickLis
         bar.runAnimate((info.total - info.free) / 1024 / 1024, Long.valueOf(5000));
     }
 
-    private void setDiskUseInfo(TextView total, TextView use, SDCardUtils.SDCardInfo info) {
+    private void setDiskUseInfo(TextView total, TextView use, SDCardUtils.StorageInfo info) {
         if(null == info) {
             return;
         }

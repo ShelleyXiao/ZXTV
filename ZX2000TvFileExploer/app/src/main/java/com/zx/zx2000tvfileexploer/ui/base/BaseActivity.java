@@ -1,5 +1,9 @@
 package com.zx.zx2000tvfileexploer.ui.base;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -10,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView;
 
@@ -39,6 +44,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         setContentView(mRootView);
         initStatusBarView();
         init();
+
+        initReceiver();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 
     protected void initStatusBarView() {
@@ -55,6 +68,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public abstract int getLayoutResId();
 
     public abstract void init();
+
+    public abstract void updateDiskInfo();
 
     @Override
     public void onClick(View view) {
@@ -100,4 +115,33 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             view.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
+
+    private void initReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+        intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+        intentFilter.addAction(Intent.ACTION_MEDIA_BAD_REMOVAL);
+        intentFilter.addDataScheme("file");
+        this.registerReceiver(mReceiver, intentFilter);
+    }
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            FileManagerApplication.getInstance().setStorageInfo();
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)
+                || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
+                    ||action.equals(Intent.ACTION_MEDIA_BAD_REMOVAL)) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateDiskInfo();
+                    }
+                });
+            }
+        }
+    };
 }

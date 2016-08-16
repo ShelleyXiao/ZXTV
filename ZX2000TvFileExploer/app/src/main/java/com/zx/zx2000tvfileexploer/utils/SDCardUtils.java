@@ -2,6 +2,7 @@ package com.zx.zx2000tvfileexploer.utils;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.storage.StorageManager;
 import android.util.Log;
 
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
@@ -11,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,6 +184,88 @@ public class SDCardUtils {
         return list;
     }
 
+    public static class StorageInfo {
+        public String path;
+        public String state;
+        public boolean isRemoveable;
+
+        public long total;
+
+        public long free;
+
+        public StorageInfo() {}
+
+        public  StorageInfo(StorageInfo info) {
+            this.path = info.path;
+            this.state = info.state;
+            this.isRemoveable = info.isRemoveable;
+        }
+
+        public StorageInfo(String path) {
+            this.path = path;
+        }
+
+        public boolean isMounted() {
+            return "mounted".equals(state);
+        }
+    }
+
+    /**
+     * 获取所有存储路径
+     * <p/>
+     * 返回：/mnt/external_sd
+     * @return String
+     */
+
+    public static List<StorageInfo> listAvaliableStorage(Context context) {
+        ArrayList<StorageInfo> storagges = new ArrayList();
+        StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+        try {
+            Class<?>[] paramClasses = {};
+            Method getVolumeList = StorageManager.class.getMethod("getVolumeList", paramClasses);
+            getVolumeList.setAccessible(true);
+            Object[] params = {};
+            Object[] invokes = (Object[]) getVolumeList.invoke(storageManager, params);
+            if (invokes != null) {
+                StorageInfo info = null;
+                for (int i = 0; i < invokes.length; i++) {
+                    Object obj = invokes[i];
+                    Method getPath = obj.getClass().getMethod("getPath", new Class[0]);
+                    String path = (String) getPath.invoke(obj, new Object[0]);
+                    info = new StorageInfo(path);
+                    File file = new File(info.path);
+                    if ((file.exists()) && (file.isDirectory()) && (file.canWrite())) {
+                        Method isRemovable = obj.getClass().getMethod("isRemovable", new Class[0]);
+                        String state = null;
+                        try {
+                            Method getVolumeState = StorageManager.class.getMethod("getVolumeState", String.class);
+                            state = (String) getVolumeState.invoke(storageManager, info.path);
+                            info.state = state;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (info.isMounted()) {
+                            info.isRemoveable = ((Boolean) isRemovable.invoke(obj, new Object[0])).booleanValue();
+                            storagges.add(info);
+                        }
+                    }
+                }
+            }
+        } catch (NoSuchMethodException e1) {
+            e1.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        storagges.trimToSize();
+
+        return storagges;
+    }
+
 
     /**
      * 获取TF或者USB存储路径
@@ -195,16 +280,17 @@ public class SDCardUtils {
         if (list.size() <= 1) {
             return null;
         }
-        String internalStoragePath = getInternalStorageDirectoryPath();
-        int index = list.indexOf(internalStoragePath);
-        Logger.getLogger().d("index: " + index + internalStoragePath);
-        if (getTF) {
-            path = list.get(index + 1);
-        } else {
-            if (list.size() > 2) {
-                path = list.get(index + 2);
-            }
-        }
+//        String internalStoragePath = getInternalStorageDirectoryPath();
+//        int index = list.indexOf(internalStoragePath);
+//        Logger.getLogger().d("index: " + index + internalStoragePath);
+//        if (getTF) {
+//            path = list.get(index + 1);
+//        } else {
+//            if (list.size() > 2) {
+//                path = list.get(index + 2);
+//            }
+//        }
+
         Logger.getLogger().d("       " + path);
         return path;
     }
@@ -243,13 +329,8 @@ public class SDCardUtils {
             return String.format("%d B", size);
     }
 
-    public static class SDCardInfo {
-        public long total;
 
-        public long free;
-    }
-
-    public static SDCardInfo getSDCardInfo() {
+    public static StorageInfo getSDCardInfo() {
         String sDcString = Environment.getExternalStorageState();
 
         if (sDcString.equals(Environment.MEDIA_MOUNTED)) {
@@ -266,7 +347,7 @@ public class SDCardUtils {
 
                 long nFreeBlock = statfs.getFreeBlocks();
 
-                SDCardInfo info = new SDCardInfo();
+                StorageInfo info = new StorageInfo();
                 info.total = nTotalBlocks * nBlocSize;
                 info.free = nAvailaBlock * nBlocSize;
                 return info;
@@ -278,7 +359,7 @@ public class SDCardUtils {
         return null;
     }
 
-    public static SDCardInfo getDiskInfo(String path) {
+    public static StorageInfo getDiskInfo(String path) {
         String status = Environment.getExternalStorageState();
         if(status.equals(Environment.MEDIA_MOUNTED)) {
             File lFile = new File(path);
@@ -289,7 +370,7 @@ public class SDCardUtils {
                     long nBlocSize = statfs.getBlockSize();
                     long nAvailaBlock = statfs.getAvailableBlocks();
                     long nFreeBlock = statfs.getFreeBlocks();
-                    SDCardInfo info = new SDCardInfo();
+                    StorageInfo info = new StorageInfo();
                     info.total = nTotalBlocks * nBlocSize;
                     info.free = nAvailaBlock * nBlocSize;
                     return info;

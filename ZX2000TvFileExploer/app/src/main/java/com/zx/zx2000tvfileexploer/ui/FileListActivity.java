@@ -84,6 +84,11 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
         initData();
     }
 
+    @Override
+    public void updateDiskInfo() {
+
+    }
+
     private void initView() {
         mFilePathGridView = (GridView) findViewById(R.id.file_path_list);
         mEmptyView = findViewById(R.id.empty_view_layout);
@@ -97,7 +102,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
         mFileViewInteractionHub.setCurrentPath(mCurPath);
         mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.View);
 
-        mSettingHelper = SettingHelper.getInstance(this);
+//        mSettingHelper = SettingHelper.getInstance(this);
 
         mFileCagetoryHelper = new FileCategoryHelper(this);
         mFileIconHelper = new FileIconHelper(this);

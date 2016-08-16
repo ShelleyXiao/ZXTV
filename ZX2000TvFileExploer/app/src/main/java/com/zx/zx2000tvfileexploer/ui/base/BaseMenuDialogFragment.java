@@ -29,6 +29,8 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
 
     public BaseMenuDialogFragment() {}
 
+    public BaseMenuDialogFragment(Bundle data) {}
+
     public BaseMenuDialogFragment(IMenuItemSelectListener listener) {
         this.mIMenuItemSelectListener = listener;
     }

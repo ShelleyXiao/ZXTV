@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.open.androidtvwidget.bridge.OpenEffectBridge;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.RelativeMainLayout;
+import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
@@ -66,18 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    private BroadcastReceiver mScannerReceiver = new ScannerReceiver();
-    private class ScannerReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            // handle intents related to external storage
-            if (action.equals(GlobalConsts.FILEUPDATEBROADCAST) || action.equals(Intent.ACTION_MEDIA_SCANNER_FINISHED)) {
-//                notifyFileChanged();
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,18 +220,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initDiskInfo() {
-        String flashPath = SDCardUtils.getFlashDirectory();
-        String TFSDPath = SDCardUtils.getSdcardDirectory();
-        String USBPath = SDCardUtils.getOTADirectory();
+//        String flashPath = SDCardUtils.getFlashDirectory();
+//        String TFSDPath = SDCardUtils.getSdcardDirectory();
+//        String USBPath = SDCardUtils.getOTADirectory();
+
+        String flashPath = FileManagerApplication.getInstance().getFlashAbsolutePath();
+        String TFSDPath = FileManagerApplication.getInstance().getTFAbsolutePath();
+        String USBPath = FileManagerApplication.getInstance().getUSBAbsolutePath();
 
 //        Logger.getLogger().d("flashPath: " + flashPath + " " + TFSDPath + " " + USBPath);
 
-        SDCardUtils.SDCardInfo unmountInfo = new SDCardUtils.SDCardInfo();
+        SDCardUtils.StorageInfo unmountInfo = new SDCardUtils.StorageInfo();
         unmountInfo.free = 0;
         unmountInfo.total = 0;
 
         if(SDCardUtils.isMounted(flashPath)) {
-            SDCardUtils.SDCardInfo info = SDCardUtils.getSDCardInfo();
+            SDCardUtils.StorageInfo info = SDCardUtils.getSDCardInfo();
             Logger.getLogger().d("flash Info: " + info.free + " " + info.total);
             setDeviceSize(tvLocalDeviceSize, info.total);
             setProgress(pbLocalDevice, info);
@@ -252,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(SDCardUtils.isMounted(TFSDPath)) {
-            SDCardUtils.SDCardInfo info = SDCardUtils.getDiskInfo(TFSDPath);
+            SDCardUtils.StorageInfo info = SDCardUtils.getDiskInfo(TFSDPath);
             setProgress(pbTFDevice, info);
             setDeviceSize(tvTFDeviceSize, info.total);
         } else {
@@ -261,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(SDCardUtils.isMounted(USBPath)) {
-            SDCardUtils.SDCardInfo info = SDCardUtils.getDiskInfo(USBPath);
+            SDCardUtils.StorageInfo info = SDCardUtils.getDiskInfo(USBPath);
             setDeviceSize(tvUsbDeviceSize, info.total);
             setProgress(pbUsbDevice, info);
         } else {
@@ -278,12 +271,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intentFilter.addDataScheme("file");
         this.registerReceiver(mReceiver, intentFilter);
 
-        mScannerReceiver = new ScannerReceiver();
-        IntentFilter scannerFilter = new IntentFilter();
-        scannerFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
-        scannerFilter.addAction(GlobalConsts.FILEUPDATEBROADCAST);
-
-//        this.registerReceiver(mScannerReceiver, scannerFilter);
     }
 
     private void updateUI() {
@@ -311,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void setProgress(ProgressBar bar, SDCardUtils.SDCardInfo info) {
+    private void setProgress(ProgressBar bar, SDCardUtils.StorageInfo info) {
         if(null == bar) {
             return;
         }

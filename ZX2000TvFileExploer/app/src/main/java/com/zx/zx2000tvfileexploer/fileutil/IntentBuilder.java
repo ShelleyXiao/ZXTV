@@ -28,6 +28,7 @@ import android.text.TextUtils;
 
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.utils.MimeUtils;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class IntentBuilder {
 
     public static void viewFile(final Context context, final String filePath) {
         String type = getMimeType(filePath);
-
+        Logger.getLogger().d("type: " + type);
         if (!TextUtils.isEmpty(type) && !TextUtils.equals(type, "*/*")) {
             /* 设置intent的file与MimeType */
             Intent intent = new Intent();
