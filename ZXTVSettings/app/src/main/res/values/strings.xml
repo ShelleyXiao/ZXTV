@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ZXTVSettings</string>
+    <string name="net_setitng_title">网络设置</string>
+    <string name="wifi_setting">无线网络</string>
+    <string name="ethernet_setting">有线网络</string>
+    <string name="bluetooth_setting">蓝牙</string>
+    <string name="net_speed_test">网络测速</string>
+
+    <string name="wifi_connected">已连接</string>
+    <string name="wifi_switch_on">打开WIFI</string>
+    <string name="wifi_switch_off">关闭WIFI</string>
+
+</resources>
