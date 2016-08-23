@@ -19,4 +19,6 @@
     <color name="zx_3df1ed">#3df1ed</color>
     <color name="zx_dcdcdc">#DCDCDC</color>
     <color name="zx_0E0A0B">#0E0A0B</color>
+
+    <color name="white">#fff</color>
 </resources>

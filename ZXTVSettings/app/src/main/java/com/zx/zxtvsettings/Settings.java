@@ -3,8 +3,6 @@ package com.zx.zxtvsettings;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.aaron.library.MLog;
-
 /**
  * User: ShaudXiao
  * Date: 2016-08-19
@@ -32,11 +30,12 @@ public class Settings extends Application {
 
         Settings = this;
 
-        if(BuildConfig.LOG_DEBUG == true) {
-            MLog.init(true);
-        } else {
-            MLog.init(false);
-        }
+//        if(BuildConfig.LOG_DEBUG == true) {
+//            MLog.init(true);
+//        } else {
+//            MLog.init(false);
+//        }
+
     }
 
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.open.androidtvwidget.bridge.OpenEffectBridge;
 import com.zx.zxtvsettings.R;
 import com.zx.zxtvsettings.view.ViewStatusTitleView;
 
@@ -16,9 +15,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.status_bar)
     ViewStatusTitleView mStatusBar;
-
-    OpenEffectBridge mOpenEffectBridge;
-    View mOldFocus;
 
     @BindView(R.id.setting_net)
     ImageButton mSettingNet;
@@ -57,23 +53,28 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.setting_net, R.id.setting_display, R.id.setting_bluethee, R.id.setting_uninstall, R.id.setting_more, R.id.setting_about})
     public void onClick(View view) {
-        Intent intent = new Intent();
+        Intent intent = new Intent();   
         switch (view.getId()) {
             case R.id.setting_net:
-                intent.setClass(this, NetSetting.class);
+//                intent.setClass(this, NetSetting.class);
+                startActivity(NetSetting.class);
                 break;
             case R.id.setting_display:
                 break;
             case R.id.setting_bluethee:
+                startActivity(BluethoothActivity.class);
                 break;
             case R.id.setting_uninstall:
+                startActivity(AppUninstallActivity.class);
                 break;
             case R.id.setting_more:
                 break;
             case R.id.setting_about:
+                startActivity(AboutActivity.class);
                 break;
         }
-        startActivity(intent);
+//        startActivity(intent);
+
     }
 
 }

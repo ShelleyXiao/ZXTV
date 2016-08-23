@@ -34,18 +34,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/nandb_tittle"
+            android:layout_alignTop="@+id/wifiseting_tittle"
             android:singleLine="true"
             android:textOff="@string/wifi_switch_on"
             android:textOn="@string/wifi_switch_off"
             android:background="@drawable/swtichbutton_bg"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/nandb_tittle"
-            android:layout_marginBottom="@dimen/px200"
-            android:layout_marginTop="@dimen/px100"
+            android:layout_below="@+id/wifiseting_tittle"
+            android:layout_marginBottom="@dimen/px120"
+            android:layout_marginTop="@dimen/px50"
             android:background="@drawable/wifi_listitem_bg"
             android:orientation="vertical"
             android:paddingBottom="@dimen/px25"
@@ -56,30 +56,41 @@
                 android:id="@+id/wifi_statedispaly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 />
 
             <ImageView
                 android:id="@+id/wifi_arrowtop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/wifi_statedispaly"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/arrow_top"
                 android:visibility="invisible"/>
 
             <ListView
-                android:id="@+id/wandb_wifi_listview"
+                android:id="@+id/wifi_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/wifi_arrowtop"
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="10dp"
                 android:cacheColorHint="#00000000"
                 android:listSelector="#00000000"
                 />
-        </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/wifi_scan_progress"
+                android:layout_width="@dimen/px150"
+                android:layout_height="@dimen/px150"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progressbar_anim"
+                />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/wifi_arrowbottom"
@@ -87,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="140dp"
+            android:layout_marginBottom="@dimen/px150"
             android:src="@drawable/arrow_bootom"
             android:visibility="invisible"/>
 
