@@ -14,12 +14,21 @@
         android:layout_height="@dimen/px60"
         android:layout_margin="@dimen/px20"/>
 
+    <HorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/status_bar"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
 
         <RelativeLayout
             android:id="@+id/main_lay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/status_bar"
             android:paddingLeft="90dp"
             android:paddingRight="80dp">
 
@@ -103,7 +112,6 @@
                 android:clickable="true"
                 android:focusable="true">
 
-
             </ImageButton>
 
             <ImageButton
@@ -123,9 +131,25 @@
 
             </ImageButton>
 
+            <ImageButton
+                android:id="@+id/setting_clear"
+                android:layout_width="@dimen/px480"
+                android:layout_height="@dimen/px310"
+                android:layout_marginLeft="@dimen/px5"
+                android:layout_marginTop="@dimen/px100"
+                android:layout_toRightOf="@+id/setting_more"
+                android:src="@drawable/setting_clean"
+                android:background="@drawable/sel_main_focus"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:focusable="true">
+
+            </ImageButton>
+
 
         </RelativeLayout>
 
+    </HorizontalScrollView>
 
 
 </RelativeLayout>

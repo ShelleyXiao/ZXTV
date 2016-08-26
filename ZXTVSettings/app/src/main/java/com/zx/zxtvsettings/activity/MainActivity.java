@@ -1,6 +1,7 @@
 package com.zx.zxtvsettings.activity;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -28,6 +29,8 @@ public class MainActivity extends BaseActivity {
     ImageButton mSettingMore;
     @BindView(R.id.setting_about)
     ImageButton mSettingAbout;
+    @BindView(R.id.setting_clear)
+    ImageButton mSettingClear;
 
     @Override
     protected int getLayoutId() {
@@ -43,6 +46,7 @@ public class MainActivity extends BaseActivity {
         mSettingMore.setOnFocusChangeListener(mFocusChangeListener);
         mSettingUninstall.setOnFocusChangeListener(mFocusChangeListener);
         mSettingAbout.setOnFocusChangeListener(mFocusChangeListener);
+        mSettingClear.setOnFocusChangeListener(mFocusChangeListener);
 
     }
 
@@ -51,12 +55,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.setting_net, R.id.setting_display, R.id.setting_bluethee, R.id.setting_uninstall, R.id.setting_more, R.id.setting_about})
+    @OnClick({R.id.setting_net, R.id.setting_display, R.id.setting_bluethee, R.id.setting_uninstall, R.id.setting_more, R.id.setting_about, R.id.setting_clear})
     public void onClick(View view) {
-        Intent intent = new Intent();   
+
         switch (view.getId()) {
             case R.id.setting_net:
-//                intent.setClass(this, NetSetting.class);
                 startActivity(NetSetting.class);
                 break;
             case R.id.setting_display:
@@ -68,13 +71,16 @@ public class MainActivity extends BaseActivity {
                 startActivity(AppUninstallActivity.class);
                 break;
             case R.id.setting_more:
-                startActivity(ClearGarbageActivity.class);
+                Intent intent =  new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
                 break;
             case R.id.setting_about:
                 startActivity(AboutActivity.class);
                 break;
+            case R.id.setting_clear:
+                startActivity(ClearGarbageActivity.class);
+                break;
         }
-//        startActivity(intent);
 
     }
 
