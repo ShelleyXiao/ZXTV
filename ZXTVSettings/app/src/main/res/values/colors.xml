@@ -13,6 +13,8 @@
 
     <color name="listMenuFocusColor">#0E0A0B</color>
 
+    <color name="clear_dividing_line">#33b5e5</color>
+
     <color name="zx_color2">#9B9A9A</color>
     <color name="zx_color3">#FFF</color>
     <color name="zx_b3aeae">#B3AEAE</color>

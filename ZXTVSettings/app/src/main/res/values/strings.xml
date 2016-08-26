@@ -99,10 +99,53 @@
     <string name="about_device_version">Android版本:</string>
     <string name="about_device_android">版本号:</string>
 
+    <string name="garbage_clear_scanning_text">正在扫描</string>
+    <string name="garbage_clear_scaned_text">扫描完成</string>
+
     <array name="speed_level">
         <item>普清电影</item>
         <item>高清电影</item>
         <item>超清电影</item>
     </array>
 
+    <string name="garbage_clear_able">可清理的垃圾有：</string>
+    <string name="system_cache">系统缓存</string>
+    <string name="sdcard_clear">SD卡清理</string>
+    <string name="empty_folder">空文件夹</string>
+    <string name="temp_file">临时文件</string>
+    <string name="thumb">缩略图</string>
+    <string name="software_last">软件残留</string>
+    <string name="other_check">其他检测</string>
+    <string name="apk_zip">无用APK安装包</string>
+    <string name="big_file">大文件</string>
+    <string name="fast_clear">一键清理</string>
+    <string name="stop_clear">停止清理</string>
+    <string name="cache">缓存</string>
+    <string name="clear">清理</string>
+    <string name="title_total">共</string>
+    <string name="title_file">个文件</string>
+    <string name="title_used">占</string>
+    <string name="title_room">空间</string>
+    <string name="unknown">未知</string>
+    <string name="clear_warn">APK和大文件，请慎重勾选</string>
+
+
+
+    <string name="clear_over">清理完毕</string>
+    <string name="clear_success">清理成功</string>
+    <string name="clearing">正在清理</string>
+    <string name="clearing_stop">停止清理</string>
+    <string name="clear_no_data">没有可清理的数据！</string>
+    <string name="clear_select">请先选择需要删除的内容！</string>
+    <string name="clear_clear">删除中#8230</string>
+    <string name="install_success">安装成功</string>
+    <string name="clear_title_defalut">共有0个文件，占0B空间</string>
+
+    <string name="clear_total_count">共扫描到 %1$d 项</string>
+    <string name="clear_count">( %1$d )</string>
+
+    <string name="root_path_text">SDcard</string>
+
+    <string name="clear_start">开始清理</string>
+    <string name="clear_scan_again">再次扫描</string>
 </resources>

@@ -68,6 +68,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(AppUninstallActivity.class);
                 break;
             case R.id.setting_more:
+                startActivity(ClearGarbageActivity.class);
                 break;
             case R.id.setting_about:
                 startActivity(AboutActivity.class);

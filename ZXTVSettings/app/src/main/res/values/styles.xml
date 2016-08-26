@@ -43,6 +43,18 @@
         <item name="android:padding">@dimen/px10</item>
         <item name="android:textSize">30sp</item>
         <item name="android:singleLine">true</item>
+
+
+    </style>
+
+    <style name="clearTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#dadada</item>
+        <item name="android:padding">@dimen/px10</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:focusable">false</item>
     </style>
 
 
