@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(NetSetting.class);
                 break;
             case R.id.setting_display:
+                startActivity(DisplayModeActivity.class);
                 break;
             case R.id.setting_bluethee:
                 startActivity(BluethoothActivity.class);

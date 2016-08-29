@@ -74,6 +74,33 @@
                 android:text="@string/about_device_android"/>
 
 
+            <TextView
+                android:id="@+id/device_mac_label"
+                style="@style/aboutTextStyle"
+                android:layout_below="@+id/device_version_label"
+                android:text="@string/about_device_mac"/>
+
+            <TextView
+                android:id="@+id/device_mac"
+                style="@style/aboutTextStyle"
+                android:layout_toRightOf="@+id/device_mac_label"
+                android:layout_below="@+id/device_version"
+                android:text="@string/about_device_android"/>
+
+            <TextView
+                android:id="@+id/device_ip_label"
+                style="@style/aboutTextStyle"
+                android:layout_below="@+id/device_mac_label"
+                android:text="@string/about_device_ip"/>
+
+            <TextView
+                android:id="@+id/device_ip"
+                style="@style/aboutTextStyle"
+                android:layout_toRightOf="@+id/device_ip_label"
+                android:layout_below="@+id/device_mac"
+                android:text="@string/about_device_android"/>
+
+
         </RelativeLayout>
 
     </RelativeLayout>

@@ -23,4 +23,11 @@
     <color name="zx_0E0A0B">#0E0A0B</color>
 
     <color name="white">#fff</color>
+
+    <color name="background_trans">#00faf8f8</color>
+    <color name="background_trans_focus">#70FFFFFF</color>
+    <color name="background_trans_highlight">#B0FFFFFF</color>
+
+    <color name="un_select_backgroud">#4682B4</color>
+    <color name="select_backgroud">#00E5EE</color>
 </resources>

@@ -52,6 +52,7 @@
         <activity android:name=".activity.AppUninstallActivity"></activity>
         <activity android:name=".activity.AboutActivity"></activity>
         <activity android:name=".activity.ClearGarbageActivity"></activity>
+        <activity android:name=".activity.DisplayModeActivity"></activity>
 
         <activity android:name=".wifi.WifiConnectDailogActivity"
                   android:theme="@style/PlatformDialog"

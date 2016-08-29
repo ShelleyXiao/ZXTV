@@ -5,6 +5,7 @@
     <string name="ethernet_setting">有线网络</string>
     <string name="bluetooth_setting">蓝牙</string>
     <string name="net_speed_test">网络测速</string>
+    <string name="display_setting">显示模式</string>
 
     <string name="wifi_connected">已连接</string>
     <string name="wifi_switch_on">打开WIFI</string>
@@ -98,6 +99,8 @@
     <string name="about_device_name">型号:</string>
     <string name="about_device_version">Android版本:</string>
     <string name="about_device_android">版本号:</string>
+    <string name="about_device_mac">MAC地址:</string>
+    <string name="about_device_ip">IP地址:</string>
 
     <string name="garbage_clear_scanning_text">正在扫描</string>
     <string name="garbage_clear_scaned_text">扫描完成</string>
@@ -148,4 +151,16 @@
 
     <string name="clear_start">开始清理</string>
     <string name="clear_scan_again">再次扫描</string>
+
+    <!-- display mode -->
+    <string name="title_display_mode">视频信号输出</string>
+    <string name="display_mode_radiobutton_null">未知视频模式</string>
+
+    <!-- display area -->
+    <string name="display_area_desc">电视屏幕边缘的文字、图像显示不完全时，您可以使用<b>\"显示区域调整\"</b>，调整页面显示的位置，方向键上、下、左、右微调，使屏幕居中显示</string>
+    <string name="display_area_btn_desc">显示区域调整</string>
+    <string name="display_area_control_desc">・ 按<b>确认</b>键切换<b>放大</b>/<b>缩小</b>\n・ 按方向键调整屏幕四个边的位置\n・ 按<b>返回</b>键保存</string>
+    <string name="area_switch_button_expand"><b>放大</b></string>
+    <string name="area_switch_button_shrink"><b>缩小</b></string>
+
 </resources>
