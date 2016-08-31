@@ -24,8 +24,8 @@ import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
+import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
-import com.zx.zx2000tvfileexploer.fileutil.SettingHelper;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.mode.FileViewInteractionHub;
@@ -36,6 +36,7 @@ import com.zx.zx2000tvfileexploer.utils.FileUtils;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,6 +54,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
     private FileIconHelper mFileIconHelper;
     private FileCategoryHelper mFileCagetoryHelper;
     private FileSortHelper mFileSortHelper;
+    private FileSettingsHelper mFileSettingsHelper;
 
     private FileListCursorAdapter mFileListCursorAdapter;
     private FileListAdapter mFileListNormalAdapter;
@@ -61,7 +63,6 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
     private ArrayList<FileInfo> mFileNameList = new ArrayList<FileInfo>();
 
-    private SettingHelper mSettingHelper;
 
     private refreshFileAsyncTask mrefreshFileAsyncTask;
 
@@ -70,6 +71,13 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
 
     private HashMap<String, FileCategoryHelper.FileCategory> filterTypeMap = new HashMap<String, FileCategoryHelper.FileCategory>();
+
+    private FilenameFilter hideFileFilter = new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String filename) {
+            return !filename.startsWith(".");
+        }
+    };
 
     @Override
     public int getLayoutResId() {
@@ -117,6 +125,8 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
         onCategorySelected();
         mFileViewInteractionHub.setRootPath(mCurPath);
+
+        mFileSettingsHelper = FileSettingsHelper.getInstance(this);
     }
 
     private void initDataCategory() {
@@ -214,7 +224,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
     @Override
     public void sortCurrentList(FileSortHelper sort) {
-        Collections.sort(mFileNameList, sort.getComparator());
+        Collections.sort(mFileNameList, sort.getComparator(mFileSettingsHelper.getSortType()));
         onDataChanged();
     }
 
@@ -501,7 +511,8 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
             ArrayList<FileInfo> fileList = mFileNameList;
             fileList.clear();
 
-            File[] listFiles = files[0].listFiles(mFileCagetoryHelper
+            File[] listFiles = files[0].listFiles(mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false) ? null : hideFileFilter);
+            Logger.getLogger().e("refreshFileAsyncTask " + mFileCagetoryHelper
                     .getFilter());
             if (listFiles == null)
                 return Integer.valueOf(0);
@@ -510,7 +521,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
                 String absolutePath = child.getAbsolutePath();
                 if (FileUtils.isNormalFile(absolutePath)) {
                     FileInfo lFileInfo = FileUtils.getFileInfo(child,/*
-                            mFileCagetoryHelper.getFilter(), */mSettingHelper.getShowHideFile());
+                            mFileCagetoryHelper.getFilter(), */mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
                     if (lFileInfo != null) {
                         fileList.add(lFileInfo);
                     }

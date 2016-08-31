@@ -6,6 +6,7 @@
     <string name="main_menu_search">搜索</string>
     <string name="main_menu_image">图片</string>
     <string name="main_menu_music">音乐</string>
+    <string name="main_menu_setting">设置</string>
 
     <string name="main_apk_nums">个安装包</string>
     <string name="main_vidio_nums">个视频</string>
@@ -182,6 +183,18 @@
     <string name="search_filter_menu_video_item">视频</string>
     <string name="search_filter_menu_picture_item">图片</string>
     <string name="search_filter_menu_apk_item">安装包</string>
+
+    <string name="settting_title">设置</string>
+
+    <string name="sort_type_title">排序方式</string>
+    <string name="sort_type_title_explain">设置列表按照选中的方式进行比较排序显示</string>
+    <string name="sort_name">名字</string>
+    <string name="sort_time">时间</string>
+    <string name="sort_size">大小</string>
+    <string name="sort_type">类型</string>
+
+    <string name="show_hiden_file">显示隐藏文件</string>
+    <string name="show_hiden_file_explain">设置列表是否显示以“.”开头文件名的文件,勾选为显示</string>
 
 
 

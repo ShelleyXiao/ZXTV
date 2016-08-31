@@ -37,9 +37,22 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     protected String mCurPath;
 
+    public Context context;
+
+
+    /**
+     * 获取全局的Context
+     *
+     * @return {@link #context = this.getApplicationContext();}
+     */
+    public Context getContext() {
+        return context;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this.getApplicationContext();
         mRootView = LayoutInflater.from(this).inflate(getLayoutResId(), null);
         setContentView(mRootView);
         initStatusBarView();

@@ -12,6 +12,9 @@ import java.util.HashMap;
 public class FileSortHelper {
     private boolean isFileFirst = false;
 
+    private static FileSortHelper instance;
+    private FileSettingsHelper mFileSettingsHelper;
+
     public enum SortMethod {
         NAME, SIZE, DATE, TYPE
     }
@@ -20,12 +23,19 @@ public class FileSortHelper {
 
     private HashMap<SortMethod, Comparator<FileInfo>> mSortMethodComparatorHashMap = new HashMap<>();
 
-    public FileSortHelper() {
+    private FileSortHelper(FileSettingsHelper fileSettingsHelper) {
+        this.mFileSettingsHelper = fileSettingsHelper;
         this.mSortMethod = SortMethod.DATE;
         mSortMethodComparatorHashMap.put(SortMethod.NAME, cmpName);
         mSortMethodComparatorHashMap.put(SortMethod.SIZE, cmpSize);
         mSortMethodComparatorHashMap.put(SortMethod.DATE, cmpDate);
         mSortMethodComparatorHashMap.put(SortMethod.TYPE, cmpType);
+    }
+
+    public static FileSortHelper getInstance(FileSettingsHelper fileSettingsHelper) {
+        if (instance == null)
+            instance = new FileSortHelper(fileSettingsHelper);
+        return instance;
     }
 
     public boolean isFileFirst() {
@@ -65,8 +75,8 @@ public class FileSortHelper {
         abstract int doCompare(FileInfo lhs, FileInfo rhs);
     }
 
-    public Comparator getComparator() {
-        return mSortMethodComparatorHashMap.get(mSortMethod);
+    public Comparator getComparator(SortMethod method) {
+        return mSortMethodComparatorHashMap.get(method);
     }
 
     private Comparator<FileInfo> cmpName = new FileComparator() {

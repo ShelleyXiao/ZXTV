@@ -11,6 +11,7 @@ import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
+import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.mode.FileListItem;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
 
@@ -25,6 +26,7 @@ public class SearchFileCursorAdaper extends CursorAdapter {
     private final LayoutInflater mLayoutInflater;
 
     private FileIconHelper mFileIconHelper;
+    private FileSettingsHelper mFileSettingsHelper;
 
 
     private HashMap<Integer, FileInfo> mFileNameList = new HashMap<Integer, FileInfo>();
@@ -36,6 +38,7 @@ public class SearchFileCursorAdaper extends CursorAdapter {
         mLayoutInflater = LayoutInflater.from(context);
         mFileIconHelper = fileIcon;
         mContext = context;
+        mFileSettingsHelper = FileSettingsHelper.getInstance(context);
     }
 
     @Override
@@ -110,6 +113,6 @@ public class SearchFileCursorAdaper extends CursorAdapter {
 
     private FileInfo getFileInfo(Cursor cursor) {
         return (cursor == null || cursor.getCount() == 0) ? null : FileUtils
-                .getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH));
+                .getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
     }
 }

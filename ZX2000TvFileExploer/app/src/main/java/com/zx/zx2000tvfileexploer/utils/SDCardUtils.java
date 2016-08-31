@@ -246,6 +246,7 @@ public class SDCardUtils {
                         }
 
                         if (info.isMounted()) {
+                            getDiskInfo(info);
                             info.isRemoveable = ((Boolean) isRemovable.invoke(obj, new Object[0])).booleanValue();
                             storagges.add(info);
                         }
@@ -357,6 +358,27 @@ public class SDCardUtils {
         }
 
         return null;
+    }
+
+    public static  void getDiskInfo(StorageInfo info) {
+        String status = Environment.getExternalStorageState();
+        if(status.equals(Environment.MEDIA_MOUNTED)) {
+            File lFile = new File(info.path);
+            if(lFile.exists()) {
+                try {
+                    android.os.StatFs statfs = new android.os.StatFs(lFile.getPath());
+                    long nTotalBlocks = statfs.getBlockCount();
+                    long nBlocSize = statfs.getBlockSize();
+                    long nAvailaBlock = statfs.getAvailableBlocks();
+                    long nFreeBlock = statfs.getFreeBlocks();
+                    info.total = nTotalBlocks * nBlocSize;
+                    info.free = nAvailaBlock * nBlocSize;
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, e.toString());
+                }
+            }
+
+        }
     }
 
     public static StorageInfo getDiskInfo(String path) {

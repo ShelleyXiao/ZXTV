@@ -129,7 +129,8 @@
             android:layout_weight="1"
             android:background="@drawable/meun_item_select_bg"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"

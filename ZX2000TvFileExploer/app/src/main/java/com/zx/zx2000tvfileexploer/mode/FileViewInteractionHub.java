@@ -21,6 +21,7 @@ import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
+import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 import com.zx.zx2000tvfileexploer.fileutil.IntentBuilder;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
@@ -53,6 +54,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     private FileSortHelper mFileSortHelper;
 
+    private FileSettingsHelper mFileSettingsHelper;
+
     private ProgressDialog progressDialog;
 
     private Context mContext;
@@ -76,8 +79,10 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         assert (fileInteractionListener != null);
 
         mFileInteractionListener = fileInteractionListener;
-        mFileSortHelper = new FileSortHelper();
         mContext = mFileInteractionListener.getContext();
+
+        mFileSettingsHelper = FileSettingsHelper.getInstance(mContext);
+        mFileSortHelper = FileSortHelper.getInstance(mFileSettingsHelper);
         mFileOperationHelper = new FileOperationHelper(this, mContext);
         setup();
     }
@@ -581,7 +586,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
         if (mFileOperationHelper.createFolder(mCurrentPath, text)) {
             mFileInteractionListener.addSingleFile(FileUtils
-                    .getFileInfo(FileUtils.makePath(mCurrentPath, text)));
+                    .getFileInfo(FileUtils.makePath(mCurrentPath, text), mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false)));
             mFileListView.setSelection(mFileListView.getCount() - 1);
         } else {
 //            new AlertDialog.Builder(mContext)

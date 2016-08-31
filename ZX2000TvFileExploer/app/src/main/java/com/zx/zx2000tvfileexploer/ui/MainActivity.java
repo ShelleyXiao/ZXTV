@@ -97,8 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(MainActivity.this, FileListActivity.class);
-        Intent intentAll = new Intent(MainActivity.this, DiskSelectActivity.class);
+        Intent intentAll = new Intent(MainActivity.this, DiskSelectActivity2.class);
         Intent intentSerach = new Intent(MainActivity.this, SearchActivity.class);
+        Intent intentSetting = new Intent(MainActivity.this, SettingActivivty.class);
+
 
         switch (view.getId()) {
             case R.id.main_apk_lay:
@@ -116,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_search_lay:
 
                 break;
+            case R.id.main_setting_lay:
+                break;
         }
 
 //        ActivityOptionsCompat  compat = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_bottom_in, R.anim.slide_bottom_out);
@@ -124,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intentAll);
         } else if(view.getId() == R.id.main_search_lay){
             startActivity(intentSerach);
+        } else if(view.getId() == R.id.main_setting_lay){
+            startActivity(intentSetting);
         } else {
             startActivity(intent);
         }
@@ -201,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.main_music_lay).setOnClickListener(this);
         findViewById(R.id.main_video_lay).setOnClickListener(this);
         findViewById(R.id.main_search_lay).setOnClickListener(this);
+        findViewById(R.id.main_setting_lay).setOnClickListener(this);
 
         tvAppCount = (TextView) findViewById(R.id.apk_count);
         tvMusicCount = (TextView) findViewById(R.id.music_count);

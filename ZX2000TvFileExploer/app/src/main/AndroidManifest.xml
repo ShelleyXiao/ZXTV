@@ -42,7 +42,8 @@
 
         </activity>
 
-        <activity android:name=".ui.DiskSelectActivity"></activity>
+        <activity android:name=".ui.DiskSelectActivity2"></activity>
+        <activity android:name=".ui.SettingActivivty"></activity>
 
     </application>
 

@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -608,7 +609,7 @@ public class FileUtils {
         return !fullName.equals(ANDROID_SECURE);
     }
 
-    public static FileInfo getFileInfo(String filePath) {
+    public static FileInfo getFileInfo(String filePath, boolean showHidden) {
         File lFile = new File(filePath);
         if (!lFile.exists())
             return null;
@@ -622,6 +623,22 @@ public class FileUtils {
         lFileInfo.IsDir = lFile.isDirectory();
         lFileInfo.filePath = filePath;
         lFileInfo.fileSize = lFile.length();
+
+        String[] list = null;
+        FilenameFilter filenameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                return !filename.startsWith(".");
+            }
+        };
+
+        if (showHidden) {
+            list = lFile.list();
+        } else {
+            list = lFile.list(filenameFilter);
+        }
+        lFileInfo.Count = list == null ? 0 : list.length;
+
         return lFileInfo;
     }
 
@@ -636,10 +653,9 @@ public class FileUtils {
         lFileInfo.ModifiedDate = lFile.lastModified();
         lFileInfo.IsDir = lFile.isDirectory();
         lFileInfo.filePath = filePath;
-/*      
         if (lFileInfo.IsDir) {
             int lCount = 0;
-            File[] files = lFile.listFiles(filter);
+            File[] files = lFile.listFiles();
 
             // null means we cannot access this dir
             if (files == null) {
@@ -648,7 +664,7 @@ public class FileUtils {
 
             for (File child : files) {
                 if ((!child.isHidden() || showHidden)
-                        && Util.isNormalFile(child.getAbsolutePath())) {
+                        && FileUtils.isNormalFile(child.getAbsolutePath())) {
                     lCount++;
                 }
             }
@@ -659,7 +675,7 @@ public class FileUtils {
             lFileInfo.fileSize = lFile.length();
 
         }
-*/
+
         lFileInfo.Count = 0;
         lFileInfo.fileSize = lFile.length();
         return lFileInfo;
