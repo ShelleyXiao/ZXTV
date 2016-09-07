@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setting_custom"
+        android:layout_alignLeft="@+id/setting_custom"
+        android:layout_marginBottom="@dimen/px20"
+        android:gravity="center"
+        android:text="@string/ethernet_configtypestring"
+        android:textAppearance="@style/TextAppearance.TileTitle"
+        />
+
+    <LinearLayout
+        android:id="@+id/setting_custom"
+        android:layout_width="@dimen/px1500"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/about_bg"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/px50">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radiogroup_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/px25">
+
+                <RadioButton
+                    android:id="@+id/auto_radio_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_light"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_radiobutton"
+                    android:paddingTop="@dimen/px15"
+                    android:paddingBottom="@dimen/px15"
+                    android:paddingLeft="@dimen/px25"
+                    android:paddingRight="@dimen/px25"
+                    android:checked="true"
+                    android:drawablePadding="@dimen/px50"
+                    android:nextFocusDown="@+id/btn_ethernet_id"
+                    android:text="@string/ethernet_configautostring"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"/>
+
+                <RadioButton
+                    android:id="@+id/man_radio_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_light"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_radiobutton"
+                    android:paddingTop="@dimen/px15"
+                    android:paddingBottom="@dimen/px15"
+                    android:paddingLeft="@dimen/px25"
+                    android:paddingRight="@dimen/px25"
+                    android:nextFocusDown="@+id/btn_ethernet_id"
+                    android:text="@string/ethernet_configmanstring"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"/>
+
+                <RadioButton
+                    android:id="@+id/pppoe_radio_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_light"
+                    android:text="@string/ethernet_configpppoe"
+                    android:textSize="28sp"
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/ethernet_configstart_id"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:background="@drawable/sel_button_focus"
+                android:nextFocusLeft="@+id/btn_ethernet_id"
+                android:text="@string/ethernet_configstart"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/ethernet_confignotify"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

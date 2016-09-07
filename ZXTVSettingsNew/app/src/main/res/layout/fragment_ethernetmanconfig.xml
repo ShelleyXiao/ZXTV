@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setting_custom"
+        android:layout_alignLeft="@+id/setting_custom"
+        android:layout_marginBottom="@dimen/px20"
+        android:gravity="center"
+        android:text="@string/ethernet_configtitle"
+        android:textAppearance="@style/TextAppearance.TileTitle"
+        />
+
+    <LinearLayout
+        android:id="@+id/setting_custom"
+        android:layout_width="@dimen/px1300"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/about_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/px50">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/ethernet_ipaddress"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="#fff"
+                android:gravity="left"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/px750"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/px80"
+                >
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_ipconfig1_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusLeft="@+id/ethernetconfig_back_id"
+                        android:nextFocusUp="@+id/ethernet_ipconfig1_id"
+                        android:text="@string/ethernet_ipconfig_1"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textAppearance="@style/TextAppearance.TileTitle"
+                        android:textColor="#bfdeff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_ipconfig2_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusUp="@+id/ethernet_ipconfig2_id"
+                        android:text="@string/ethernet_ipconfig_2"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textAppearance="@style/TextAppearance.TileTitle"
+                        android:textColor="#bfdeff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_ipconfig3_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusUp="@+id/ethernet_ipconfig3_id"
+                        android:text="@string/ethernet_ipconfig_3"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textAppearance="@style/TextAppearance.TileTitle"
+                        android:textColor="#bfdeff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_ipconfig4_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusUp="@+id/ethernet_ipconfig4_id"
+                        android:text="@string/ethernet_ipconfig_4"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/ethernet_netmask"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="#fff"
+                android:gravity="left"/>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/px750"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/px80"
+                >
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_maskconfig1_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusLeft="@+id/ethernetconfig_back_id"
+                        android:text="@string/ethernet_maskconfig_1"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_maskconfig2_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_maskconfig_2"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_maskconfig3_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_maskconfig_3"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_maskconfig4_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_maskconfig_4"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/ethernet_gateway"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="#fff"
+                android:gravity="left"/>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/px750"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/px80"
+                >
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_gateconfig1_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusLeft="@+id/ethernetconfig_back_id"
+                        android:text="@string/ethernet_gateconfig_1"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_gateconfig2_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_gateconfig_2"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_gateconfig3_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_gateconfig_3"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_gateconfig4_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_gateconfig_4"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/ethernet_dns1"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="#fff"
+                android:gravity="left"/>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/px750"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/px80"
+                >
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns1config1_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusLeft="@+id/ethernetconfig_back_id"
+                        android:text="@string/ethernet_dns1config_1"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns1config2_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_dns1config_2"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns1config3_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_dns1config_3"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns1config4_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_dns1config_4"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/ethernet_dns2"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="#fff"
+                android:gravity="left"/>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/px750"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/px80"
+                >
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns2config1_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:nextFocusLeft="@+id/ethernetconfig_back_id"
+                        android:text="@string/ethernet_dns2config_1"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns2config2_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_dns2config_2"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px100"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns2config3_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_dns2config_3"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/px40"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/ethernet_dot"
+                        android:textColor="#bfdeff"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="43dp"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/ethernet_dns2config4_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:inputType="number"
+                        android:text="@string/ethernet_dns2config_4"
+                        android:textAppearance="@style/TextAppearance.TileTitle"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/px1300"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/setting_custom"
+        android:layout_alignRight="@+id/setting_custom"
+        android:layout_below="@+id/setting_custom"
+        android:layout_marginTop="@dimen/px50"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left">
+
+            <Button
+                android:id="@+id/ethernetconfig_back_id"
+                android:layout_width="@dimen/px200"
+                android:layout_height="@dimen/px80"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/sel_button_focus"
+                android:nextFocusLeft="@+id/btn_ethernet_id"
+                android:text="@string/ethernet_laststep"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/ethernetconfig_finish_id"
+                android:layout_width="@dimen/px200"
+                android:layout_height="@dimen/px80"
+                android:layout_marginLeft="@dimen/px40"
+                android:background="@drawable/sel_button_focus"
+                android:text="@string/ethernet_finish"
+                android:textAppearance="@style/TextAppearance.TileTitle"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
+
