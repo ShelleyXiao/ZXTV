@@ -54,7 +54,6 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
     private FileIconHelper mFileIconHelper;
     private FileCategoryHelper mFileCagetoryHelper;
     private FileSortHelper mFileSortHelper;
-    private FileSettingsHelper mFileSettingsHelper;
 
     private FileListCursorAdapter mFileListCursorAdapter;
     private FileListAdapter mFileListNormalAdapter;
@@ -126,7 +125,6 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
         onCategorySelected();
         mFileViewInteractionHub.setRootPath(mCurPath);
 
-        mFileSettingsHelper = FileSettingsHelper.getInstance(this);
     }
 
     private void initDataCategory() {
@@ -184,14 +182,23 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
     }
 
     @Override
+    public FileCategoryHelper.FileCategory getCurrentCategory() {
+        return mCurrentCategory;
+    }
+
+    @Override
     public FileInfo getItem(int pos) {
         if (mCurrentCategory == FileCategoryHelper.FileCategory.All) {
             if (pos < 0 || pos > mFileNameList.size() - 1) {
                 return null;
             }
             return mFileNameList.get(pos);
+        } else {
+            Object[] datas = getAllFiles().toArray();
+
+            return(FileInfo) datas[pos];
         }
-        return null;
+
     }
 
     @Override
@@ -224,7 +231,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
     @Override
     public void sortCurrentList(FileSortHelper sort) {
-        Collections.sort(mFileNameList, sort.getComparator(mFileSettingsHelper.getSortType()));
+        Collections.sort(mFileNameList, sort.getComparator(FileSettingsHelper.getInstance(getContext()).getSortType()));
         onDataChanged();
     }
 
@@ -444,7 +451,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
     }
 
     private void showNormalMenuDialog() {
-        Logger.getLogger().d("****showNormalMenuDialog****");
+//        Logger.getLogger().d("****showNormalMenuDialog****");
         FragmentTransaction mFragTransaction = getFragmentManager().beginTransaction();
         mNormalMenuDialog = (NormalMenuDialogFragment) getFragmentManager().findFragmentByTag(NormalMenuDialogFragment.class.getSimpleName());
         if (mNormalMenuDialog != null) {
@@ -510,10 +517,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
             ArrayList<FileInfo> fileList = mFileNameList;
             fileList.clear();
-
-            File[] listFiles = files[0].listFiles(mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false) ? null : hideFileFilter);
-            Logger.getLogger().e("refreshFileAsyncTask " + mFileCagetoryHelper
-                    .getFilter());
+            File[] listFiles = files[0].listFiles(FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false) ? null : hideFileFilter);
             if (listFiles == null)
                 return Integer.valueOf(0);
 
@@ -521,7 +525,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
                 String absolutePath = child.getAbsolutePath();
                 if (FileUtils.isNormalFile(absolutePath)) {
                     FileInfo lFileInfo = FileUtils.getFileInfo(child,/*
-                            mFileCagetoryHelper.getFilter(), */mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+                            mFileCagetoryHelper.getFilter(), */FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
                     if (lFileInfo != null) {
                         fileList.add(lFileInfo);
                     }

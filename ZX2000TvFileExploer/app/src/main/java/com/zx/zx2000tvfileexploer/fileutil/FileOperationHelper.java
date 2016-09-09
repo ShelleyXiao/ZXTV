@@ -28,7 +28,6 @@ public class FileOperationHelper {
 
     private FilenameFilter mFilter = null;
 
-    private FileSettingsHelper mFileSettingsHelper;
 
     private Context mContext;
 
@@ -37,7 +36,6 @@ public class FileOperationHelper {
     public FileOperationHelper(IOperationProgressListener l, Context context) {
         moperationListener = l;
         mContext = context;
-        mFileSettingsHelper = FileSettingsHelper.getInstance(context);
     }
 
     public void setFilenameFilter(FilenameFilter f) {
@@ -312,7 +310,7 @@ public class FileOperationHelper {
                         destFilePath.length());
             }
 
-            FileInfo desFileInfo = FileUtils.getFileInfo(destFilePath, mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+            FileInfo desFileInfo = FileUtils.getFileInfo(destFilePath, FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
             ops.add(ContentProviderOperation
                     .newUpdate(
                             FileUtils.getMediaUriFromFilename(desFileInfo.fileName))

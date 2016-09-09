@@ -20,6 +20,7 @@ import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
@@ -54,7 +55,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     private FileSortHelper mFileSortHelper;
 
-    private FileSettingsHelper mFileSettingsHelper;
 
     private ProgressDialog progressDialog;
 
@@ -69,7 +69,9 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public enum Mode {
         View, Pick
-    };
+    }
+
+    ;
 
 
     private Mode mcurrentMode;
@@ -81,8 +83,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         mFileInteractionListener = fileInteractionListener;
         mContext = mFileInteractionListener.getContext();
 
-        mFileSettingsHelper = FileSettingsHelper.getInstance(mContext);
-        mFileSortHelper = FileSortHelper.getInstance(mFileSettingsHelper);
+        mFileSortHelper = FileSortHelper.getInstance(FileSettingsHelper.getInstance(mContext));
         mFileOperationHelper = new FileOperationHelper(this, mContext);
         setup();
     }
@@ -131,8 +132,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void refreshFileList() {
-        if(getMode() != Mode.Pick) {
-            Logger.getLogger().d("refreshFileList:  clearSelection" );
+        if (getMode() != Mode.Pick) {
+            Logger.getLogger().d("refreshFileList:  clearSelection");
             clearSelection();
         } else {
             mFileInteractionListener.onRefreshFileList(mCurrentPath,
@@ -150,7 +151,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
 
         Logger.getLogger().d("onListItemClick "
-        + ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping());
+                + ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping());
 
         if (isInSelection() && !((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping()) {
             boolean selected = lFileInfo.Selected;
@@ -180,7 +181,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         mCurrentPath = getAbsoluteName(mCurrentPath, lFileInfo.fileName);
 
 //        setCurrentPath(getAbsoluteName(mCurrentPath, lFileInfo.fileName));
-        ((FileListActivity)mFileInteractionListener).setCurPath(mCurrentPath);
+        ((FileListActivity) mFileInteractionListener).setCurPath(mCurrentPath);
 
         refreshFileList();
     }
@@ -216,7 +217,11 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     private void viewFile(FileInfo lFileInfo) {
         try {
-            IntentBuilder.viewFile(mContext, lFileInfo.filePath);
+            FileCategoryHelper.FileCategory category = ((FileListActivity) mFileInteractionListener).getCurrentCategory();
+
+            IntentBuilder.viewFile(mContext, lFileInfo.filePath, category);
+
+
         } catch (ActivityNotFoundException e) {
             Logger.getLogger().e("fail to view file: " + e.toString());
         }
@@ -258,7 +263,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     public void setCurrentPath(String path) {
         mCurrentPath = path;
         Log.e("DEBUG", "path: " + path);
-        ((FileListActivity)mFileInteractionListener).setCurPath(mCurrentPath);
+        ((FileListActivity) mFileInteractionListener).setCurPath(mCurrentPath);
     }
 
     public void setMode(Mode mode) {
@@ -360,7 +365,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public FileListActivity getActivity() {
-        return (FileListActivity)mFileInteractionListener;
+        return (FileListActivity) mFileInteractionListener;
     }
 
     public void onOperationSelectAll() {
@@ -375,11 +380,11 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void norSlection() {
-        for(FileInfo f : mFileInteractionListener.getAllFiles()) {
-            if(f.Selected == true) {
+        for (FileInfo f : mFileInteractionListener.getAllFiles()) {
+            if (f.Selected == true) {
                 f.Selected = true;
                 mCheckedFileNameList.add(f);
-            } else if(mCheckedFileNameList.indexOf(f) > 0){
+            } else if (mCheckedFileNameList.indexOf(f) > 0) {
                 f.Selected = false;
                 mCheckedFileNameList.remove(f);
             }
@@ -413,11 +418,11 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 selectedFileList);
         DialogFragment dialog = null;
         Bundle args = new Bundle();
-        if(selectedFiles.size() == 0) {
+        if (selectedFiles.size() == 0) {
             Toast.makeText(mContext, R.string.nothing_to_delete, Toast.LENGTH_LONG).show();
             return;
         }
-        if(selectedFileList.size() > 1) {
+        if (selectedFileList.size() > 1) {
 
             dialog = new MultiDeleteDialog();
 
@@ -425,17 +430,17 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             dialog.setArguments(args);
             dialog.show(getActivity().getFragmentManager(), MultiDeleteDialog.class.getName());
 
-        } else if(selectedFileList.size() == 1) {
+        } else if (selectedFileList.size() == 1) {
             dialog = new SingleDeleteDialog();
             args.putParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER, getSelectedFileList().get(0));
             dialog.setArguments(args);
-            dialog.show(getActivity().getFragmentManager(),  SingleDeleteDialog.class.getName());
+            dialog.show(getActivity().getFragmentManager(), SingleDeleteDialog.class.getName());
         }
     }
 
     public void onOperationCopy() {
         final ArrayList<FileInfo> copyListData = getSelectedFileList();
-        if(copyListData.size() > 0) {
+        if (copyListData.size() > 0) {
             ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(copyListData);
 
         } else {
@@ -451,7 +456,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onOperationPaste() {
-        if(((FileManagerApplication) getActivity().getApplication()).getCopyHelper().canPaste()) {
+        if (((FileManagerApplication) getActivity().getApplication()).getCopyHelper().canPaste()) {
             ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().paste(new File(mCurrentPath), new IOperationProgressListener() {
                 @Override
                 public void onOperationFinish(boolean success) {
@@ -472,7 +477,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public void onOperationMove() {
         final ArrayList<FileInfo> copyListData = getSelectedFileList();
-        if(copyListData.size() > 0) {
+        if (copyListData.size() > 0) {
             ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().cut(copyListData);
 
         } else {
@@ -485,9 +490,9 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onOperationRename() {
-        if(getSelectedFileList().size() > 1) {
+        if (getSelectedFileList().size() > 1) {
             Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_rename_msg), Toast.LENGTH_LONG).show();
-            return ;
+            return;
         }
         DialogFragment dialog = new RenameDialog();
         Bundle args = new Bundle();
@@ -496,7 +501,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         dialog.show(getActivity().getFragmentManager(), RenameDialog.class.getName());
 
     }
-
 
 
 //    public void onOperationFavorite(String path) {
@@ -586,7 +590,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
         if (mFileOperationHelper.createFolder(mCurrentPath, text)) {
             mFileInteractionListener.addSingleFile(FileUtils
-                    .getFileInfo(FileUtils.makePath(mCurrentPath, text), mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false)));
+                    .getFileInfo(FileUtils.makePath(mCurrentPath, text), FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false)));
             mFileListView.setSelection(mFileListView.getCount() - 1);
         } else {
 //            new AlertDialog.Builder(mContext)

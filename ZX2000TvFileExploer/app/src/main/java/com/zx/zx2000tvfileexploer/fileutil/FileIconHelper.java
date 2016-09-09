@@ -88,6 +88,7 @@ public class FileIconHelper implements IconLoadFinishListener {
         }
     }
 
+
     @Override
     public void onIconLoadFinished(ImageView view) {
         ImageView frame = imageFrames.get(view);

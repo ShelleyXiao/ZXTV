@@ -92,7 +92,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
             FileInfo fileInfo = getItem(position);
             if (!fileInfo.IsDir) {
                 try {
-                    IntentBuilder.viewFile(this, fileInfo.filePath);
+                    IntentBuilder.viewFile(this, fileInfo.filePath, mFileCagetoryHelper.getCurFileCategory());
                 } catch (ActivityNotFoundException e) {
                     Logger.getLogger().d("fail to view file: " + e.toString());
                 }
@@ -320,6 +320,11 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     @Override
     public void updateMenuItem(int resId, boolean isShow) {
 
+    }
+
+    @Override
+    public FileCategoryHelper.FileCategory getCurrentCategory() {
+        return null;
     }
 
 

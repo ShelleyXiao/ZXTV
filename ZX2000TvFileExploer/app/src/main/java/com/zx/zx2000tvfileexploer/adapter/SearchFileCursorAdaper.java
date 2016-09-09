@@ -26,7 +26,6 @@ public class SearchFileCursorAdaper extends CursorAdapter {
     private final LayoutInflater mLayoutInflater;
 
     private FileIconHelper mFileIconHelper;
-    private FileSettingsHelper mFileSettingsHelper;
 
 
     private HashMap<Integer, FileInfo> mFileNameList = new HashMap<Integer, FileInfo>();
@@ -38,7 +37,6 @@ public class SearchFileCursorAdaper extends CursorAdapter {
         mLayoutInflater = LayoutInflater.from(context);
         mFileIconHelper = fileIcon;
         mContext = context;
-        mFileSettingsHelper = FileSettingsHelper.getInstance(context);
     }
 
     @Override
@@ -113,6 +111,6 @@ public class SearchFileCursorAdaper extends CursorAdapter {
 
     private FileInfo getFileInfo(Cursor cursor) {
         return (cursor == null || cursor.getCount() == 0) ? null : FileUtils
-                .getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+                .getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
     }
 }

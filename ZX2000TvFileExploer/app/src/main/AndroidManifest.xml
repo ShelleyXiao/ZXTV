@@ -17,7 +17,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -44,6 +45,14 @@
 
         <activity android:name=".ui.DiskSelectActivity2"></activity>
         <activity android:name=".ui.SettingActivivty"></activity>
+
+        <activity android:name=".ui.PhotoViewActivity">
+            <intent-filter>
+                <action android:name="com.zx.fileexplore.picture.show"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
     </application>
 

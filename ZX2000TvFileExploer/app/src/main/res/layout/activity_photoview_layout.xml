@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:background="@drawable/main_bg">
+
+
+
+    <ImageView
+        android:id="@+id/photo_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleType="fitCenter"
+        android:focusable="false"
+        />
+
+    <com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"
+        android:layout_margin="@dimen/px20"
+        android:focusable="false"
+        android:layout_alignParentTop="true"/>
+
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
+        android:id="@+id/photo_thumb_rc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px320"
+        android:background="#10f1f1f1"
+        android:paddingLeft="@dimen/px50"
+        android:paddingRight="@dimen/px50"
+        android:paddingTop="@dimen/px20"
+        android:paddingBottom="@dimen/px20"
+        android:layout_alignParentBottom="true"
+        android:focusable="true"
+        />
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

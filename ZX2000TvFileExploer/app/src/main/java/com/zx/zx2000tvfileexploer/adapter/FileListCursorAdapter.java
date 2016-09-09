@@ -15,7 +15,6 @@ import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.mode.FileListItem;
 import com.zx.zx2000tvfileexploer.mode.FileViewInteractionHub;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
-import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,7 +33,6 @@ public class FileListCursorAdapter extends CursorAdapter {
     private Context mContext;
 
     private FileViewInteractionHub mFileViewInteractionHub;
-    private FileSettingsHelper mFileSettingsHelper;
 
     public FileListCursorAdapter(Context context, Cursor cursor, FileViewInteractionHub fHub, FileIconHelper fileIconHelper) {
         super(context, cursor, false /* auto-requery */);
@@ -42,7 +40,6 @@ public class FileListCursorAdapter extends CursorAdapter {
         this.mFileIconHelper = fileIconHelper;
         this.mFileViewInteractionHub = fHub;
         this.mLayoutInflater = LayoutInflater.from(context);
-        mFileSettingsHelper = FileSettingsHelper.getInstance(context);
     }
 
     @Override
@@ -61,7 +58,7 @@ public class FileListCursorAdapter extends CursorAdapter {
             fileInfo.fileSize = cursor.getLong(FileCategoryHelper.COLUMN_SIZE);
             fileInfo.ModifiedDate = cursor.getLong(FileCategoryHelper.COLUMN_DATE);
         }
-        Logger.getLogger().d("FileInfo: " + fileInfo.fileName);
+//        Logger.getLogger().d("FileInfo: " + fileInfo.fileName);
         FileListItem.setupFileListItemInfo(mContext, view, fileInfo, mFileIconHelper,
                 mFileViewInteractionHub);
     }
@@ -114,6 +111,6 @@ public class FileListCursorAdapter extends CursorAdapter {
 
     private FileInfo getFileInfo(Cursor cursor) {
         return (cursor == null || cursor.getCount() == 0) ? null :
-                FileUtils.getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), mFileSettingsHelper.getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+                FileUtils.getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
     }
 }

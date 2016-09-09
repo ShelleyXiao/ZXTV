@@ -103,6 +103,10 @@ public class DiskSelectActivity2 extends BaseActivity  {
             }
 
         }
+        View view = mContentContainer.getChildAt(0);
+        if(null != view){
+            view.requestFocus();
+        }
     }
 
 

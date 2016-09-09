@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 
 import java.util.Collection;
@@ -40,5 +41,7 @@ public interface IFileInteractionListener {
 	public void updateMediaData();
 
 	public void updateMenuItem(int resId, boolean isShow);
+
+	public FileCategoryHelper.FileCategory  getCurrentCategory();
 
 }

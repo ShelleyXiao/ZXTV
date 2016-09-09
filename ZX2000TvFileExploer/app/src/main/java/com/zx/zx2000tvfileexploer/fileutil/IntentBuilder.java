@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.utils.Logger;
@@ -36,9 +37,32 @@ import java.util.ArrayList;
 
 public class IntentBuilder {
 
-    public static void viewFile(final Context context, final String filePath) {
+    public static void viewFile(final Context context, final String filePath, FileCategoryHelper.FileCategory category) {
         String type = getMimeType(filePath);
         Logger.getLogger().d("type: " + type);
+        if (!TextUtils.isEmpty(type) && !TextUtils.equals(type, "*/*")
+                && type.contains("image/")) {
+            viewFileForPic(context, filePath, category);
+        } else {
+            viewFile(context, filePath, type);
+        }
+    }
+
+    public static void viewFileForPic(final Context context, final String filePath, FileCategoryHelper.FileCategory category) {
+        Intent intent = new Intent();
+        intent.setAction(GlobalConsts.INTENT_ACTION_PIC_SHOW);
+        if (category == FileCategoryHelper.FileCategory.PICTURE) {
+            intent.putExtra("category", GlobalConsts.INTENT_EXTRA_PICTURE_VLAUE);
+        } else {
+            intent.putExtra("category", GlobalConsts.INTENT_EXTRA_ALL_VLAUE);
+            intent.putExtra("path", filePath);
+        }
+        context.startActivity(intent);
+        return;
+    }
+
+    public static void viewFile(final Context context, final String filePath, String type) {
+
         if (!TextUtils.isEmpty(type) && !TextUtils.equals(type, "*/*")) {
             /* 设置intent的file与MimeType */
             Intent intent = new Intent();
@@ -51,35 +75,37 @@ public class IntentBuilder {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
             dialogBuilder.setTitle(R.string.dialog_select_type);
 
-            CharSequence[] menuItemArray = new CharSequence[] {
+            CharSequence[] menuItemArray = new CharSequence[]{
                     context.getString(R.string.dialog_type_text),
                     context.getString(R.string.dialog_type_audio),
                     context.getString(R.string.dialog_type_video),
-                    context.getString(R.string.dialog_type_image) };
+                    context.getString(R.string.dialog_type_image)};
             dialogBuilder.setItems(menuItemArray,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String selectType = "*/*";
                             switch (which) {
-                            case 0:
-                                selectType = "text/plain";
-                                break;
-                            case 1:
-                                selectType = "audio/*";
-                                break;
-                            case 2:
-                                selectType = "video/*";
-                                break;
-                            case 3:
-                                selectType = "image/*";
-                                break;
+                                case 0:
+                                    selectType = "text/plain";
+                                    break;
+                                case 1:
+                                    selectType = "audio/*";
+                                    break;
+                                case 2:
+                                    selectType = "video/*";
+                                    break;
+                                case 3:
+                                    selectType = "image/*";
+                                    break;
                             }
                             Intent intent = new Intent();
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setAction(Intent.ACTION_VIEW);
                             intent.setDataAndType(Uri.fromFile(new File(filePath)), selectType);
                             context.startActivity(intent);
+
+
                         }
                     });
             dialogBuilder.show();

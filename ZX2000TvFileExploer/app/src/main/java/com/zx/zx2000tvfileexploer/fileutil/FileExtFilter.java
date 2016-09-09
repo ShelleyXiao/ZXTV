@@ -28,7 +28,7 @@ public class FileExtFilter implements FilenameFilter {
     public boolean accept(File dir, String fileName) {
         File file = new File(dir + File.separator + fileName);
         if (file.isDirectory()) {
-            return true;
+            return false;
         }
 
         int dot = fileName.lastIndexOf(".");

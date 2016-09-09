@@ -80,13 +80,18 @@
 
     <TextView
         android:id="@+id/disk_name"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/px500"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/px20"
         android:text="@string/disk_tf_sd"
         android:textColor="@color/diskViewDiskNameColor"
-        android:textSize="@dimen/px56"/>
+        android:textSize="@dimen/px56"
+        android:textAlignment="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
 </com.open.androidtvwidget.view.RelativeMainLayout>

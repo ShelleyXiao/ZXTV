@@ -37,4 +37,9 @@ public interface GlobalConsts {
     public static final int INTENT_EXTRA_VIDEO_VLAUE = 0x01 << 3;
     public static final int INTENT_EXTRA_ALL_VLAUE = 0x01 << 4;
     public static final int INTENT_EXTRA_SEARTCH_VALUE = 0X01 << 5;
+
+    public static final int INTENT_EXTRA_PIC_CURSR = 0X01;
+    public static final int INTENT_EXTRA_PIC_PATH = 0X02;
+
+    public static final String INTENT_ACTION_PIC_SHOW = "com.zx.fileexplore.picture.show";
 }
