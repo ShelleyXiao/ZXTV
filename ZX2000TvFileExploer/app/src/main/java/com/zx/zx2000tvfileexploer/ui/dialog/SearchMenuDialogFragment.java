@@ -7,6 +7,8 @@ import com.zx.zx2000tvfileexploer.ui.base.BaseMenuDialogFragment;
 /**
  * Created by ShaudXiao on 2016/7/22.
  */
+
+@SuppressWarnings("ValidFragment")
 public class SearchMenuDialogFragment extends BaseMenuDialogFragment {
 
     public SearchMenuDialogFragment(IMenuItemSelectListener listener) {

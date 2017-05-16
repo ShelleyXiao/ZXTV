@@ -1,183 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-    android:background="@drawable/background_sentgift">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/menu_title"
-        android:layout_margin="@dimen/px15"
-        android:textColor="#3fb8f1"
-        android:textSize="@dimen/px60"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#629cff"
-        />
-
+                android:background="#45000000">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/px15"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:text="@string/menu_title"
+            android:textColor="#3fb8f1"
+            android:textSize="@dimen/px54"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#629cff"
+            android:visibility="gone"
+            />
 
         <LinearLayout
             android:id="@+id/menu_refresh"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_refresh"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_refresh"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px48"
                 />
 
         </LinearLayout>
 
         <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
             android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
+            android:visibility="invisible"
             />
 
         <LinearLayout
             android:id="@+id/menu_select"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
                 android:text="@string/operatiion_select"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px48"
-                android:layout_margin="@dimen/px15"
-                android:gravity="center"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/menu_new_folder"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/operation_create_folder"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
-                android:layout_margin="@dimen/px15"
-                android:gravity="center"
                 />
 
         </LinearLayout>
 
         <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
             android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
+            android:visibility="invisible"
+            />
+
+        <LinearLayout
+            android:id="@+id/menu_new_folder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_create_folder"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px48"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#a1a1a1"
+            android:visibility="invisible"
             />
 
         <LinearLayout
             android:id="@+id/menu_new_file"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/operation_create_file"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
+                android:layout_height="@dimen/px120"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_create_file"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px48"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:background="@drawable/meun_item_select_bg"
-        android:orientation="horizontal"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#a1a1a1"
+            android:visibility="invisible"
+            />
 
         <LinearLayout
             android:id="@+id/menu_cancle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/cancle"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/cancle"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px48"
                 />
 
         </LinearLayout>
 
 
     </LinearLayout>
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/px120"-->
+    <!--android:orientation="horizontal">-->
 
-</LinearLayout>
+
+    <!--<View-->
+    <!--android:layout_width="2px"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="@dimen/px10"-->
+    <!--android:layout_marginTop="@dimen/px10"-->
+    <!--android:background="#a1a1a1"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/menu_select"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/sel_focus"-->
+    <!--android:focusable="true"-->
+    <!--android:focusableInTouchMode="true">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_margin="@dimen/px15"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/operatiion_select"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="@dimen/px48"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1px"-->
+    <!--android:background="#a1a1a1"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/px120"-->
+    <!--android:orientation="horizontal">-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1px"-->
+    <!--android:background="#a1a1a1"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/px120"-->
+    <!--android:background="@drawable/sel_focus"-->
+    <!--android:focusable="true"-->
+    <!--android:focusableInTouchMode="true"-->
+    <!--android:orientation="horizontal">-->
+
+
+    <!--</LinearLayout>-->
+
+</RelativeLayout>

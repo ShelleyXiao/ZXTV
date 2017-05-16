@@ -28,8 +28,8 @@ import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
-import com.zx.zx2000tvfileexploer.mode.FileViewInteractionHub;
-import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
+import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
+import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.EditMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.ui.dialog.NormalMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
@@ -43,7 +43,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class FileListActivity extends BaseActivity implements IFileInteractionListener, IMenuItemSelectListener, DialogInterface.OnDismissListener {
+public class FileListActivity extends BaseFileOperationActivity implements IFileInteractionListener, IMenuItemSelectListener, DialogInterface.OnDismissListener {
 
     private GridView mFilePathGridView;
     private View mEmptyView;
@@ -62,12 +62,10 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
 
     private ArrayList<FileInfo> mFileNameList = new ArrayList<FileInfo>();
 
-
     private refreshFileAsyncTask mrefreshFileAsyncTask;
 
     private NormalMenuDialogFragment mNormalMenuDialog;
     private EditMenuDialogFragment mEditMenuDialog;
-
 
     private HashMap<String, FileCategoryHelper.FileCategory> filterTypeMap = new HashMap<String, FileCategoryHelper.FileCategory>();
 
@@ -79,12 +77,20 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
     };
 
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutId() {
         return R.layout.activity_file_list;
     }
 
     @Override
-    public void init() {
+    protected void setupViews() {
+        super.setupViews();
+
+    }
+
+    @Override
+    protected void initialized() {
+        super.initialized();
+
         initDataCategory();
         initView();
 
@@ -108,8 +114,6 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
         mFileViewInteractionHub = new FileViewInteractionHub(this);
         mFileViewInteractionHub.setCurrentPath(mCurPath);
         mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.View);
-
-//        mSettingHelper = SettingHelper.getInstance(this);
 
         mFileCagetoryHelper = new FileCategoryHelper(this);
         mFileIconHelper = new FileIconHelper(this);
@@ -413,7 +417,7 @@ public class FileListActivity extends BaseActivity implements IFileInteractionLi
                     return true;
                 }
             }
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
+        } else if (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_INFO) {
             if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
                 mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.Pick);
 //                mFileViewInteractionHub.refreshFileList();

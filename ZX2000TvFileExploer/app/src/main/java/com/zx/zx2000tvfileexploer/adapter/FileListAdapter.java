@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
-import com.zx.zx2000tvfileexploer.mode.FileListItem;
-import com.zx.zx2000tvfileexploer.mode.FileViewInteractionHub;
+import com.zx.zx2000tvfileexploer.presenter.FileListItem;
+import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
 
 import java.util.List;
 

@@ -8,10 +8,25 @@
                 android:padding="@dimen/px20"
                 tools:context=".ui.MainActivity">
 
-    <com.zx.zx2000tvfileexploer.view.StatusTitleView
-        android:id="@+id/title_view"
+    <!--<com.zx.zx2000tvfileexploer.view.StatusTitleView-->
+        <!--android:id="@+id/title_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/px100"/>-->
+
+    <include layout="@layout/status_bar_layout"
+             android:id="@+id/statu"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/px80"
+             android:layout_marginTop="@dimen/px10"
+        />
+
+
+    <View
+        android:id="@+id/status_back"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px100"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/tran"
+        android:visibility="invisible"/>
 
 
     <com.open.androidtvwidget.view.RelativeMainLayout
@@ -22,16 +37,19 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_allfile_lay"
-            android:layout_width="@dimen/px560"
-            android:layout_height="@dimen/px860"
+            android:layout_width="@dimen/px460"
+            android:layout_height="@dimen/px660"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/px10"
-            android:background="@drawable/b_02"
+            android:background="@drawable/local_app_bg_1"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:nextFocusLeft="@+id/main_apk_lay"
+            android:nextFocusRight="@+id/main_image_lay"
             app:isReflect="true"
-            app:isShape="true">
+            app:isShape="true"
+            >
 
 
             <RelativeLayout
@@ -200,12 +218,12 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_apk_lay"
-            android:layout_width="@dimen/px512"
-            android:layout_height="@dimen/px260"
+            android:layout_width="@dimen/px420"
+            android:layout_height="@dimen/px200"
             android:layout_alignTop="@+id/main_allfile_lay"
             android:layout_margin="@dimen/px10"
             android:layout_toLeftOf="@+id/main_allfile_lay"
-            android:background="@drawable/b_05"
+            android:background="@drawable/local_app_bg_2"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -255,12 +273,12 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_video_lay"
-            android:layout_width="@dimen/px512"
-            android:layout_height="@dimen/px260"
+            android:layout_width="@dimen/px420"
+            android:layout_height="@dimen/px200"
             android:layout_below="@+id/main_apk_lay"
             android:layout_margin="@dimen/px10"
             android:layout_toLeftOf="@+id/main_allfile_lay"
-            android:background="@drawable/a01"
+            android:background="@drawable/local_app_bg_3"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -309,13 +327,13 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_search_lay"
-            android:layout_width="@dimen/px512"
-            android:layout_height="@dimen/px260"
+            android:layout_width="@dimen/px420"
+            android:layout_height="@dimen/px200"
             android:layout_alignBottom="@+id/main_allfile_lay"
             android:layout_below="@+id/main_video_lay"
             android:layout_margin="@dimen/px10"
             android:layout_toLeftOf="@+id/main_allfile_lay"
-            android:background="@drawable/b_06"
+            android:background="@drawable/local_app_bg_1"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -353,12 +371,12 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_image_lay"
-            android:layout_width="@dimen/px512"
-            android:layout_height="@dimen/px260"
+            android:layout_width="@dimen/px420"
+            android:layout_height="@dimen/px200"
             android:layout_alignTop="@+id/main_allfile_lay"
             android:layout_margin="@dimen/px10"
             android:layout_toRightOf="@+id/main_allfile_lay"
-            android:background="@drawable/a04"
+            android:background="@drawable/local_app_bg_4"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -407,12 +425,12 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_music_lay"
-            android:layout_width="@dimen/px512"
-            android:layout_height="@dimen/px260"
+            android:layout_width="@dimen/px420"
+            android:layout_height="@dimen/px200"
             android:layout_below="@+id/main_image_lay"
             android:layout_margin="@dimen/px10"
             android:layout_toRightOf="@+id/main_allfile_lay"
-            android:background="@drawable/a07"
+            android:background="@drawable/local_app_bg_3"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -462,13 +480,13 @@
 
         <com.open.androidtvwidget.view.ReflectItemView
             android:id="@+id/main_setting_lay"
-            android:layout_width="@dimen/px512"
-            android:layout_height="@dimen/px260"
+            android:layout_width="@dimen/px420"
+            android:layout_height="@dimen/px200"
             android:layout_alignBottom="@+id/main_allfile_lay"
             android:layout_below="@+id/main_music_lay"
             android:layout_margin="@dimen/px10"
             android:layout_toRightOf="@+id/main_allfile_lay"
-            android:background="@drawable/a01"
+            android:background="@drawable/local_app_bg_2"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -521,6 +539,6 @@
         android:id="@+id/main_up_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:upImageRes="@drawable/top_rectangle"/>
+        app:upImageRes="@drawable/health_focus_border"/>
 
 </RelativeLayout>

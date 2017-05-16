@@ -1,17 +1,23 @@
 package com.zx.zx2000tvfileexploer.ui;
 
+import android.content.AsyncQueryHandler;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.bridge.OpenEffectBridge;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.RelativeMainLayout;
@@ -19,12 +25,19 @@ import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
+import com.zx.zx2000tvfileexploer.fileutil.FileUirUtils;
+import com.zx.zx2000tvfileexploer.ui.base.BaseStatusBarActivity;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.utils.SDCardUtils;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends BaseStatusBarActivity implements View.OnClickListener {
+
+    private final int APK_UPDATE_SIZE_EVENT = 0X01;
+    private final int MUSIC_UPDATE_SIZE_EVENT = 0X02;
+    private final int VIDEO_UPDATE_SIZE_EVENT = 0X04;
+    private final int PIC_UPDATE_SIZE_EVENT = 0X08;
 
     private MainUpView mAnimationFrame;
     private OpenEffectBridge mOpenEffectBridge;
@@ -46,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvUsbDeviceSize;
     private TextView tvTFDeviceSize;
 
+    private QueryHandler mApkSizeQueryHandler;
+    private QueryHandler mVideoSizeQueryHandler;
+    private QueryHandler mPicSizeQueryHandler;
+    private QueryHandler mMusicSizeQueryHandler;
 
     private FileCategoryHelper mFileCategoryHelper;
 
@@ -67,13 +84,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Logger.getLogger().e("cont " + msg.arg1 + " " + msg.what);
+            int count = msg.arg1;
+            switch (msg.what) {
+                case APK_UPDATE_SIZE_EVENT:
+                    tvAppCount.setText(count + getString(R.string.main_apk_nums));
+                    break;
+                case MUSIC_UPDATE_SIZE_EVENT:
+                    tvMusicCount.setText(count + getString(R.string.main_music_nums));
+                    break;
+                case VIDEO_UPDATE_SIZE_EVENT:
+                    tvVideoCount.setText(count + getString(R.string.main_vidio_nums));
+                    break;
+                case PIC_UPDATE_SIZE_EVENT:
+                    tvPictureCount.setText(count + getString(R.string.main_image_nums));
+                    break;
+            }
+        }
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        init();
+    @Override
+    protected void setupViews() {
+        initView();
+    }
+
+    @Override
+    protected void initialized() {
+
+        initData();
+        initMainMenu();
+
+        initDiskInfo();
+
+        initReceiver();
+
+        initQuery();
     }
 
     @Override
@@ -124,27 +177,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        ActivityOptionsCompat  compat = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_bottom_in, R.anim.slide_bottom_out);
 //        ActivityCompat.startActivity(MainActivity.this, intent, compat.toBundle());
-        if(view.getId() == R.id.main_allfile_lay) {
+        if (view.getId() == R.id.main_allfile_lay) {
             startActivity(intentAll);
-        } else if(view.getId() == R.id.main_search_lay){
+        } else if (view.getId() == R.id.main_search_lay) {
             startActivity(intentSerach);
-        } else if(view.getId() == R.id.main_setting_lay){
+        } else if (view.getId() == R.id.main_setting_lay) {
             startActivity(intentSetting);
         } else {
             startActivity(intent);
         }
-//        overridePendingTransition(R.anim.slide_in_top, R.anim.slide_in_top);
-//        overridePendingTransition(R.anim.slide_bottom_in, R.anim.slide_bottom_out);
-    }
-
-    private void init() {
-        initView();
-        initData();
-        initMainMenu();
-
-        initDiskInfo();
-
-        initReceiver();
     }
 
     private void initData() {
@@ -182,7 +223,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAnimationFrame = (MainUpView) findViewById(R.id.main_up_view);
         mOpenEffectBridge = (OpenEffectBridge) mAnimationFrame.getEffectBridge();
 
-        mAnimationFrame.setUpRectResource(R.drawable.test_rectangle);
+        mAnimationFrame.setEffectBridge(new EffectNoDrawBridge());
+        mAnimationFrame.setDrawUpRectPadding(new Rect(11, 11, 11, 11));
+        mAnimationFrame.setUpRectResource(R.drawable.health_focus_border);
         mAnimationFrame.setShadowResource(R.drawable.item_shadow);
 
         RelativeMainLayout mainLayout = (RelativeMainLayout) findViewById(R.id.main_layout);
@@ -193,11 +236,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (newFocus != null) {
                     newFocus.bringToFront();
                 }
-                float scale = 1.2f;
+                float scale = 1.10f;
                 mAnimationFrame.setFocusView(newFocus, mOldFocus, scale);
                 mOldFocus = newFocus;
-
-
             }
         });
 
@@ -241,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         unmountInfo.free = 0;
         unmountInfo.total = 0;
 
-        if(SDCardUtils.isMounted(flashPath)) {
+        if (SDCardUtils.isMounted(flashPath)) {
             SDCardUtils.StorageInfo info = SDCardUtils.getSDCardInfo();
             Logger.getLogger().d("flash Info: " + info.free + " " + info.total);
             setDeviceSize(tvLocalDeviceSize, info.total);
@@ -251,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setProgress(pbLocalDevice, unmountInfo);
         }
 
-        if(SDCardUtils.isMounted(TFSDPath)) {
+        if (SDCardUtils.isMounted(TFSDPath)) {
             SDCardUtils.StorageInfo info = SDCardUtils.getDiskInfo(TFSDPath);
             setProgress(pbTFDevice, info);
             setDeviceSize(tvTFDeviceSize, info.total);
@@ -260,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setProgress(pbTFDevice, unmountInfo);
         }
 
-        if(SDCardUtils.isMounted(USBPath)) {
+        if (SDCardUtils.isMounted(USBPath)) {
             SDCardUtils.StorageInfo info = SDCardUtils.getDiskInfo(USBPath);
             setDeviceSize(tvUsbDeviceSize, info.total);
             setProgress(pbUsbDevice, info);
@@ -280,6 +321,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void initQuery() {
+        mApkSizeQueryHandler = new QueryHandler(getContentResolver(), FileCategoryHelper.FileCategory.APK);
+        mMusicSizeQueryHandler = new QueryHandler(getContentResolver(), FileCategoryHelper.FileCategory.MUSIC);
+        mPicSizeQueryHandler = new QueryHandler(getContentResolver(), FileCategoryHelper.FileCategory.PICTURE);
+        mVideoSizeQueryHandler = new QueryHandler(getContentResolver(), FileCategoryHelper.FileCategory.VIDEO);
+    }
+
     private void updateUI() {
         initDiskInfo();
     }
@@ -288,11 +336,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView udTitle = (TextView) findViewById(R.id.usb_device_title);
         TextView udSize = (TextView) findViewById(R.id.usb_device_size);
         ProgressBar udPb = (ProgressBar) findViewById(R.id.usb_device_size_progress);
-        if(isShow) {
+        if (isShow) {
             udTitle.setVisibility(View.VISIBLE);
             udSize.setVisibility(View.VISIBLE);
             udPb.setVisibility(View.VISIBLE);
-        } else{
+        } else {
             udTitle.setVisibility(View.GONE);
             udSize.setVisibility(View.GONE);
             udPb.setVisibility(View.GONE);
@@ -300,23 +348,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setDeviceSize(TextView view, long size) {
-        if(null != view) {
+        if (null != view) {
             view.setText(SDCardUtils.convertStorage(size));
         }
     }
 
     private void setProgress(ProgressBar bar, SDCardUtils.StorageInfo info) {
-        if(null == bar) {
+        if (null == bar) {
             return;
         }
-        if(info.total == 0) {
+        if (info.total == 0) {
             bar.setMax(100);
             bar.setProgress(100);
             return;
         }
-        Logger.getLogger().d("info.total: " + (int)(info.total / 1024 /1024)+ " " + (int)((info.total - info.free) / 1024 / 1024));
-        bar.setMax((int)info.total / 1024 / 1024);
-        bar.setProgress((int)((info.total - info.free) / 1024 / 1024));
+        Logger.getLogger().d("info.total: " + (int) (info.total / 1024 / 1024) + " " + (int) ((info.total - info.free) / 1024 / 1024));
+        bar.setMax((int) info.total / 1024 / 1024);
+        bar.setProgress((int) ((info.total - info.free) / 1024 / 1024));
+    }
+
+    private final class QueryHandler extends AsyncQueryHandler {
+
+        FileCategoryHelper.FileCategory mFileCategory;
+
+
+        String[] columns = new String[] {
+                MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.SIZE,
+        };
+
+
+        public QueryHandler(ContentResolver cr, FileCategoryHelper.FileCategory category) {
+            super(cr);
+
+            mFileCategory = category;
+            String selection = null;
+            if(category == FileCategoryHelper.FileCategory.APK) {
+                selection = MediaStore.Files.FileColumns.DATA + " LIKE '%.apk'";
+            }
+
+            startQuery(0, null, FileUirUtils.getContentUriByCategory(category), columns,
+                    selection, null, null);
+        }
+
+        @Override
+        protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+            super.onQueryComplete(token, cookie, cursor);
+            int count = cursor.getCount();
+            Message message = new Message();
+            message.arg1 = count;
+            if(mFileCategory ==  FileCategoryHelper.FileCategory.APK) {
+                message.what =APK_UPDATE_SIZE_EVENT;
+                mHandler.sendMessage(message);
+            } else if(mFileCategory == FileCategoryHelper.FileCategory.MUSIC) {
+                message.what =MUSIC_UPDATE_SIZE_EVENT;
+                mHandler.sendMessage(message);
+            } else if(mFileCategory == FileCategoryHelper.FileCategory.VIDEO) {
+                message.what =VIDEO_UPDATE_SIZE_EVENT;
+                mHandler.sendMessage(message);
+            } else if(mFileCategory == FileCategoryHelper.FileCategory.PICTURE) {
+                message.what =PIC_UPDATE_SIZE_EVENT;
+                mHandler.sendMessage(message);
+            }
+
+        }
+
     }
 
 }

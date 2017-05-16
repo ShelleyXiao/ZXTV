@@ -196,6 +196,7 @@
     <string name="show_hiden_file">显示隐藏文件</string>
     <string name="show_hiden_file_explain">设置列表是否显示以“.”开头文件名的文件,勾选为显示</string>
 
-
+    <string name="setting">设置</string>
+    <string name="netsetting">网络</string>
 
 </resources>

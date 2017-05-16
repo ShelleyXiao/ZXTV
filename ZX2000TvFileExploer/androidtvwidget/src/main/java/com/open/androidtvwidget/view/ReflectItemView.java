@@ -9,10 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -31,7 +29,7 @@ public class ReflectItemView extends FrameLayout {
     private static final String TAG = "ReflectItemView";
 
     private static final int DEFUALT_REFHEIGHT = 80;
-    private static final int DEFUALT_RADIUS = 12;
+    private static final int DEFUALT_RADIUS = 0;
 
     private Paint mClearPaint = null;
     private Paint mShapePaint = null;

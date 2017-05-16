@@ -1,154 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-    android:background="@drawable/background_sentgift">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/menu_title"
-        android:layout_margin="@dimen/px15"
-        android:textColor="#3fb8f1"
-        android:textSize="@dimen/px60"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#629cff"
-        />
-
+                android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        >
+
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_margin="@dimen/px15"-->
+        <!--android:focusable="false"-->
+        <!--android:focusableInTouchMode="false"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/menu_title"-->
+        <!--android:textColor="#3fb8f1"-->
+        <!--android:textSize="@dimen/px60"-->
+        <!--/>-->
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2px"-->
+        <!--android:background="#629cff"-->
+        <!--/>-->
+
 
         <LinearLayout
             android:id="@+id/menu_refresh"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_refresh"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_refresh"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
-            />
 
         <LinearLayout
             android:id="@+id/menu_rename"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_rename"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_rename"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/menu_new_folder"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_create_folder"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_create_folder"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
-            />
 
         <LinearLayout
             android:id="@+id/menu_copy"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/opearation_copy"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/opearation_copy"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/menu_copy_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:visibility="gone">
@@ -156,147 +126,103 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_coping_cancel"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_coping_cancel"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/menu_select_all"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_selectall"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_selectall"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
-            />
 
         <LinearLayout
             android:id="@+id/menu_select_all_cancle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_selectall_cancle"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_selectall_cancle"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/menu_paste"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="false"
             android:focusableInTouchMode="false">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_paste"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_paste"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
-            />
-
         <LinearLayout
             android:id="@+id/menu_move"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_move"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_move"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/menu_move_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:visibility="gone">
@@ -304,56 +230,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_move_cancel"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_move_cancel"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/menu_delete"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/meun_item_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/operation_delete"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/operation_delete"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:background="#a1a1a1"
-            android:layout_marginBottom="@dimen/px10"
-            android:layout_marginTop="@dimen/px10"
-            />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -366,48 +271,37 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#a1a1a1"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px120"
-        android:background="@drawable/meun_item_select_bg"
-        android:orientation="horizontal"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:id="@+id/menu_cancle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/cancle"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/px48"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
+                android:text="@string/cancle"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/px36"
                 />
 
+
         </LinearLayout>
-
-
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

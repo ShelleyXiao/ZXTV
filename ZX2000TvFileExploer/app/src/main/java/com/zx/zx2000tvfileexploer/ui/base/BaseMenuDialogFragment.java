@@ -1,21 +1,27 @@
 package com.zx.zx2000tvfileexploer.ui.base;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
+import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 /**
  * Created by ShaudXiao on 2016/7/22.
  */
+@SuppressLint("ValidFragment")
 public class BaseMenuDialogFragment extends DialogFragment implements View.OnClickListener  {
 
     protected View mRootView;
@@ -45,16 +51,30 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
         super.onDetach();
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.setStyle(0, R.style.RightMenuDialog);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mRootView = inflater.inflate(getLayoutId(), container);
 
+        Dialog dialog = getDialog();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.gravity = Gravity.RIGHT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.width = (int)getResources().getDimension(R.dimen.menu_dialog_width);
+        window.setAttributes(lp);
+
+        mRootView = inflater.inflate(getLayoutId(), container);
         return mRootView;
     }
 

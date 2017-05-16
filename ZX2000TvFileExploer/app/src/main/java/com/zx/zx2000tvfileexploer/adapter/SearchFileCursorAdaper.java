@@ -12,7 +12,7 @@ import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
-import com.zx.zx2000tvfileexploer.mode.FileListItem;
+import com.zx.zx2000tvfileexploer.presenter.FileListItem;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
 
 import java.util.Collection;

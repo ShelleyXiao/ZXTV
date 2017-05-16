@@ -8,6 +8,7 @@ import com.zx.zx2000tvfileexploer.utils.Logger;
 /**
  * Created by ShaudXiao on 2016/7/22.
  */
+@SuppressWarnings("ValidFragment")
 public class EditMenuDialogFragment extends BaseMenuDialogFragment {
 
     private boolean copying = false;

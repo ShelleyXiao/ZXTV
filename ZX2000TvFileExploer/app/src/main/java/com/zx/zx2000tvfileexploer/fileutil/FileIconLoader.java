@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import com.zx.zx2000tvfileexploer.interfaces.IconLoadFinishListener;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.utils.OtherUtil;
 
 import java.lang.ref.SoftReference;
@@ -72,6 +73,7 @@ public class FileIconLoader implements Handler.Callback {
 
     public boolean loadIcon(ImageView view, String path, long id, FileCategoryHelper.FileCategory cate) {
         boolean loaded = loadCacheIcon(view, path, cate);
+        Logger.getLogger().e("loaded " + loaded + " mPaused " + mPaused);
         if(loaded) {
             mPendingRequests.remove(view);
         } else {
@@ -307,6 +309,7 @@ public class FileIconLoader implements Handler.Callback {
                 ImageHolder holder = mImageCache.get(id.mPath);
                 if(null != holder && holder.state == ImageHolder.NEEDED) {
                     holder.state = ImageHolder.LOADING;
+                    Logger.getLogger().i(id.mPath + " catge " + id.mCategory) ;
                     switch (id.mCategory) {
                         case APK:
                             Drawable icon = OtherUtil.getApkIcon(mContext, id.mPath);

@@ -62,7 +62,6 @@ public class FileIconHelper implements IconLoadFinishListener {
         fileImage.setImageResource(id);
 
         mFileIconLoader.cancelRequest(fileImage);
-
         switch (fc) {
             case APK:
                 set = mFileIconLoader.loadIcon(fileImage, filePath, fileId, fc);

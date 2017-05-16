@@ -23,7 +23,7 @@ public class FileCategoryHelper {
     public static final int COLUMN_SIZE = 2;
     public static final int COLUMN_DATE = 3;
 
-    private static final String APK_EXT = ".apk";
+    private static final String APK_EXT = "apk";
 
     private FileCategory mFileCategory;
 
@@ -92,15 +92,18 @@ public class FileCategoryHelper {
             if(MediaFile.isVideoFileType(fileType.fileType)) {
                 return FileCategory.VIDEO;
             }
-            int dotPosition = path.lastIndexOf(".");
-            if(dotPosition < 0) {
-                return FileCategory.OTHRE;
-            }
 
-            String ext = path.substring(dotPosition + 1);
-            if(ext.equalsIgnoreCase(APK_EXT)) {
-                return FileCategory.APK;
-            }
+        }
+
+        int dotPosition = path.lastIndexOf(".");
+        String ext = path.substring(dotPosition + 1);
+        Logger.getLogger().e("ext " + ext);
+        if(ext.equalsIgnoreCase(APK_EXT)) {
+            return FileCategory.APK;
+        }
+
+        if(dotPosition < 0) {
+            return FileCategory.OTHRE;
         }
 
         return FileCategory.OTHRE;
@@ -139,7 +142,7 @@ public class FileCategoryHelper {
             return null;
         }
 
-        Uri uri = getContentUriByCategory(fc);
+        Uri uri = FileUirUtils.getContentUriByCategory(fc);
 //        Logger.getLogger().d("uri: " + uri.toString());
         String selection = buildSelectionByCategory(fc);
         if(TextUtils.isEmpty(selection)) {
@@ -165,7 +168,7 @@ public class FileCategoryHelper {
     }
 
     public Cursor query(FileCategory fc, FileSortHelper.SortMethod sort) {
-        Uri uri = getContentUriByCategory(fc);
+        Uri uri = FileUirUtils.getContentUriByCategory(fc);
         String selection = buildSelectionByCategory(fc);
         String sortOrder = buildSortOrder(sort);
 
@@ -229,29 +232,6 @@ public class FileCategoryHelper {
         return false;
     }
 
-    private Uri getContentUriByCategory(FileCategory fc) {
-        Uri uri;
-        String volumeName = "external";
-        switch (fc) {
-            case All:
-            case APK:
-                uri = MediaStore.Files.getContentUri(volumeName);
-                break;
-            case MUSIC:
-                uri = MediaStore.Audio.Media.getContentUri(volumeName);
-                break;
-            case PICTURE:
-                uri = MediaStore.Images.Media.getContentUri(volumeName);
-                break;
-            case VIDEO:
-                uri = MediaStore.Video.Media.getContentUri(volumeName);
-                break;
-            default:
-                uri = null;
-        }
-
-        return uri;
-    }
 
     private String buildSortOrder(FileSortHelper.SortMethod sort) {
         String sortOrder = null;

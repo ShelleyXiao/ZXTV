@@ -8,50 +8,25 @@
     tools:context="com.zx.zx2000tvfileexploer.ui.FileListActivity">
 
 
-    <com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px60"
-        android:layout_margin="@dimen/px20"/>
+    <!--<com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView-->
+        <!--android:id="@+id/title_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/px60"-->
+        <!--android:layout_margin="@dimen/px20"/>-->
 
-    <RelativeLayout
-        android:id="@+id/title_bar__"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px80"
-        android:visibility="gone">
+    <include layout="@layout/status_bar_layout_for_list"
+             android:id="@+id/statu"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/px80"
+             android:layout_marginTop="@dimen/px10"
+        />
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="@dimen/px56"
-            android:layout_height="@dimen/px56"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px15"
-            android:scaleType="fitCenter"
-            android:src="@drawable/title_back"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px15"
-            android:textColor="@color/titleTextColor"
-            android:textSize="18sp"/>
-
-
-        <com.zx.zx2000tvfileexploer.view.StatusTitleView
-            android:id="@+id/title_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px10"/>
-    </RelativeLayout>
 
     <GridView
         android:id="@+id/file_path_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_bar"
+        android:layout_below="@+id/statu"
         android:layout_margin="@dimen/px20"
         android:numColumns="auto_fit"
         android:columnWidth="@dimen/px260"
@@ -75,7 +50,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/px45"
-        android:background="#9588a8d4"
+        android:background="#2688a8d4"
         android:layout_alignParentBottom="true">
 
 

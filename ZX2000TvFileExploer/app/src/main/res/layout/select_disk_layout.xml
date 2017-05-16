@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.open.androidtvwidget.view.RelativeMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/tools"
-                xmlns:pv="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/main_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg"
-                android:orientation="vertical">
+<com.open.androidtvwidget.view.RelativeMainLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:pv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
 
     <com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView
         android:id="@+id/title_bar"
@@ -56,7 +57,8 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/sd_item_icon"/>
 
-            <TextView android:id="@+id/disk_tf_status"
+            <TextView
+                android:id="@+id/disk_tf_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tf_logo"
@@ -147,7 +149,8 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/flash_item_icon"/>
 
-            <TextView android:id="@+id/disk_flash_status"
+            <TextView
+                android:id="@+id/disk_flash_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/flash_logo"
@@ -238,7 +241,8 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ota_item_icon"/>
 
-            <TextView android:id="@+id/disk_usb_status"
+            <TextView
+                android:id="@+id/disk_usb_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/usb_logo"
