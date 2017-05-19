@@ -2,26 +2,28 @@ package com.zx.zx2000tvfileexploer.ui.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.DialogFragment;
 import android.widget.Toast;
 
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.fileutil.MediaScannerUtils;
 import com.zx.zx2000tvfileexploer.ui.FileListActivity;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 public class MultiDeleteDialog extends DialogFragment {
-    private List<FileInfo> mFileHolders;
+    private ArrayList<FileInfo> mFileHolders;
     private Context mContext;
+    private FileOperationHelper mFileOperationHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class MultiDeleteDialog extends DialogFragment {
 
         mFileHolders = getArguments().getParcelableArrayList(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER);
         mContext = (FileListActivity) this.getActivity();
+
+        mFileOperationHelper = new FileOperationHelper(null, mContext);
     }
 
     @Override
@@ -38,7 +42,11 @@ public class MultiDeleteDialog extends DialogFragment {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new RecursiveDeleteTask().execute();
+//                        new RecursiveDeleteTask().execute();
+
+                        Toast.makeText(getActivity(), getResources().getString(R.string.deleting), Toast.LENGTH_SHORT).show();
+
+                        mFileOperationHelper.deleteFiles(mFileHolders);
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

@@ -51,7 +51,7 @@ public class FileCategoryHelper {
 
     static {
         addItem(new String[]{"mp4", "wmv", "mpeg", "m4v", "3gp", "3gpp",
-                "3g2", "3gpp2", "asf", "rmvb", "avi"}, FileCategory.VIDEO);
+                "3g2", "3gpp2", "asf", "rmvb", "avi", "mkv", "mpg"}, FileCategory.VIDEO);
         addItem(new String[] { "jpg", "jpeg", "gif", "png", "bmp", "wbmp" },
                 FileCategory.PICTURE);
         addItem(new String[] { "mp3", "wma", "wav", "ogg" },
@@ -97,7 +97,6 @@ public class FileCategoryHelper {
 
         int dotPosition = path.lastIndexOf(".");
         String ext = path.substring(dotPosition + 1);
-        Logger.getLogger().e("ext " + ext);
         if(ext.equalsIgnoreCase(APK_EXT)) {
             return FileCategory.APK;
         }

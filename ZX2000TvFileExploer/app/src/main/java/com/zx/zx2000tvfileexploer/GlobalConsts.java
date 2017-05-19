@@ -42,4 +42,11 @@ public interface GlobalConsts {
     public static final int INTENT_EXTRA_PIC_PATH = 0X02;
 
     public static final String INTENT_ACTION_PIC_SHOW = "com.zx.fileexplore.picture.show";
+
+    public static final String KEY_PREF_OTG = "uri_usb_otg";
+
+    public static final String KEY_INTENT_PROCESS_VIEWER = "openprocesses";
+    public static final String TAG_INTENT_FILTER_FAILED_OPS = "failedOps";
+    public static final String TAG_INTENT_FILTER_GENERAL = "general_communications";
+    public static final String ARGS_KEY_LOADER = "loader_cloud_args_service";
 }

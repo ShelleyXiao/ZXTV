@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.util.Log;
 
+import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 
 import java.io.BufferedReader;
@@ -12,10 +13,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zx.zx2000tvfileexploer.utils.SDCardUtils.StorageInfo.TYPE_SD;
+import static com.zx.zx2000tvfileexploer.utils.SDCardUtils.StorageInfo.TYPE_USB;
+import static com.zx.zx2000tvfileexploer.utils.SDCardUtils.StorageInfo.TYPE_ext;
 
 /**
  * 类说明： 	SD卡工具类
@@ -31,6 +37,7 @@ public class SDCardUtils {
 
     private static final String TYPE_FILES = "files";
 
+
     /**
      * SD卡是否挂载
      *
@@ -42,11 +49,11 @@ public class SDCardUtils {
     }
 
     public static boolean isMounted(String dir) {
-        if(dir == null) {
+        if (dir == null) {
             return false;
         }
         File file = new File(dir);
-        if(file.exists() && file.canRead()) {
+        if (file.exists() && file.canRead()) {
             return true;
         }
 
@@ -134,6 +141,7 @@ public class SDCardUtils {
      * 获取所有存储路径
      * <p/>
      * 返回：/mnt/external_sd
+     *
      * @return String
      */
     public static ArrayList<String> getExternalStorageDirectory() {
@@ -185,17 +193,29 @@ public class SDCardUtils {
     }
 
     public static class StorageInfo {
+
+        public static final String TYPE_SD = "sd";
+        public static final String TYPE_USB = "usb";
+        public static final String TYPE_ext = "ext";
+
         public String path;
         public String state;
         public boolean isRemoveable;
+
+        public boolean isOnlyReader;
+
+        public String type;
+
+        public String label;
 
         public long total;
 
         public long free;
 
-        public StorageInfo() {}
+        public StorageInfo() {
+        }
 
-        public  StorageInfo(StorageInfo info) {
+        public StorageInfo(StorageInfo info) {
             this.path = info.path;
             this.state = info.state;
             this.isRemoveable = info.isRemoveable;
@@ -214,6 +234,7 @@ public class SDCardUtils {
      * 获取所有存储路径
      * <p/>
      * 返回：/mnt/external_sd
+     *
      * @return String
      */
 
@@ -226,14 +247,31 @@ public class SDCardUtils {
             getVolumeList.setAccessible(true);
             Object[] params = {};
             Object[] invokes = (Object[]) getVolumeList.invoke(storageManager, params);
+
+            Class<?> storageVolumeClazz = null;
+
             if (invokes != null) {
                 StorageInfo info = null;
+
+                storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
+                Method getUserLabel = storageVolumeClazz.getMethod("getUserLabel");
+
+                int usbIndex = 1;
+
                 for (int i = 0; i < invokes.length; i++) {
                     Object obj = invokes[i];
+
                     Method getPath = obj.getClass().getMethod("getPath", new Class[0]);
                     String path = (String) getPath.invoke(obj, new Object[0]);
+
+                    Method getLabel = obj.getClass().getMethod("getUserLabel", new Class[0]);
+                    String label = (String) getUserLabel.invoke(obj);
+                    Logger.getLogger().i("label " + label);
+
                     info = new StorageInfo(path);
+
                     File file = new File(info.path);
+                    Logger.getLogger().i("path " + path + " canWrite: ");
                     if ((file.exists()) && (file.isDirectory()) && (file.canWrite())) {
                         Method isRemovable = obj.getClass().getMethod("isRemovable", new Class[0]);
                         String state = null;
@@ -241,6 +279,11 @@ public class SDCardUtils {
                             Method getVolumeState = StorageManager.class.getMethod("getVolumeState", String.class);
                             state = (String) getVolumeState.invoke(storageManager, info.path);
                             info.state = state;
+                            getDiskType(context, info);
+                            if (TYPE_USB.equals(info.type)) {
+                                info.label += String.valueOf(usbIndex);
+                                usbIndex++;
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -261,17 +304,89 @@ public class SDCardUtils {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+
         }
         storagges.trimToSize();
 
         return storagges;
     }
 
+    /**
+     * 6.0获取外置sdcard和U盘路径，并区分
+     *
+     * @param mContext
+     * @param keyword  SD = "内部存储"; EXT = "SD卡"; USB = "U盘"
+     * @return
+     */
+    public static String getStoragePath(Context mContext, String keyword) {
+        String targetpath = "";
+        StorageManager mStorageManager = (StorageManager) mContext
+                .getSystemService(Context.STORAGE_SERVICE);
+        Class<?> storageVolumeClazz = null;
+        try {
+            storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
+
+            Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
+
+            Method getPath = storageVolumeClazz.getMethod("getPath");
+
+            Object result = getVolumeList.invoke(mStorageManager);
+
+            final int length = Array.getLength(result);
+
+            Method getUserLabel = storageVolumeClazz.getMethod("getUserLabel");
+
+
+            for (int i = 0; i < length; i++) {
+
+                Object storageVolumeElement = Array.get(result, i);
+
+                String userLabel = (String) getUserLabel.invoke(storageVolumeElement);
+
+                String path = (String) getPath.invoke(storageVolumeElement);
+
+                if (userLabel.contains(keyword)) {
+                    targetpath = path;
+                }
+
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return targetpath;
+    }
+
+    private static StorageInfo getDiskType(Context mContext, StorageInfo info) {
+        if (info.path.contains(TYPE_SD) || info.path.contains("emulated")) {
+            info.type = TYPE_SD;
+            info.label = mContext.getResources().getString(R.string.label_sd);
+        }
+
+        if (info.path.contains(TYPE_USB)) {
+            info.type = TYPE_USB;
+            info.label = mContext.getResources().getString(R.string.label_usb);
+        }
+
+        if (info.path.contains(TYPE_ext)) {
+            info.type = TYPE_ext;
+            info.label = mContext.getResources().getString(R.string.label_ext);
+        }
+
+        return info;
+    }
 
     /**
      * 获取TF或者USB存储路径
      * <p/>
      * 返回：/mnt/external_sd
+     *
      * @return String
      */
 
@@ -311,7 +426,7 @@ public class SDCardUtils {
     // storage, G M K B
     public static String convertStorage(long size) {
         Logger.getLogger().d("szie: " + size);
-        if(size <= 0) {
+        if (size <= 0) {
             return 0 + " ";
         }
         long kb = 1024;
@@ -360,11 +475,11 @@ public class SDCardUtils {
         return null;
     }
 
-    public static  void getDiskInfo(StorageInfo info) {
+    public static void getDiskInfo(StorageInfo info) {
         String status = Environment.getExternalStorageState();
-        if(status.equals(Environment.MEDIA_MOUNTED)) {
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
             File lFile = new File(info.path);
-            if(lFile.exists()) {
+            if (lFile.exists()) {
                 try {
                     android.os.StatFs statfs = new android.os.StatFs(lFile.getPath());
                     long nTotalBlocks = statfs.getBlockCount();
@@ -383,9 +498,9 @@ public class SDCardUtils {
 
     public static StorageInfo getDiskInfo(String path) {
         String status = Environment.getExternalStorageState();
-        if(status.equals(Environment.MEDIA_MOUNTED)) {
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
             File lFile = new File(path);
-            if(lFile.exists()) {
+            if (lFile.exists()) {
                 try {
                     android.os.StatFs statfs = new android.os.StatFs(lFile.getPath());
                     long nTotalBlocks = statfs.getBlockCount();
@@ -410,14 +525,14 @@ public class SDCardUtils {
     public static boolean isDstHaveFreeSpace(String src, String dst) {
         File srcFile = new File(src);
         long srcSize = 0;
-        if(srcFile.isDirectory()) {
+        if (srcFile.isDirectory()) {
             srcSize = FileUtils.getFolderSize(srcFile);
         } else {
             srcSize = srcFile.length();
         }
 
         long destFreeSize = getDiskInfo(dst).free;
-        if(destFreeSize > srcSize) {
+        if (destFreeSize > srcSize) {
             return true;
         }
 
@@ -427,10 +542,10 @@ public class SDCardUtils {
     public static boolean isDstHaveFreeSpace(List<FileInfo> listFile, String dst) {
         long srcSizeTotal = 0;
         Log.i(TAG, "  **************** " + listFile.size());
-        for(FileInfo fileInfo : listFile) {
+        for (FileInfo fileInfo : listFile) {
             File file = new File(fileInfo.filePath);
             Log.i(TAG, "*************** " + fileInfo.filePath);
-            if(file.isDirectory()) {
+            if (file.isDirectory()) {
                 srcSizeTotal += FileUtils.getFolderSize(file.getAbsoluteFile());
             } else {
                 srcSizeTotal += file.length();
@@ -438,8 +553,8 @@ public class SDCardUtils {
         }
 
         long dstFreeSpace = getDiskInfo(dst).free;
-        Log.i(TAG,"isDstHaveFreeSpace() .dstFreeSpace: " + dstFreeSpace + " srcSizeTotal: " + srcSizeTotal);
-        if(dstFreeSpace > srcSizeTotal) {
+        Log.i(TAG, "isDstHaveFreeSpace() .dstFreeSpace: " + dstFreeSpace + " srcSizeTotal: " + srcSizeTotal);
+        if (dstFreeSpace > srcSizeTotal) {
             return true;
         }
 

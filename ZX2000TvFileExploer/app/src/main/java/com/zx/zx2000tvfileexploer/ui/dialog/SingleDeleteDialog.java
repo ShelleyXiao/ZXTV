@@ -13,32 +13,39 @@ import android.widget.Toast;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
-import com.zx.zx2000tvfileexploer.fileutil.MediaScannerUtils;
+import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.ui.FileListActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class SingleDeleteDialog extends DialogFragment {
-    private FileInfo mFileHolder;
     private Context mContext;
+    private ArrayList<FileInfo> destFiles = new ArrayList<>();
+
+    private FileOperationHelper mFileOperationHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-		mFileHolder = getArguments().getParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER);
-
+		FileInfo fileInfo = getArguments().getParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER);
+        destFiles.add(fileInfo);
         mContext = (FileListActivity) this.getActivity();
+
+        mFileOperationHelper = new FileOperationHelper(null, mContext);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getActivity())
-                .setTitle(getString(R.string.really_delete, mFileHolder.getFileName()))
+                .setTitle(getString(R.string.really_delete, destFiles.get(0).getFileName()))
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new RecursiveDeleteTask().execute(mFileHolder.getFile());
+                        Toast.makeText(getActivity(), getResources().getString(R.string.deleting), Toast.LENGTH_SHORT).show();
+
+                        mFileOperationHelper.deleteFiles(destFiles);
                     }
                 })
 //				.setIcon(mFileHolder.getIcon())
@@ -93,7 +100,7 @@ public class SingleDeleteDialog extends DialogFragment {
             refresh();
             dialog.dismiss();
 
-            MediaScannerUtils.informFileDeleted( mContext.getApplicationContext(), mFileHolder.getFile());
+//            MediaScannerUtils.informFileDeleted( mContext.getApplicationContext(), mFileHolder.getFile());
         }
     }
 

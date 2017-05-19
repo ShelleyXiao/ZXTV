@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.R;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 
 /**
  * Created by ShaudXiao on 2016/7/18.
@@ -44,16 +45,6 @@ public abstract class BaseFileOperationActivity extends BaseStatusBarActivity im
     public Context getContext() {
         return context;
     }
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        context = this.getApplicationContext();
-//
-////        mRootView = LayoutInflater.from(this).inflate(getLayoutResId(), null);
-//
-//
-//    }
 
     @Override
     protected int getLayoutId() {
@@ -157,6 +148,7 @@ public abstract class BaseFileOperationActivity extends BaseStatusBarActivity im
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Logger.getLogger().e("BroadcastReceiver disk********");
                         updateDiskInfo();
                     }
                 });

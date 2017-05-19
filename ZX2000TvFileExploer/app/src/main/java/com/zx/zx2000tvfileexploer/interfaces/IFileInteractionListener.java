@@ -31,7 +31,7 @@ public interface IFileInteractionListener {
 	public Collection<FileInfo> getAllFiles();
 
 	public void startActivity(Intent intent);
-	
+
 	public void startActivityForResult(Intent intent, int requestCode);
 
 	public void addSingleFile(FileInfo file);

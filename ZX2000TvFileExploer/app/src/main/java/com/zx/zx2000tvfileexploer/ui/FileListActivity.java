@@ -3,9 +3,11 @@ package com.zx.zx2000tvfileexploer.ui;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,18 +23,19 @@ import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.adapter.FileListAdapter;
 import com.zx.zx2000tvfileexploer.adapter.FileListCursorAdapter;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.OpenMode;
 import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
+import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
 import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.EditMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.ui.dialog.NormalMenuDialogFragment;
-import com.zx.zx2000tvfileexploer.utils.FileUtils;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
@@ -69,12 +72,36 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
     private HashMap<String, FileCategoryHelper.FileCategory> filterTypeMap = new HashMap<String, FileCategoryHelper.FileCategory>();
 
+    public static OpenMode mOpenMode = OpenMode.UNKNOWN;
+
     private FilenameFilter hideFileFilter = new FilenameFilter() {
         @Override
         public boolean accept(File dir, String filename) {
             return !filename.startsWith(".");
         }
     };
+
+    private BroadcastReceiver receiver2 = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Logger.getLogger().w("receive: loadlist");
+            onRefresh();
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(receiver2, new IntentFilter("loadlist"));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver2);
+    }
+
 
     @Override
     protected int getLayoutId() {
@@ -259,6 +286,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             mRefreshProgress.setVisibility(View.GONE);
 
             mFileListCursorAdapter.changeCursor(c);
+            mOpenMode = OpenMode.CUSTOM;
+
         } else {
             File file = new File(path);
             if (!file.exists() || !file.isDirectory()) {
@@ -363,12 +392,24 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 ((FileManagerApplication)getApplication()).getCopyHelper().clear();
                 mFileViewInteractionHub.clearSelection();
                 break;
+            case R.id.normal_menu_copy_cancel:
+                ((FileManagerApplication)getApplication()).getCopyHelper().clear();
+                mFileViewInteractionHub.clearSelection();
+                break;
             case R.id.menu_paste:
                 if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
                     mFileViewInteractionHub.onOperationPaste();
                 }
 //                ((FileManagerApplication)getApplication()).getCopyHelper().clear();
 //                mFileViewInteractionHub.clearSelection();
+                break;
+            case R.id.normal_menu_paste:
+                if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
+//                    mFileViewInteractionHub.onOperationPaste();
+                }
+
+                mFileViewInteractionHub.onOperationPaste();
+
                 break;
             case R.id.menu_move:
                 mFileViewInteractionHub.onOperationMove();
@@ -519,23 +560,43 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         @Override
         protected Integer doInBackground(File... files) {
 
-            ArrayList<FileInfo> fileList = mFileNameList;
-            fileList.clear();
-            File[] listFiles = files[0].listFiles(FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false) ? null : hideFileFilter);
-            if (listFiles == null)
-                return Integer.valueOf(0);
+//            ArrayList<FileInfo> fileList = mFileNameList;
+//            fileList.clear();
+//            File[] listFiles = files[0].listFiles(FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false) ? null : hideFileFilter);
+//            if (listFiles == null)
+//                return Integer.valueOf(0);
+//
+//            for (File child : listFiles) {
+//                String absolutePath = child.getAbsolutePath();
+//                if (FileUtils.isNormalFile(absolutePath)) {
+//                    FileInfo lFileInfo = FileUtils.getFileInfo(child,/*
+//                            mFileCagetoryHelper.getFilter(), */FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+//                    if (lFileInfo != null) {
+//                        fileList.add(lFileInfo);
+//                    }
+//                }
+//            }
 
-            for (File child : listFiles) {
-                String absolutePath = child.getAbsolutePath();
-                if (FileUtils.isNormalFile(absolutePath)) {
-                    FileInfo lFileInfo = FileUtils.getFileInfo(child,/*
-                            mFileCagetoryHelper.getFilter(), */FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
-                    if (lFileInfo != null) {
-                        fileList.add(lFileInfo);
-                    }
-                }
+            ArrayList<FileInfo> arrayList1 ;
+            try {
+                arrayList1 = RootHelper.getFilesList(files[0].getAbsolutePath(), false, FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false),
+                        new RootHelper.GetModeCallBack() {
+                            @Override
+                            public void getMode(OpenMode mode) {
+                                mOpenMode = mode;
+
+                            }
+                        });
+
+            } catch (Exception e) {
+                return null;
             }
-            return Integer.valueOf(fileList.size());
+//            Logger.getLogger().i("mOpenMode: " + mOpenMode.toString() +  "arrayList1 " + arrayList1.size() +
+//            "name; " + arrayList1.get(0).getFileName());
+            mFileNameList.clear();
+            mFileNameList.addAll(arrayList1);
+
+            return Integer.valueOf(arrayList1.size());
         }
 
         @Override

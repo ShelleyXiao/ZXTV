@@ -4,41 +4,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:pv="http://schemas.android.com/tools"
     android:id="@+id/disk"
-    android:layout_width="@dimen/px660"
-    android:layout_height="@dimen/px800"
-    android:background="@drawable/b_02"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/local_app_bg_1"
     android:clickable="true"
-    android:focusable="true"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:focusable="true"
     app:isReflect="true"
     app:isShape="true"
     >
 
     <RelativeLayout
         android:id="@+id/disk_progress_view"
-        android:layout_width="@dimen/px460"
-        android:layout_height="@dimen/px400"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/px30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px15"
+        android:layout_marginTop="@dimen/px25"
         >
 
         <com.zx.zx2000tvfileexploer.view.RoundProgressBar
             android:id="@+id/disk_progress"
+            android:layout_width="@dimen/px300"
+            android:layout_height="@dimen/px300"
+            android:layout_centerInParent="true"
             pv:max="100"
             pv:progress="10"
             pv:ringColor="#4d95dc"
             pv:ringProgressColor="#cfe1f4"
             pv:ringWidth="@dimen/px20"
-            pv:textIsDisplayable="false"
-            android:layout_width="@dimen/px400"
-            android:layout_height="@dimen/px400"
-            android:layout_centerInParent="true"/>
+            pv:textIsDisplayable="false"/>
 
         <ImageView
             android:id="@+id/disk_logo"
-            android:layout_width="@dimen/px168"
-            android:layout_height="@dimen/px194"
+            android:layout_width="@dimen/px128"
+            android:layout_height="@dimen/px164"
             android:layout_centerInParent="true"
             android:scaleType="fitXY"
             android:src="@drawable/sd_item_icon"/>
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/disk_progress_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px20"
+        android:layout_marginTop="@dimen/px15"
         android:text="@string/disk_size_use"
         android:textColor="@color/diskViewTextColor"
         android:textSize="@dimen/px44"/>
@@ -73,25 +73,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/disk_use"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px20"
+        android:layout_marginTop="@dimen/px10"
         android:text="@string/disk_size_total"
         android:textColor="@color/diskViewTextColor"
         android:textSize="@dimen/px44"/>
 
     <TextView
         android:id="@+id/disk_name"
-        android:layout_width="@dimen/px500"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/px20"
-        android:text="@string/disk_tf_sd"
-        android:textColor="@color/diskViewDiskNameColor"
-        android:textSize="@dimen/px56"
-        android:textAlignment="center"
-        android:marqueeRepeatLimit="marquee_forever"
+        android:layout_marginBottom="@dimen/px10"
         android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:text="@string/disk_tf_sd"
+        android:textAlignment="center"
+        android:textColor="@color/diskViewDiskNameColor"
+        android:textSize="@dimen/px56"/>
 
 </com.open.androidtvwidget.view.RelativeMainLayout>

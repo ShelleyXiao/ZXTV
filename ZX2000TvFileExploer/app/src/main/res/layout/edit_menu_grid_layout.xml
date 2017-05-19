@@ -45,7 +45,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_refresh"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -66,7 +66,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_rename"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -87,7 +87,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_create_folder"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -108,7 +108,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/opearation_copy"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -129,7 +129,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_coping_cancel"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -150,7 +150,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_selectall"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -171,7 +171,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_selectall_cancle"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -192,7 +192,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_paste"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -212,7 +212,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_move"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -233,7 +233,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_move_cancel"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -254,7 +254,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_delete"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -273,7 +273,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 
@@ -296,7 +296,7 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/cancle"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />
 

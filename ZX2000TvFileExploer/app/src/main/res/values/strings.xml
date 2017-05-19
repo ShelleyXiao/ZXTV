@@ -57,6 +57,8 @@
     <string name="operation_favorite">添加星标</string>
     <string name="operation_unfavorite">取消星标</string>
     <string name="operation_copy">复制</string>
+    <string name="operation_copy_cancel">取消拷贝</string>
+    <string name="cancelled">拷贝已取消</string>
     <string name="operation_copy_path">复制路径</string>
     <string name="operation_send">发送</string>
     <string name="operation_rename">重命名</string>
@@ -66,14 +68,14 @@
     <string name="operation_cancel">取消</string>
     <string name="operation_refresh">刷新</string>
     <string name="operation_search">搜索</string>
-    <string name="operation_selectall">全部选择</string>
+    <string name="operation_selectall">全选</string>
     <string name="operation_selectall_cancle">取消全选</string>
     <string name="operatiion_select">选择</string>
     <string name="operation_create_folder">新建文件夹</string>
     <string name="operation_create_file">新建文件</string>
-    <string name="opearation_copy">拷贝选择项</string>
-    <string name="operation_paste">粘贴选择项</string>
-    <string name="operation_move">移动选择项</string>
+    <string name="opearation_copy">拷贝</string>
+    <string name="operation_paste">粘贴</string>
+    <string name="operation_move">移动</string>
     <string name="operation_move_cancel">取消移动</string>
     <string name="opeartion_delete">删除选择项</string>
     <string name="operation_coping_cancel">取消拷贝</string>
@@ -132,6 +134,8 @@
 
     <string name="delete_success">删除成功</string>
     <string name="delete_failure">有一些文件未被删除</string>
+    <string name="cant_read_file">无法读取文件</string>
+    <string name="not_allowed">此操作不被允许</string>
     <string name="deleting">正在删除…</string>
     <string name="rename_success">重命名成功</string>
     <string name="rename_failure">未能重命名</string>
@@ -161,17 +165,26 @@
     <!-- CopyHelper statuses -->
     <string name="copying">正在复制…</string>
     <string name="copied">复制成功</string>
+    <string name="copy_complete">拷贝完成</string>
+    <string name="move_complete">移动完成</string>
     <string name="copy_error">有一些或者所有项目无法被复制！</string>
     <string name="moving">正在移动…</string>
     <string name="moved">移动成功</string>
     <string name="move_error">有一些或者全部项目无法被移动！</string>
     <string name="nothing_to_paste">没有可以粘贴的内容。请先复制或者剪切文件。</string>
     <string name="nothing_to_delete">没有可以删除的内容。请先选择需删除的文件。</string>
-
+    <string name="doforall">所有此类项目按此做</string>
+    <string name="in_safe">空间不足</string>
+    <string name="no_file_overwrite">未覆盖任何文件</string>
+    <string name="skip">跳过</string>
+    <string name="overwrite">覆盖</string>
 
     <string name="wrong_rename_msg">重命名只能选择一个文件夹或文件</string>
     <string name="copy_no_selection_msg">请选择需拷贝的文件</string>
     <string name="move_no_selection_msg">请选择需移动的文件</string>
+
+    <string name="waiting_title">正在等待</string>
+    <string name="waiting_content">正在等待操作结束</string>
 
     <string name="search_hint">搜索字词</string>
     <string name="search_title">搜索</string>
@@ -199,4 +212,23 @@
     <string name="setting">设置</string>
     <string name="netsetting">网络</string>
 
+    <string name="label_sd">内部存储</string>
+    <string name="label_usb">USB设备</string>
+    <string name="label_ext">TF卡</string>
+
+    <string name="operationunsuccesful">操作失败</string>
+
+    <string name="needsaccess">需要写入权限</string>
+    <string name="needsaccesssummary">请选择根目录下的 \t</string>
+    <string name="needsaccesssummary1">\\t 授予当前操作写入权限</string>
+    <string name="open">打开</string>
+    <string name="error">错误</string>
+
+
+    <string name="written">已写入</string>
+    <string name="out_of">不超过</string>
+    <!-- reference to - 'Processing file # of #' in process viewer -->
+    <string name="of">中的</string>
+    <string name="processing_file">处理文件</string>
+    <string name="current_speed">当前频率</string>
 </resources>

@@ -22,7 +22,7 @@ import com.zx.zx2000tvfileexploer.utils.Logger;
  * Created by ShaudXiao on 2016/7/22.
  */
 @SuppressLint("ValidFragment")
-public class BaseMenuDialogFragment extends DialogFragment implements View.OnClickListener  {
+public class BaseMenuDialogFragment extends DialogFragment implements View.OnClickListener {
 
     protected View mRootView;
     private IMenuItemSelectListener mIMenuItemSelectListener;
@@ -33,9 +33,11 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
 
     private MenuMode mCurMode;
 
-    public BaseMenuDialogFragment() {}
+    public BaseMenuDialogFragment() {
+    }
 
-    public BaseMenuDialogFragment(Bundle data) {}
+    public BaseMenuDialogFragment(Bundle data) {
+    }
 
     public BaseMenuDialogFragment(IMenuItemSelectListener listener) {
         this.mIMenuItemSelectListener = listener;
@@ -50,7 +52,6 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
     public void onDetach() {
         super.onDetach();
     }
-
 
 
     @Override
@@ -71,7 +72,7 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.RIGHT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.width = (int)getResources().getDimension(R.dimen.menu_dialog_width);
+        lp.width = (int) getResources().getDimension(R.dimen.menu_dialog_width);
         window.setAttributes(lp);
 
         mRootView = inflater.inflate(getLayoutId(), container);
@@ -103,18 +104,22 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        if(mIMenuItemSelectListener != null) {
+        if (mIMenuItemSelectListener != null) {
             mIMenuItemSelectListener.menuItemSelected(view.getId());
         }
 
         dismiss();
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(getDialog());
+        }
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         final Activity activity = getActivity();
-        if(activity instanceof DialogInterface.OnDismissListener) {
+        if (activity instanceof DialogInterface.OnDismissListener) {
             ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
         }
     }
@@ -129,14 +134,14 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
 
     public void setChildvisibility(int resId, boolean show) {
         View view = mRootView.findViewById(resId);
-        if(null != view) {
+        if (null != view) {
             view.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 
     public void setChildEnable(int resId, boolean enable) {
         View view = mRootView.findViewById(resId);
-        if(null != view) {
+        if (null != view) {
             view.setFocusable(enable ? true : false);
 //            view.setFocusableInTouchMode(enable ? true : false);
             view.setEnabled(enable ? true : false);

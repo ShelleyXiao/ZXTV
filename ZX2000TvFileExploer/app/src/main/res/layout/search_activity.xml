@@ -4,16 +4,23 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/bg">
 
-    <com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px60"
-        android:layout_margin="@dimen/px20"/>
+    <!--<com.zx.zx2000tvfileexploer.view.FileViewStatusTitleView-->
+        <!--android:id="@+id/title_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/px60"-->
+        <!--android:layout_margin="@dimen/px20"/>-->
+
+    <include layout="@layout/status_bar_layout_for_list"
+             android:id="@+id/statu"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/px80"
+             android:layout_marginTop="@dimen/px10"
+        />
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/title_bar">
+        android:layout_below="@+id/statu">
 
 
         <GridView

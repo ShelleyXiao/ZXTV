@@ -221,7 +221,6 @@ public class MainActivity extends BaseStatusBarActivity implements View.OnClickL
 
     private void initView() {
         mAnimationFrame = (MainUpView) findViewById(R.id.main_up_view);
-        mOpenEffectBridge = (OpenEffectBridge) mAnimationFrame.getEffectBridge();
 
         mAnimationFrame.setEffectBridge(new EffectNoDrawBridge());
         mAnimationFrame.setDrawUpRectPadding(new Rect(11, 11, 11, 11));
@@ -265,6 +264,7 @@ public class MainActivity extends BaseStatusBarActivity implements View.OnClickL
         tvLocalDeviceSize = (TextView) findViewById(R.id.local_device_size);
         tvUsbDeviceSize = (TextView) findViewById(R.id.usb_device_size);
         tvTFDeviceSize = (TextView) findViewById(R.id.tf_device_size);
+
     }
 
     private void initDiskInfo() {

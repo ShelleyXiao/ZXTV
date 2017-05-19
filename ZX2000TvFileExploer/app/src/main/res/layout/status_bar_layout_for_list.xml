@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/px54"
-        android:layout_height="@dimen/px54"
+        android:layout_width="@dimen/px64"
+        android:layout_height="@dimen/px64"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/px5"
         android:scaleType="fitXY"
@@ -17,67 +17,66 @@
         android:id="@+id/title_path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px15"
+        android:layout_toRightOf="@+id/back"
         android:gravity="left"
         android:textColor="#ffffff"
-        android:textSize="25sp"
-        android:layout_marginLeft="@dimen/px15"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/back"/>
+        android:textSize="25sp"/>
 
     <TextView
         android:id="@+id/title_file_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="#c3719fbe"
-        android:textSize="18sp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/px25"
-        android:layout_toRightOf="@+id/title_path"/>
+        android:layout_toRightOf="@+id/title_path"
+        android:gravity="left"
+        android:textColor="#c3719fbe"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/search_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:textSize="25sp"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/title_file_num"
         android:text="@string/category_all"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/px36"
         android:visibility="gone"/>
 
-    <FrameLayout android:id="@+id/serarh_input"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_marginLeft="@dimen/px50"
-                 android:layout_marginRight="@dimen/px50"
-                 android:layout_toRightOf="@+id/search_category"
-                 android:layout_toLeftOf="@+id/home_networkstate"
-                 android:visibility="gone">
+    <FrameLayout
+        android:id="@+id/serarh_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/px50"
+        android:layout_marginRight="@dimen/px50"
+        android:layout_toLeftOf="@+id/net"
+        android:layout_toRightOf="@+id/search_category"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_search_actionbar"
-            android:gravity="center"
+            android:layout_gravity="bottom"
             android:text="@string/search_hint"
             android:textColor="#ffaaaaaa"
-            android:textSize="25.0sp" />
+            android:textSize="@dimen/px28"/>
 
         <EditText
             android:id="@+id/input"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="@dimen/px15"
             android:background="@null"
             android:singleLine="true"
             android:textColor="#ffffffff"
             android:textCursorDrawable="@null"
-            android:textSize="18.0sp" />
+            android:textSize="@dimen/px36"/>
     </FrameLayout>
-
-
-
 
 
     <TextView

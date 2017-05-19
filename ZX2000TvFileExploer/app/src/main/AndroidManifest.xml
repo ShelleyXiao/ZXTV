@@ -54,6 +54,12 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name = ".fileutil.service.CopyService"
+            android:label = "Copying"
+            >
+        </service>
+
     </application>
 
 </manifest>

@@ -29,7 +29,7 @@ import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 import com.zx.zx2000tvfileexploer.fileutil.IntentBuilder;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
-import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
+import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.SearchMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
@@ -39,7 +39,7 @@ import java.util.HashMap;
 /**
  * Created by ShaudXiao on 2016/7/27.
  */
-public class SearchActivity extends BaseActivity implements AdapterView.OnItemClickListener
+public class SearchActivity extends BaseFileOperationActivity implements AdapterView.OnItemClickListener
         , IFileInteractionListener, IMenuItemSelectListener, DialogInterface.OnDismissListener {
 
     private GridView mFilePathGridView;
@@ -64,14 +64,20 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
 
     private HashMap<String, FileCategoryHelper.FileCategory> filterTypeMap = new HashMap<String, FileCategoryHelper.FileCategory>();
 
-
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutId() {
         return R.layout.search_activity;
     }
 
     @Override
-    public void init() {
+    protected void setupViews() {
+        super.setupViews();
+
+    }
+
+    @Override
+    protected void initialized() {
+        super.initialized();
         initView();
         initData();
 

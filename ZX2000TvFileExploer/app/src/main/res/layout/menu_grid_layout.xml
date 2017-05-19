@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#45000000">
+                >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +32,55 @@
             android:layout_height="2px"
             android:background="#629cff"
             android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/normal_menu_paste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_paste"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px48"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_menu_copy_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_copy_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px48"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#a1a1a1"
+            android:visibility="invisible"
             />
 
         <LinearLayout

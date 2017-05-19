@@ -17,34 +17,45 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zx.zx2000tvfileexploer.fileutil.CopyHelper.Operation.Copy;
+import static com.zx.zx2000tvfileexploer.fileutil.CopyHelper.Operation.Cut;
+import static com.zx.zx2000tvfileexploer.fileutil.CopyHelper.Operation.Unkonw;
+
 
 public class CopyHelper {
     private static final int COPY_BUFFER_SIZE = 32 * 1024;
 
-
     private Context mContext;
     private List<FileInfo> mClipboard;
-    private Operation mOperation;
     private IOperationProgressListener mListener;
 
+    public Operation operation = Unkonw;
+    public ArrayList<FileInfo> oparrayList;
+    public ArrayList<ArrayList<FileInfo>> oparrayListList;
+
+    public ArrayList<FileInfo> COPY_PATH = null, MOVE_PATH = null;
+
+    // oppathe - the path at which certain operation needs to be performed
+    // oppathe1 - the new path which user wants to create/modify
+    // oppathList - the paths at which certain operation needs to be performed (pairs with oparrayList)
+    public String oppathe, oppathe1;
+    public ArrayList<String> oppatheList;
+
+
     public enum Operation {
-        Copy, Cut
+        Copy, Cut, Unkonw
     }
 
     public CopyHelper(Context c) {
         mContext = c;
     }
 
-    public int getItemsCount() {
-        if (canPaste()) {
-            return mClipboard.size();
-        } else {
-            return 0;
-        }
+    public boolean isCopying() {
+        return COPY_PATH!= null && COPY_PATH.size() > 0 && (operation == Copy || operation == Cut);
     }
 
     public void copy(List<FileInfo> tbc) {
-        mOperation = Operation.Copy;
+        operation = Operation.Copy;
         mClipboard = tbc;
 //        mClipboard = new ArrayList<>(tbc);
 //        Logger.getLogger().d("mClipboard " + mClipboard.size());
@@ -57,21 +68,14 @@ public class CopyHelper {
     }
 
     public void cut(List<FileInfo> tbc) {
-        mOperation = Operation.Cut;
+        operation = Operation.Cut;
 
         mClipboard = tbc;
     }
 
-    public void cut(FileInfo tbc) {
-        ArrayList<FileInfo> tbcl = new ArrayList<>();
-        tbcl.add(tbc);
-        cut(tbcl);
-    }
-
     public void clear() {
-        mClipboard.clear();
-        mClipboard = null;
-        mOperation = null;
+        operation = Unkonw;
+        COPY_PATH = null;
     }
 
     /**
@@ -82,11 +86,11 @@ public class CopyHelper {
     }
 
     public Operation getOperationType() {
-        return mOperation;
+        return operation;
     }
 
     public boolean isCoping() {
-        return mOperation == Operation.Copy || mOperation == Operation.Cut;
+        return operation == Operation.Copy || operation == Operation.Cut;
     }
 
     /**
@@ -230,7 +234,7 @@ public class CopyHelper {
         if (!copyTo.isDirectory())
             return;
 
-        switch (mOperation) {
+        switch (operation) {
             case Copy:
                 new CopyAsync().execute(copyTo);
                 break;

@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -20,16 +21,19 @@ import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 import com.zx.zx2000tvfileexploer.fileutil.IntentBuilder;
+import com.zx.zx2000tvfileexploer.fileutil.service.CopyFileCheck;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IOperationProgressListener;
 import com.zx.zx2000tvfileexploer.ui.FileListActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.CreateDirectoryDialog;
 import com.zx.zx2000tvfileexploer.ui.dialog.MultiDeleteDialog;
+import com.zx.zx2000tvfileexploer.ui.dialog.ProgressUpdateDialog;
 import com.zx.zx2000tvfileexploer.ui.dialog.RenameDialog;
 import com.zx.zx2000tvfileexploer.ui.dialog.SingleDeleteDialog;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
@@ -55,7 +59,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     private FileSortHelper mFileSortHelper;
 
-
     private ProgressDialog progressDialog;
 
     private Context mContext;
@@ -72,7 +75,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     ;
-
 
     private Mode mcurrentMode;
 
@@ -105,6 +107,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         });
 
         mFileListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
@@ -112,6 +115,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 if (mcurrentMode != Mode.Pick) {
                     setMode(Mode.Pick);
                     refreshFileList();
+
+//                    onListItemClick(parent, view, position, id);
 //                    mFileInteractionListener.showMenuDailog();
                 }
 
@@ -164,6 +169,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 mCheckedFileNameList.add(lFileInfo);
                 checkBox.setImageResource(R.drawable.checked);
             }
+            Logger.getLogger().e("Select file mode = " + lFileInfo.getMode());
             lFileInfo.Selected = !selected;
             getActivity().updateSelectInfo(mCheckedFileNameList.size());
             return;
@@ -242,7 +248,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public ArrayList<FileInfo> getSelectedFileList() {
-        return mCheckedFileNameList;
+        return new ArrayList<>(mCheckedFileNameList);
     }
 
     public void setRootPath(String path) {
@@ -286,7 +292,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     @Override
     public void onOperationFinish(boolean sucess) {
-        // TODO Auto-generated method stub
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
@@ -305,7 +310,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     @Override
     public void onFileChanged(String path) {
-        // TODO Auto-generated method stub
         notifyFileSystemChanged(path);
     }
 
@@ -366,17 +370,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         return (FileListActivity) mFileInteractionListener;
     }
 
-    public void onOperationSelectAll() {
-        mCheckedFileNameList.clear();
-        for (FileInfo f : mFileInteractionListener.getAllFiles()) {
-            f.Selected = true;
-            mCheckedFileNameList.add(f);
-        }
-
-        mFileInteractionListener.onDataChanged();
-        getActivity().updateSelectInfo(mCheckedFileNameList.size());
-    }
-
     public void norSlection() {
         for (FileInfo f : mFileInteractionListener.getAllFiles()) {
             if (f.Selected == true) {
@@ -405,6 +398,17 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
         mFileInteractionListener.onRefreshFileList(mCurrentPath,
                 mFileSortHelper);
+    }
+
+    public void onOperationSelectAll() {
+        mCheckedFileNameList.clear();
+        for (FileInfo f : mFileInteractionListener.getAllFiles()) {
+            f.Selected = true;
+            mCheckedFileNameList.add(f);
+        }
+
+        mFileInteractionListener.onDataChanged();
+        getActivity().updateSelectInfo(mCheckedFileNameList.size());
     }
 
     public void onOperationDelete() {
@@ -437,55 +441,88 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onOperationCopy() {
-        final ArrayList<FileInfo> copyListData = getSelectedFileList();
-        if (copyListData.size() > 0) {
-            ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(copyListData);
+        final ArrayList<FileInfo> copies = getSelectedFileList();
+        mCheckedFileNameList.clear();
+
+        if (copies.size() > 0) {
+            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+            helper.MOVE_PATH = null;
+
+            helper.COPY_PATH = copies;
+            helper.operation = CopyHelper.Operation.Copy;
+            for(int i = 0; i < helper.COPY_PATH.size(); i++) {
+                Logger.getLogger().i("helper.COPY_PATH  " + helper.COPY_PATH.get(i).getFilePath());
+            }
+            Logger.getLogger().i("helper.COPY_PATH " + helper.COPY_PATH.size());
+
+//            ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(copies);
 
         } else {
             Toast.makeText(mContext, mContext.getString(R.string.copy_no_selection_msg), Toast.LENGTH_LONG).show();
         }
-    }
 
-    public void doOperationCopy(ArrayList<FileInfo> files) {
-        mFileOperationHelper.Copy(files);
-        mFileInteractionListener.ShowMovingOperationBar(true);
+        setMode(Mode.View);
         clearSelection();
-
     }
 
     public void onOperationPaste() {
-        if (((FileManagerApplication) getActivity().getApplication()).getCopyHelper().canPaste()) {
-            ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().paste(new File(mCurrentPath), new IOperationProgressListener() {
+        CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+
+        if (helper.isCopying()) {
+//            helper.paste(new File(mCurrentPath), new IOperationProgressListener() {
+//                @Override
+//                public void onOperationFinish(boolean success) {
+//                    ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().clear();
+//                    clearSelection();
+//                    refreshFileList();
+////                    setMode(Mode.View);
+//                    Logger.getLogger().d("onOperationPaste finish ");
+//                }
+//
+//                @Override
+//                public void onFileChanged(String path) {
+//
+//                }
+//            });
+            Logger.getLogger().i("paster start *************");
+            String path = mCurrentPath;
+            ArrayList<FileInfo> arrayList = helper.COPY_PATH != null ? helper.COPY_PATH : helper.MOVE_PATH;
+            boolean move = helper.MOVE_PATH != null;
+
+            new CopyFileCheck(path, move, mContext, false, new IOperationProgressListener() {
                 @Override
                 public void onOperationFinish(boolean success) {
-                    ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().clear();
-                    clearSelection();
-                    refreshFileList();
-//                    setMode(Mode.View);
-                    Logger.getLogger().d("onOperationPaste finish ");
+                    if(success) {
+                        ProgressUpdateDialog dialog = new ProgressUpdateDialog();
+                        dialog.show(((FileListActivity) mFileInteractionListener).getFragmentManager(), CreateDirectoryDialog.class.getName());
+                    }
                 }
 
                 @Override
                 public void onFileChanged(String path) {
 
                 }
-            });
+
+            }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, arrayList);
+
+            helper.COPY_PATH = null;
+            helper.MOVE_PATH = null;
         }
     }
 
     public void onOperationMove() {
         final ArrayList<FileInfo> copyListData = getSelectedFileList();
         if (copyListData.size() > 0) {
-            ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().cut(copyListData);
+            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+            helper.operation = CopyHelper.Operation.Cut;
+
+            helper.cut(copyListData);
 
         } else {
             Toast.makeText(mContext, mContext.getString(R.string.move_no_selection_msg), Toast.LENGTH_LONG).show();
         }
     }
 
-
-    public void onOperationMove(ArrayList<FileInfo> files) {
-    }
 
     public void onOperationRename() {
         if (getSelectedFileList().size() > 1) {
@@ -500,20 +537,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     }
 
-
-//    public void onOperationFavorite(String path) {
-//        FavoriteDatabaseHelper databaseHelper = FavoriteDatabaseHelper
-//                .getInstance();
-//        if (databaseHelper != null) {
-//
-//            if (databaseHelper.isFavorite(path)) {
-//                databaseHelper.delete(path);
-//            } else {
-//                databaseHelper.insert(FileUtils.getNameFromFilepath(path), path);
-//            }
-
-//        }
-//    }
 
     public void onSortChanged(FileSortHelper.SortMethod s) {
         if (mFileSortHelper.getSortMethod() != s) {
