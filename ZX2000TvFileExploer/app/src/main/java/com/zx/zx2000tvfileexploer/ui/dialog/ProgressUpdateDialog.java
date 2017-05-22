@@ -20,11 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.DataPackage;
 import com.zx.zx2000tvfileexploer.fileutil.service.CopyService;
-import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -94,6 +92,7 @@ public class ProgressUpdateDialog extends DialogFragment {
         Window window = dialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.height = (int) getResources().getDimension(R.dimen.px400);
+
         window.setAttributes(lp);
 
         accentColor = getResources().getColor(R.color.primary_pink);
@@ -107,6 +106,7 @@ public class ProgressUpdateDialog extends DialogFragment {
         mProgressSpeedText = (TextView) rootView.findViewById(R.id.text_view_progress_speed);
         mProgressTimer = (TextView) rootView.findViewById(R.id.text_view_progress_timer);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+        mProgressBar.setMax(100);
 
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,11 +120,12 @@ public class ProgressUpdateDialog extends DialogFragment {
     }
 
 
-
-
     @Override
     public void onResume() {
         super.onResume();
+
+        getDialog().getWindow().setLayout((int) getResources().getDimension(R.dimen.px800),
+                (int) getResources().getDimension(R.dimen.px400));
 
         Intent intent = new Intent(getActivity(), CopyService.class);
         getActivity().bindService(intent, mConnection, 0);
@@ -153,7 +154,6 @@ public class ProgressUpdateDialog extends DialogFragment {
             CopyService copyService = localBinder.getService();
 
             for (int i = 0; i < copyService.getDataPackageSize(); i++) {
-
                 processResults(copyService.getDataPackage(i), ServiceType.COPY);
             }
 
@@ -161,15 +161,16 @@ public class ProgressUpdateDialog extends DialogFragment {
             copyService.setProgressListener(new CopyService.ProgressListener() {
                 @Override
                 public void onUpdate(final DataPackage dataPackage) {
-                    if (getActivity() == null || getActivity().getFragmentManager().
-                            findFragmentByTag(GlobalConsts.KEY_INTENT_PROCESS_VIEWER) == null) {
-                        // callback called when we're not inside the app
-                        return;
-                    }
+//                    if (getActivity() == null || getActivity().getFragmentManager().
+//                            findFragmentByTag(GlobalConsts.KEY_INTENT_PROCESS_VIEWER) == null) {
+//                        // callback called when we're not inside the app
+//                        return;
+//                    }
+
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
                             processResults(dataPackage, ServiceType.COPY);
                         }
                     });
@@ -177,7 +178,12 @@ public class ProgressUpdateDialog extends DialogFragment {
 
                 @Override
                 public void refresh() {
-
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dismiss();
+                        }
+                    });
                 }
             });
         }
@@ -199,6 +205,7 @@ public class ProgressUpdateDialog extends DialogFragment {
             long doneBytes = dataPackage.getByteProgress();
             boolean move = dataPackage.isMove();
 
+//            Logger.getLogger().i("processResults dataPackage: " + dataPackage);
 
             mProgressFileNameText.setText(name);
 
@@ -218,10 +225,11 @@ public class ProgressUpdateDialog extends DialogFragment {
                     + ": <font color='" + accentColor + "'><i>"
                     + Formatter.formatFileSize(getActivity(), dataPackage.getSpeedRaw())
                     + "/s</font></i>");
-            Logger.getLogger().i(" " + bytesText + " " + fileProcessedSpan + " " + speedSpan);
+
             mProgressSpeedText.setText(speedSpan);
 
-
+            float percent = ((float) doneBytes / total) * 100;
+            mProgressBar.setProgress((int) percent);
         }
     }
 

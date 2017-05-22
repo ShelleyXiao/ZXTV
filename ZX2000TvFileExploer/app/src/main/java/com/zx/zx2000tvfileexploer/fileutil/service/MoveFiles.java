@@ -1,5 +1,3 @@
-
-
 package com.zx.zx2000tvfileexploer.fileutil.service;
 
 import android.content.Context;
@@ -10,11 +8,11 @@ import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.entity.OpenMode;
 import com.zx.zx2000tvfileexploer.fileutil.FileUtil;
 import com.zx.zx2000tvfileexploer.fileutil.ServiceWatcherUtil;
-import com.zx.zx2000tvfileexploer.ui.FileListActivity;
+import com.zx.zx2000tvfileexploer.interfaces.IOperationProgressListener;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
-
 
 
 public class MoveFiles extends AsyncTask<ArrayList<String>, Void, Boolean> {
@@ -22,12 +20,17 @@ public class MoveFiles extends AsyncTask<ArrayList<String>, Void, Boolean> {
     private ArrayList<String> paths;
     private Context context;
     private OpenMode mode;
-    private FileListActivity mFileListActivity;
+    private String currentPath;
 
-    public MoveFiles(ArrayList<ArrayList<FileInfo>> files,  Context context, OpenMode mode) {
+    private IOperationProgressListener mProgressListener;
+
+    public MoveFiles(ArrayList<ArrayList<FileInfo>> files, Context context, OpenMode mode, String currentPath,
+                     IOperationProgressListener listener) {
         this.context = context;
         this.files = files;
         this.mode = mode;
+        this.currentPath = currentPath;
+        this.mProgressListener = listener;
     }
 
     @Override
@@ -59,12 +62,13 @@ public class MoveFiles extends AsyncTask<ArrayList<String>, Void, Boolean> {
 
     @Override
     public void onPostExecute(Boolean movedCorrectly) {
+        Logger.getLogger().i("movedCorrectly " + movedCorrectly
+                + " paths.get(0) " + paths.get(0));
         if (movedCorrectly) {
-//            if (mainFrag != null && mainFrag.CURRENT_PATH.equals(paths.get(0))) {
-//                // mainFrag.updateList();
-//                Intent intent = new Intent("loadlist");
-//                context.sendBroadcast(intent);
-//            }
+            if (this.currentPath != null && this.currentPath.equals(paths.get(0))) {
+                Intent intent = new Intent("loadlist");
+                context.sendBroadcast(intent);
+            }
 
             for (int i = 0; i < paths.size(); i++) {
                 for (FileInfo f : files.get(i)) {
@@ -82,6 +86,9 @@ public class MoveFiles extends AsyncTask<ArrayList<String>, Void, Boolean> {
                 intent.putExtra(CopyService.TAG_COPY_OPEN_MODE, mode.ordinal());
 
                 ServiceWatcherUtil.runService(context, intent);
+                if (null != mProgressListener) {
+                    mProgressListener.onOperationFinish(true);
+                }
             }
         }
     }

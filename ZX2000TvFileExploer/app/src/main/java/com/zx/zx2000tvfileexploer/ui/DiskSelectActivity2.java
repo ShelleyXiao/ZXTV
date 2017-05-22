@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
-import com.open.androidtvwidget.bridge.OpenEffectBridge;
 import com.open.androidtvwidget.view.LinearMainLayout;
 import com.open.androidtvwidget.view.MainUpView;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
@@ -27,7 +26,6 @@ import java.util.List;
 public class DiskSelectActivity2 extends BaseFileOperationActivity {
 
     private MainUpView mAnimationFrame;
-    private OpenEffectBridge mOpenEffectBridge;
     private View mOldFocus;
 
     private LinearMainLayout mContentContainer;

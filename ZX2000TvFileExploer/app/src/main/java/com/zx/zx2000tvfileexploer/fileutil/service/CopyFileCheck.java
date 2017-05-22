@@ -100,12 +100,12 @@ public class CopyFileCheck extends AsyncTask<ArrayList<FileInfo>, String, CopyFi
             }
         }
 
-        Logger.getLogger().i("paster start ************* totalBytes" + totalBytes);
+        Logger.getLogger().d("paster start ************* totalBytes" + totalBytes);
 
         FileInfo destination = new FileInfo(openMode, path);
         if (destination.getUsableSpace() < totalBytes) {
             publishProgress(context.getResources().getString(R.string.in_safe));
-            Logger.getLogger().i("paster start ************* no space ");
+            Logger.getLogger().w("paster start ************* no space ");
             return null;
         }
 
@@ -263,7 +263,7 @@ public class CopyFileCheck extends AsyncTask<ArrayList<FileInfo>, String, CopyFi
                 i--;
             }
         }
-        Logger.getLogger().i(" finishCopying**************");
+        Logger.getLogger().i(" finishCopying************** move " + move);
         if (filesToCopyPerFolder.size() != 0) {
             int mode = FileOperationHelper.checkFolder(new File(path), context);
             if (mode == FileOperationHelper.CAN_CREATE_FILES && !path.contains("otg:/")) {
@@ -280,8 +280,9 @@ public class CopyFileCheck extends AsyncTask<ArrayList<FileInfo>, String, CopyFi
                         startService(filesToCopyPerFolder.get(i), paths.get(i), openMode);
                     }
                 } else {
-                    new MoveFiles(filesToCopyPerFolder, context, openMode)
+                    new MoveFiles(filesToCopyPerFolder, context, openMode, this.path, mProgressListener)
                             .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, paths);
+
                 }
             }
         } else {

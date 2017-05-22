@@ -174,6 +174,7 @@ public class ServiceWatcherUtil {
 
                     // pop recent intent from pendingIntents
                     Logger.getLogger().i(">>>>>>>>>>>>> runService runnable ");
+
                     context.startService(pendingIntents.remove(pendingIntents.size()-1));
 
                     if (pendingIntents.size()==0) {

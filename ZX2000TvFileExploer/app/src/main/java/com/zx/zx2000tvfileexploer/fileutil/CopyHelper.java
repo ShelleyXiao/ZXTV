@@ -34,6 +34,7 @@ public class CopyHelper {
     public ArrayList<ArrayList<FileInfo>> oparrayListList;
 
     public ArrayList<FileInfo> COPY_PATH = null, MOVE_PATH = null;
+    public String CURRENT_PATH = null;
 
     // oppathe - the path at which certain operation needs to be performed
     // oppathe1 - the new path which user wants to create/modify
@@ -51,7 +52,8 @@ public class CopyHelper {
     }
 
     public boolean isCopying() {
-        return COPY_PATH!= null && COPY_PATH.size() > 0 && (operation == Copy || operation == Cut);
+        return ((COPY_PATH != null && COPY_PATH.size() > 0) || (MOVE_PATH != null && MOVE_PATH.size() > 0))
+                && (operation == Copy || operation == Cut);
     }
 
     public void copy(List<FileInfo> tbc) {

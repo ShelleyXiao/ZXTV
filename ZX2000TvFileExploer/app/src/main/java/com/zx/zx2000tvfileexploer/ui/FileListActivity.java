@@ -227,7 +227,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         } else {
             Object[] datas = getAllFiles().toArray();
 
-            return(FileInfo) datas[pos];
+            return (FileInfo) datas[pos];
         }
 
     }
@@ -301,7 +301,6 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             mCurPath = path;
             Logger.getLogger().d("ddddddddddddddddddddd");
             showProgressBar(true);
-
 
             return true;
         }
@@ -389,11 +388,11 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_copy_cancel:
                 mEditMenuDialog.setCopying(false);
-                ((FileManagerApplication)getApplication()).getCopyHelper().clear();
+                ((FileManagerApplication) getApplication()).getCopyHelper().clear();
                 mFileViewInteractionHub.clearSelection();
                 break;
             case R.id.normal_menu_copy_cancel:
-                ((FileManagerApplication)getApplication()).getCopyHelper().clear();
+                ((FileManagerApplication) getApplication()).getCopyHelper().clear();
                 mFileViewInteractionHub.clearSelection();
                 break;
             case R.id.menu_paste:
@@ -416,7 +415,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_move_cancel:
                 mEditMenuDialog.setMoveing(false);
-                ((FileManagerApplication)getApplication()).getCopyHelper().clear();
+                ((FileManagerApplication) getApplication()).getCopyHelper().clear();
                 mFileViewInteractionHub.clearSelection();
                 break;
             case R.id.menu_delete:
@@ -452,13 +451,23 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             } else {
                 Logger.getLogger().d("******onKeyDown********");
                 boolean exitActivity = !mFileViewInteractionHub.onBackPressed();
-                if(exitActivity) {
+                if (exitActivity) {
                     finish();
                 } else {
                     return true;
                 }
             }
         } else if (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_INFO) {
+            if (mEditMenuDialog != null && mEditMenuDialog.getShowsDialog()) {
+                mEditMenuDialog.dismiss();
+                Logger.getLogger().d("******onKeyDown****mEditMenuDialog***");
+                return true;
+            } else if (mNormalMenuDialog != null && mNormalMenuDialog.getShowsDialog()) {
+                mNormalMenuDialog.dismiss();
+                Logger.getLogger().d("******onKeyDown****mNormalMenuDialog***");
+                return true;
+            }
+
             if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
                 mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.Pick);
 //                mFileViewInteractionHub.refreshFileList();
@@ -515,11 +524,11 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             mEditMenuDialog = null;
         }
         mEditMenuDialog = new EditMenuDialogFragment(this);
-        if(((FileManagerApplication)this.getApplication()).getCopyHelper().isCoping()) {
-            if(((FileManagerApplication)getApplication()).getCopyHelper().getOperationType() == CopyHelper.Operation.Copy) {
+        if (((FileManagerApplication) this.getApplication()).getCopyHelper().isCoping()) {
+            if (((FileManagerApplication) getApplication()).getCopyHelper().getOperationType() == CopyHelper.Operation.Copy) {
                 mEditMenuDialog.setCopying(true);
                 Logger.getLogger().d(" showEditMenuDialog copy");
-            }  else if(((FileManagerApplication)getApplication()).getCopyHelper().getOperationType() == CopyHelper.Operation.Cut) {
+            } else if (((FileManagerApplication) getApplication()).getCopyHelper().getOperationType() == CopyHelper.Operation.Cut) {
                 mEditMenuDialog.setMoveing(true);
             }
 
@@ -577,10 +586,11 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 //                }
 //            }
 
-            ArrayList<FileInfo> arrayList1 ;
+            ArrayList<FileInfo> arrayList1;
             try {
                 arrayList1 = RootHelper.getFilesList(files[0].getAbsolutePath(), false, FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false),
                         new RootHelper.GetModeCallBack() {
+
                             @Override
                             public void getMode(OpenMode mode) {
                                 mOpenMode = mode;
@@ -601,7 +611,6 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
         @Override
         protected void onPostExecute(Integer result) {
-            // TODO Auto-generated method stub
             setFileNums(String.valueOf(result.intValue()));
             showProgressBar(false);
         }

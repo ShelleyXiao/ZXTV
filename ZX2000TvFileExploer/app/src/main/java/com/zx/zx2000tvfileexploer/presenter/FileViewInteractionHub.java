@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -76,7 +75,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     ;
 
-    private Mode mcurrentMode;
+    private Mode mCurrentMode;
 
 
     public FileViewInteractionHub(IFileInteractionListener fileInteractionListener) {
@@ -112,7 +111,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
 
-                if (mcurrentMode != Mode.Pick) {
+                if (mCurrentMode != Mode.Pick) {
                     setMode(Mode.Pick);
                     refreshFileList();
 
@@ -156,7 +155,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
 
         Logger.getLogger().d("onListItemClick "
-                + ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping());
+                + ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping()
+                + " " + isInSelection() + " " + mCurrentMode);
 
         if (isInSelection() && !((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping()) {
             boolean selected = lFileInfo.Selected;
@@ -176,7 +176,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
 
         if (!lFileInfo.IsDir) {
-            if (mcurrentMode == Mode.Pick) {
+            if (mCurrentMode == Mode.Pick) {
 //                mFileInteractionListener.onPick(lFileInfo);
             } else {
                 viewFile(lFileInfo);
@@ -191,16 +191,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
         refreshFileList();
     }
-
-    public boolean onLongItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        if (mcurrentMode != Mode.Pick) {
-            mcurrentMode = Mode.Pick;
-
-        }
-        return true;
-    }
-
 
     // check or uncheck
     public boolean onCheckItem(FileInfo f, View v) {
@@ -239,7 +229,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public boolean isInSelection() {
-        return mcurrentMode == Mode.Pick || mCheckedFileNameList.size() > 0;
+        return mCurrentMode == Mode.Pick || mCheckedFileNameList.size() > 0;
     }
 
     private String getAbsoluteName(String path, String name) {
@@ -266,20 +256,19 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public void setCurrentPath(String path) {
         mCurrentPath = path;
-        Log.e("DEBUG", "path: " + path);
         ((FileListActivity) mFileInteractionListener).setCurPath(mCurrentPath);
     }
 
     public void setMode(Mode mode) {
-        mcurrentMode = mode;
+        mCurrentMode = mode;
     }
 
     public Mode getMode() {
-        return mcurrentMode;
+        return mCurrentMode;
     }
 
     public boolean canShowSelectBg() {
-        return mcurrentMode == Mode.Pick;
+        return mCurrentMode == Mode.Pick;
     }
 
     public FileSortHelper.SortMethod getSortMethod() {
@@ -438,6 +427,9 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             dialog.setArguments(args);
             dialog.show(getActivity().getFragmentManager(), SingleDeleteDialog.class.getName());
         }
+
+        setMode(Mode.View);
+        clearSelection();
     }
 
     public void onOperationCopy() {
@@ -450,7 +442,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
             helper.COPY_PATH = copies;
             helper.operation = CopyHelper.Operation.Copy;
-            for(int i = 0; i < helper.COPY_PATH.size(); i++) {
+            for (int i = 0; i < helper.COPY_PATH.size(); i++) {
                 Logger.getLogger().i("helper.COPY_PATH  " + helper.COPY_PATH.get(i).getFilePath());
             }
             Logger.getLogger().i("helper.COPY_PATH " + helper.COPY_PATH.size());
@@ -492,9 +484,11 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             new CopyFileCheck(path, move, mContext, false, new IOperationProgressListener() {
                 @Override
                 public void onOperationFinish(boolean success) {
-                    if(success) {
+                    if (success) {
+                        Logger.getLogger().i("**********show ProgressUpdateDialog****************");
                         ProgressUpdateDialog dialog = new ProgressUpdateDialog();
-                        dialog.show(((FileListActivity) mFileInteractionListener).getFragmentManager(), CreateDirectoryDialog.class.getName());
+                        dialog.show(((FileListActivity) mFileInteractionListener).getFragmentManager(), ProgressUpdateDialog.class.getName());
+                        CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
                     }
                 }
 
@@ -507,20 +501,44 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
             helper.COPY_PATH = null;
             helper.MOVE_PATH = null;
+            helper.operation = CopyHelper.Operation.Unkonw;
         }
     }
 
     public void onOperationMove() {
-        final ArrayList<FileInfo> copyListData = getSelectedFileList();
-        if (copyListData.size() > 0) {
-            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
-            helper.operation = CopyHelper.Operation.Cut;
+//        final ArrayList<FileInfo> copyListData = getSelectedFileList();
+//        if (copyListData.size() > 0) {
+//            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+//            helper.operation = CopyHelper.Operation.Cut;
+//
+//            helper.cut(copyListData);
+//
+//        } else {
+//            Toast.makeText(mContext, mContext.getString(R.string.move_no_selection_msg), Toast.LENGTH_LONG).show();
+//        }
 
-            helper.cut(copyListData);
+        final ArrayList<FileInfo> copies = getSelectedFileList();
+        mCheckedFileNameList.clear();
+
+        if (copies.size() > 0) {
+            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+            helper.MOVE_PATH = copies;
+
+            helper.COPY_PATH = null;
+            helper.operation = CopyHelper.Operation.Cut;
+            for (int i = 0; i < helper.MOVE_PATH.size(); i++) {
+                Logger.getLogger().i("helper.MOVE_PATH  " + helper.MOVE_PATH.get(i).getFilePath());
+            }
+            Logger.getLogger().i("helper.MOVE_PATH " + helper.MOVE_PATH.size());
+
+//            ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(copies);
 
         } else {
-            Toast.makeText(mContext, mContext.getString(R.string.move_no_selection_msg), Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, mContext.getString(R.string.copy_no_selection_msg), Toast.LENGTH_LONG).show();
         }
+
+        setMode(Mode.View);
+        clearSelection();
     }
 
 

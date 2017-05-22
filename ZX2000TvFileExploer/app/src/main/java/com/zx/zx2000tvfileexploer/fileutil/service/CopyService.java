@@ -379,6 +379,7 @@ public class CopyService extends Service {
 
             //notification
             float progressPercent = ((float) writtenSize / totalSize) * 100;
+            Logger.getLogger().i("progressPercent = " + progressPercent);
             mBuilder.setProgress(100, Math.round(progressPercent), false);
             mBuilder.setOngoing(true);
             int title = R.string.copying;
@@ -419,8 +420,8 @@ public class CopyService extends Service {
             putDataPackage(intent);
             if (progressListener != null) {
                 progressListener.onUpdate(intent);
-                Logger.getLogger().i("DataPackage: " + intent.toString());
-                if (isComplete) {
+//                Logger.getLogger().i("CopyService DataPackage: " + intent.toString());
+                if (isComplete || writtenSize == totalSize || totalSize == 0) {
                     progressListener.refresh();
                 }
             }
