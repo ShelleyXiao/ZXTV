@@ -333,6 +333,9 @@ public class SearchActivity extends BaseFileOperationActivity implements Adapter
         return null;
     }
 
+    @Override
+    public void notifyUpdateListUI() {
+    }
 
     class SearchTextWatcher implements TextWatcher {
 

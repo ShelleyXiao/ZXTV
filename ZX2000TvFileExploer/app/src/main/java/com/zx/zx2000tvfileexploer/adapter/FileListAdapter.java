@@ -49,9 +49,11 @@ public class FileListAdapter extends ArrayAdapter<FileInfo> {
         FileInfo lFileInfo = mFileViewInteractionHub.getItem(position);
         FileListItem.setupFileListItemInfo(mContext, view, lFileInfo,
                 mFileIcon, mFileViewInteractionHub);
+
         view.findViewById(R.id.file_checkbox_area).setOnClickListener(
                 new FileListItem.FileItemOnClickListener(mContext,
                         mFileViewInteractionHub));
+
         return view;
     }
 }

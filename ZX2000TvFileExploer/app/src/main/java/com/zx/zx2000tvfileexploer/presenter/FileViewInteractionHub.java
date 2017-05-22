@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -35,7 +34,6 @@ import com.zx.zx2000tvfileexploer.ui.dialog.MultiDeleteDialog;
 import com.zx.zx2000tvfileexploer.ui.dialog.ProgressUpdateDialog;
 import com.zx.zx2000tvfileexploer.ui.dialog.RenameDialog;
 import com.zx.zx2000tvfileexploer.ui.dialog.SingleDeleteDialog;
-import com.zx.zx2000tvfileexploer.utils.FileUtils;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
@@ -113,37 +111,40 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
                 if (mCurrentMode != Mode.Pick) {
                     setMode(Mode.Pick);
-                    refreshFileList();
+//                    refreshFileList();
 
-//                    onListItemClick(parent, view, position, id);
-//                    mFileInteractionListener.showMenuDailog();
+                    FileInfo lFileInfo = mFileInteractionListener.getItem(position);
+
+                    if (lFileInfo == null) {
+                        Logger.getLogger().e("file does not exist on position:" + position);
+                        return true;
+                    }
+
+                    if (isInSelection() && !((FileManagerApplication) getActivity().getApplication()).getCopyHelper().isCoping()) {
+                        boolean selected = lFileInfo.Selected;
+                        ImageView checkBox = (ImageView) view
+                                .findViewById(R.id.file_checkbox);
+                        Logger.getLogger().i("checkBox >>>>>>>> " + checkBox);
+                        if (selected) {
+                            mCheckedFileNameList.remove(lFileInfo);
+                            checkBox.setImageResource(R.drawable.check);
+                        } else {
+                            mCheckedFileNameList.add(lFileInfo);
+                            checkBox.setImageResource(R.drawable.checked);
+                        }
+                        Logger.getLogger().e("Select file mode = " + lFileInfo.getMode());
+                        lFileInfo.Selected = !selected;
+                        getActivity().updateSelectInfo(mCheckedFileNameList.size());
+                    }
                 }
+                mFileInteractionListener.notifyUpdateListUI();
 
                 return true;
             }
         });
 
-
     }
 
-    private void showProgress(String msg) {
-        progressDialog = new ProgressDialog(mContext);
-        // dialog.setIcon(R.drawable.icon);
-        progressDialog.setMessage(msg);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-    }
-
-    public void refreshFileList() {
-        if (getMode() != Mode.Pick) {
-            Logger.getLogger().d("refreshFileList:  clearSelection");
-            clearSelection();
-        } else {
-            mFileInteractionListener.onRefreshFileList(mCurrentPath,
-                    mFileSortHelper);
-        }
-    }
 
     public void onListItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
@@ -176,9 +177,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
 
         if (!lFileInfo.IsDir) {
-            if (mCurrentMode == Mode.Pick) {
-//                mFileInteractionListener.onPick(lFileInfo);
-            } else {
+            if (mCurrentMode != Mode.Pick) {
                 viewFile(lFileInfo);
             }
             return;
@@ -190,6 +189,11 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         ((FileListActivity) mFileInteractionListener).setCurPath(mCurrentPath);
 
         refreshFileList();
+    }
+
+    public void refreshFileList() {
+        mFileInteractionListener.onRefreshFileList(mCurrentPath,
+                mFileSortHelper);
     }
 
     // check or uncheck
@@ -269,10 +273,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public boolean canShowSelectBg() {
         return mCurrentMode == Mode.Pick;
-    }
-
-    public FileSortHelper.SortMethod getSortMethod() {
-        return mFileSortHelper.getSortMethod();
     }
 
     public FileInfo getItem(int pos) {
@@ -373,7 +373,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void clearSelection() {
-
         if (mCheckedFileNameList.size() > 0) {
             for (FileInfo f : mCheckedFileNameList) {
                 if (f == null) {
@@ -384,9 +383,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             mCheckedFileNameList.clear();
 
         }
-
-        mFileInteractionListener.onRefreshFileList(mCurrentPath,
-                mFileSortHelper);
+        getActivity().updateSelectInfo(mCheckedFileNameList.size());
+        mFileInteractionListener.notifyUpdateListUI();
     }
 
     public void onOperationSelectAll() {
@@ -555,18 +553,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     }
 
-
-    public void onSortChanged(FileSortHelper.SortMethod s) {
-        if (mFileSortHelper.getSortMethod() != s) {
-            mFileSortHelper.setSortMethod(s);
-            sortCurrentList();
-        }
-    }
-
-    public void sortCurrentList() {
-        mFileInteractionListener.sortCurrentList(mFileSortHelper);
-    }
-
     public void onOperationNewFile() {
 
 //        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
@@ -621,59 +607,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         args.putString(GlobalConsts.EXTRA_DIR_PATH, getCurrentPath());
         dialog.setArguments(args);
         dialog.show(((FileListActivity) mFileInteractionListener).getFragmentManager(), CreateDirectoryDialog.class.getName());
-    }
-
-    private boolean doCreateFolder(String text) {
-        if (TextUtils.isEmpty(text))
-            return false;
-
-        if (mFileOperationHelper.createFolder(mCurrentPath, text)) {
-            mFileInteractionListener.addSingleFile(FileUtils
-                    .getFileInfo(FileUtils.makePath(mCurrentPath, text), FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false)));
-            mFileListView.setSelection(mFileListView.getCount() - 1);
-        } else {
-//            new AlertDialog.Builder(mContext)
-//                    .setMessage(
-//                            mContext.getString(R.string.fail_to_create_folder))
-//                    .setPositiveButton(R.string.confirm, null).create().show();
-//            return false;
-        }
-
-        return true;
-    }
-
-    private void createTakePhoto() {
-//        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-//        View view = layoutInflater.inflate(R.layout.dialog_input_layout, null);
-//        final EditText editText = (EditText) view.findViewById(R.id.edit_text);
-//        editText.setText("��Ƭ");
-
-//        Dialog dialog = new CustomDialog.Builder(mContext)
-//                .setTitle(R.string.create_photo_name).setContentView(view)
-//                .setPositiveButton(R.string.cancel, new OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // TODO Auto-generated method stub
-//                        dialog.dismiss();
-//                    }
-//                }).setNegativeButton(R.string.confirm, new OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // TODO Auto-generated method stub
-//
-//                        if (editText != null) {
-//                            String textString = editText.getText().toString();
-//                            dialog.dismiss();
-//                            doTakePhoto(textString);
-//                        } else {
-//                            dialog.dismiss();
-//                        }
-//
-//                    }
-//                }).create();
-//        dialog.show();
     }
 
 }

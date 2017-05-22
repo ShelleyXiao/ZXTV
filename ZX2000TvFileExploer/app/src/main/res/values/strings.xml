@@ -231,4 +231,5 @@
     <string name="of">中的</string>
     <string name="processing_file">处理文件</string>
     <string name="current_speed">当前频率</string>
+    <string name="operation_fail_following">以下文件操作失败</string>
 </resources>

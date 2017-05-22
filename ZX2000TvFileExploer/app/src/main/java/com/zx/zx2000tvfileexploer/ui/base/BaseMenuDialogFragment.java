@@ -76,6 +76,20 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
         window.setAttributes(lp);
 
         mRootView = inflater.inflate(getLayoutId(), container);
+
+//        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+//                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_MENU
+//                        ||keyEvent.getKeyCode() == KeyEvent.KEYCODE_INFO ) {
+//                    Logger.getLogger().i("******************** KEYCODE_MENU d");
+//                    dismiss();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
         return mRootView;
     }
 
@@ -143,11 +157,12 @@ public class BaseMenuDialogFragment extends DialogFragment implements View.OnCli
         View view = mRootView.findViewById(resId);
         if (null != view) {
             view.setFocusable(enable ? true : false);
-//            view.setFocusableInTouchMode(enable ? true : false);
             view.setEnabled(enable ? true : false);
 
             Logger.getLogger().d("setChildEnable ----- " + resId);
         }
     }
+
+
 
 }

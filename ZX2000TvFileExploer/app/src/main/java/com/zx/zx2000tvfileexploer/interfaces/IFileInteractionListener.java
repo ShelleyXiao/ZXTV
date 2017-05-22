@@ -44,4 +44,6 @@ public interface IFileInteractionListener {
 
 	public FileCategoryHelper.FileCategory  getCurrentCategory();
 
+	public void notifyUpdateListUI();
+
 }

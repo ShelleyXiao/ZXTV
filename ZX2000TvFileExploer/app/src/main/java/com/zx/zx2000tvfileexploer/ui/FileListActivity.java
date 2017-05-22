@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
@@ -33,6 +35,7 @@ import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
+import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
 import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.EditMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.ui.dialog.NormalMenuDialogFragment;
@@ -45,6 +48,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+
+import static com.zx.zx2000tvfileexploer.GlobalConsts.TAG_INTENT_FILTER_FAILED_OPS;
 
 public class FileListActivity extends BaseFileOperationActivity implements IFileInteractionListener, IMenuItemSelectListener, DialogInterface.OnDismissListener {
 
@@ -90,16 +95,30 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         }
     };
 
+    private BroadcastReceiver receiver3 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent i) {
+            if (i.getStringArrayListExtra(TAG_INTENT_FILTER_FAILED_OPS) != null) {
+                ArrayList<FileInfo> failedOps = i.getParcelableArrayListExtra(TAG_INTENT_FILTER_FAILED_OPS);
+                if (failedOps != null) {
+                    showFailedOperationDialog(failedOps, i.getBooleanExtra("move", false), FileListActivity.this);
+                }
+            }
+        }
+    };
+
     @Override
     public void onResume() {
         super.onResume();
         registerReceiver(receiver2, new IntentFilter("loadlist"));
+        registerReceiver(receiver3, new IntentFilter(GlobalConsts.TAG_INTENT_FILTER_GENERAL));
     }
 
     @Override
     public void onPause() {
         super.onPause();
         unregisterReceiver(receiver2);
+        unregisterReceiver(receiver3);
     }
 
 
@@ -138,6 +157,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     }
 
     private void initData() {
+        mFileSortHelper = FileSortHelper.getInstance(FileSettingsHelper.getInstance(this));
         mFileViewInteractionHub = new FileViewInteractionHub(this);
         mFileViewInteractionHub.setCurrentPath(mCurPath);
         mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.View);
@@ -199,7 +219,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 //            setCurPath(mCurPath);
         }
 
-        mFileViewInteractionHub.refreshFileList();
+//        mFileViewInteractionHub.refreshFileList();
+        onRefresh();
     }
 
     @Override
@@ -351,6 +372,15 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     }
 
     @Override
+    public void notifyUpdateListUI() {
+        if (mCurrentCategory != FileCategoryHelper.FileCategory.All) {
+            mFileListCursorAdapter.notifyDataSetChanged();
+        } else {
+            mFileListNormalAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void menuItemSelected(int id) {
         switch (id) {
             case R.id.menu_refresh:
@@ -426,7 +456,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     }
 
     public void onRefresh() {
-        mFileViewInteractionHub.refreshFileList();
+//        mFileViewInteractionHub.refreshFileList();
+        onRefreshFileList(mCurPath, mFileSortHelper);
     }
 
     public void updateSelectInfo(int selectedNums) {
@@ -458,23 +489,15 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 }
             }
         } else if (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_INFO) {
-            if (mEditMenuDialog != null && mEditMenuDialog.getShowsDialog()) {
-                mEditMenuDialog.dismiss();
-                Logger.getLogger().d("******onKeyDown****mEditMenuDialog***");
-                return true;
-            } else if (mNormalMenuDialog != null && mNormalMenuDialog.getShowsDialog()) {
-                mNormalMenuDialog.dismiss();
-                Logger.getLogger().d("******onKeyDown****mNormalMenuDialog***");
-                return true;
-            }
-
+            Logger.getLogger().i("******************** KEYCODE_MENU");
             if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
                 mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.Pick);
-//                mFileViewInteractionHub.refreshFileList();
                 showEditMenuDialog();
             } else {
                 showNormalMenuDialog();
             }
+
+            return true;
         }
 
         return super.onKeyDown(keyCode, event);
@@ -564,6 +587,22 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         }
     }
 
+    public void showFailedOperationDialog(ArrayList<FileInfo> failedOps, boolean move,
+                                          Context contextc) {
+        MaterialDialog.Builder mat=new MaterialDialog.Builder(contextc);
+        mat.title(contextc.getString(R.string.operationunsuccesful));
+        mat.positiveColor(getColor(R.color.primary_pink));
+        mat.positiveText(R.string.cancle);
+        String content = contextc.getResources().getString(R.string.operation_fail_following);
+        int k=1;
+        for(FileInfo s:failedOps){
+            content=content+ "\n" + (k) + ". " + s.getName();
+            k++;
+        }
+        mat.content(content);
+        mat.build().show();
+    }
+
     public class refreshFileAsyncTask extends AsyncTask<File, Void, Integer> {
 
         @Override
@@ -615,5 +654,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             showProgressBar(false);
         }
     }
+
+
 
 }
