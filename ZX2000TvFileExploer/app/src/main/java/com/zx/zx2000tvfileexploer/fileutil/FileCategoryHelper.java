@@ -141,7 +141,7 @@ public class FileCategoryHelper {
             return null;
         }
 
-        Uri uri = FileUirUtils.getContentUriByCategory(fc);
+        Uri uri = MediaStoreHack.getContentUriByCategory(fc);
 //        Logger.getLogger().d("uri: " + uri.toString());
         String selection = buildSelectionByCategory(fc);
         if(TextUtils.isEmpty(selection)) {
@@ -167,7 +167,7 @@ public class FileCategoryHelper {
     }
 
     public Cursor query(FileCategory fc, FileSortHelper.SortMethod sort) {
-        Uri uri = FileUirUtils.getContentUriByCategory(fc);
+        Uri uri = MediaStoreHack.getContentUriByCategory(fc);
         String selection = buildSelectionByCategory(fc);
         String sortOrder = buildSortOrder(sort);
 

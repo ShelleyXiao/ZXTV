@@ -25,7 +25,7 @@ import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
-import com.zx.zx2000tvfileexploer.fileutil.FileUirUtils;
+import com.zx.zx2000tvfileexploer.fileutil.MediaStoreHack;
 import com.zx.zx2000tvfileexploer.ui.base.BaseStatusBarActivity;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.utils.SDCardUtils;
@@ -387,7 +387,7 @@ public class MainActivity extends BaseStatusBarActivity implements View.OnClickL
                 selection = MediaStore.Files.FileColumns.DATA + " LIKE '%.apk'";
             }
 
-            startQuery(0, null, FileUirUtils.getContentUriByCategory(category), columns,
+            startQuery(0, null, MediaStoreHack.getContentUriByCategory(category), columns,
                     selection, null, null);
         }
 

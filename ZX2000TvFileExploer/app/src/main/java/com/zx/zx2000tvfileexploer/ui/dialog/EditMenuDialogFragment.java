@@ -1,5 +1,7 @@
 package com.zx.zx2000tvfileexploer.ui.dialog;
 
+import android.view.View;
+
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.ui.base.BaseMenuDialogFragment;
@@ -13,6 +15,7 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
 
     private boolean copying = false;
     private boolean moveing = false;
+    private boolean normal = true;
 
     public EditMenuDialogFragment(IMenuItemSelectListener listener) {
         super(listener);
@@ -30,7 +33,7 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
         mRootView.findViewById(R.id.menu_new_folder).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_copy).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_cancle).setOnClickListener(this);
-        mRootView.findViewById(R.id.menu_rename).setOnClickListener(this);
+//
         mRootView.findViewById(R.id.menu_select_all).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_select_all_cancle).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_paste).setOnClickListener(this);
@@ -45,6 +48,14 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
             setMenuMoving();
         }
 
+        if(!normal) {
+            mRootView.findViewById(R.id.menu_new_folder).setVisibility(View.GONE);
+        }
+
+    }
+
+    public void setNormal(boolean normal) {
+        this.normal = normal;
     }
 
     public boolean isCopying() {
@@ -69,7 +80,6 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
             Logger.getLogger().d("setMenuCoping isCopying");
             setChildEnable(R.id.menu_refresh, false);
             setChildEnable(R.id.menu_new_folder, false);
-            setChildEnable(R.id.menu_rename, false);
             setChildEnable(R.id.menu_select_all, false);
             setChildEnable(R.id.menu_select_all_cancle, false);
             setChildEnable(R.id.menu_move, false);
@@ -83,7 +93,6 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
         } else {
             setChildEnable(R.id.menu_refresh, true);
             setChildEnable(R.id.menu_new_folder, true);
-            setChildEnable(R.id.menu_rename, true);
             setChildEnable(R.id.menu_select_all, true);
             setChildEnable(R.id.menu_select_all_cancle, true);
             setChildEnable(R.id.menu_move, true);
@@ -101,7 +110,6 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
         if(isMoveing()) {
             setChildEnable(R.id.menu_refresh, false);
             setChildEnable(R.id.menu_new_folder, false);
-            setChildEnable(R.id.menu_rename, false);
             setChildEnable(R.id.menu_select_all, false);
             setChildEnable(R.id.menu_select_all_cancle, false);
             setChildEnable(R.id.menu_delete, false);
@@ -115,7 +123,6 @@ public class EditMenuDialogFragment extends BaseMenuDialogFragment {
         } else {
             setChildEnable(R.id.menu_refresh, true);
             setChildEnable(R.id.menu_new_folder, true);
-            setChildEnable(R.id.menu_rename, true);
             setChildEnable(R.id.menu_select_all, true);
             setChildEnable(R.id.menu_select_all_cancle, true);
             setChildEnable(R.id.menu_delete, true);

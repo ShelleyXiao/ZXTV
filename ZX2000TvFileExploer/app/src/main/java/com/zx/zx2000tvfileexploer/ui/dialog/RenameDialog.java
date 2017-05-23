@@ -2,24 +2,21 @@ package com.zx.zx2000tvfileexploer.ui.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
-import com.zx.zx2000tvfileexploer.fileutil.MediaScannerUtils;
+import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.ui.FileListActivity;
-
-import java.io.File;
 
 public class RenameDialog extends DialogFragment {
 	private FileInfo mFileHolder;
@@ -65,22 +62,23 @@ public class RenameDialog extends DialogFragment {
 	}
 	
 	private void renameTo(String to){
-		boolean res = false;
-		
-		if(to.length() > 0){
-			File from = mFileHolder.getFile();
-			
-			File dest = new File(mFileHolder.getFile().getParent() + File.separator + to);
-			if(!dest.exists()){
-				res = mFileHolder.getFile().renameTo(dest);
-				((FileListActivity)this.getActivity()).onRefresh();
+//		boolean res = false;
+//
+//		if(to.length() > 0){
+//			File from = mFileHolder.getFile();
+//
+//			File dest = new File(mFileHolder.getFile().getParent() + File.separator + to);
+//			if(!dest.exists()){
+//				res = mFileHolder.getFile().renameTo(dest);
+//				((FileListActivity)this.getActivity()).onRefresh();
+//
+//				// Inform media scanner
+//				MediaScannerUtils.informFileDeleted(getActivity().getApplicationContext(), from);
+//				MediaScannerUtils.informFileAdded(getActivity().getApplicationContext(), dest);
+//			}
+//		}
+		FileOperationHelper.rename(FileListActivity.mOpenMode, mFileHolder.getFilePath(),
+				mFileHolder.getParent(getActivity()) + "/" + to, getActivity(), false);
 
-				// Inform media scanner
-				MediaScannerUtils.informFileDeleted(getActivity().getApplicationContext(), from);
-				MediaScannerUtils.informFileAdded(getActivity().getApplicationContext(), dest);
-			}
-		}
-		
-		Toast.makeText(getActivity(), res ? R.string.rename_success : R.string.rename_failure, Toast.LENGTH_SHORT).show();
 	}
 }

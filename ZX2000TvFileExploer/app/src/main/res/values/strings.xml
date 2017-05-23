@@ -149,6 +149,7 @@
     <string name="filename_hint">File name</string>
     <string name="choose_filename">File name can\'t be empty!</string>
     <string name="pick_button_default">Pick file</string>
+    <string name="invalid_name">无效文件名</string>
 
     <!-- Construct a unique file name of a file called %s. -->
     <string name="copied_file_name">%s的副本</string>
@@ -232,4 +233,5 @@
     <string name="processing_file">处理文件</string>
     <string name="current_speed">当前频率</string>
     <string name="operation_fail_following">以下文件操作失败</string>
+    <string name="no_writeable">(只读)</string>
 </resources>

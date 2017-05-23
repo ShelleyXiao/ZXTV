@@ -206,4 +206,19 @@ public class RootHelper {
         return rootUri;
     }
 
+    public static FileInfo generateBaseFile(File x, boolean showHidden) {
+        long size = 0;
+        if (!x.isDirectory())
+            size = x.length();
+        FileInfo baseFile = new FileInfo(x.getPath(), parseFilePermission(x), x.lastModified(), size, x.isDirectory());
+        baseFile.setFileName(x.getName());
+        baseFile.setMode(OpenMode.FILE);
+        if (showHidden) {
+            return (baseFile);
+        } else if (!x.isHidden()) {
+            return (baseFile);
+        }
+        return null;
+    }
+
 }

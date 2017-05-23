@@ -1,24 +1,19 @@
 package com.zx.zx2000tvfileexploer.fileutil;
 
+import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.Context;
-import android.content.OperationApplicationException;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.RemoteException;
-import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.OpenMode;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.fileutil.service.DeleteTask;
 import com.zx.zx2000tvfileexploer.interfaces.IOperationProgressListener;
+import com.zx.zx2000tvfileexploer.ui.FileListActivity;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
 
 import java.io.File;
@@ -42,210 +37,163 @@ public class FileOperationHelper {
     private boolean mMoving;
 
 
-
     public FileOperationHelper(IOperationProgressListener l, Context context) {
         moperationListener = l;
         mContext = context;
     }
 
-    public void setFilenameFilter(FilenameFilter f) {
-        mFilter = f;
-    }
-
-    public void Copy(ArrayList<FileInfo> files) {
-        copyFileList(files);
-    }
-
-    public void clear() {
-        synchronized (mCurFileNameList) {
-            mCurFileNameList.clear();
-        }
-    }
-
-
-    private void asnycExecute(Runnable r) {
-        final Runnable _r = r;
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object... params) {
-                synchronized (mCurFileNameList) {
-                    _r.run();
-                }
-
-                try {
-                    mContext.getContentResolver().applyBatch(
-                            MediaStore.AUTHORITY, ops);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (OperationApplicationException e) {
-                    // TODO: handle exception
-                    e.printStackTrace();
-                }
-
-                if (moperationListener != null) {
-                    moperationListener.onOperationFinish(true);
-                }
-                ops.clear();
-                return null;
-            }
-        }.execute();
-    }
-
-
-    public  boolean createFolder(String path, String name) {
-        File f = new File(FileUtils.makePath(path, name));
-        if (f.exists())
-            return false;
-
-        return f.mkdir();
-    }
-
-    public void deleteFiles(ArrayList<FileInfo> files) {
+    public static void deleteFiles(Context context, ArrayList<FileInfo> files) {
         if (files == null) return;
 
-        int mode = checkFolder(new File(files.get(0).getFilePath()).getParentFile(), mContext);
+        int mode = checkFolder(new File(files.get(0).getFilePath()).getParentFile(), context);
         if (mode == 2) {
 //            mainActivity.oparrayList = (files);
 //            mainActivity.operation = DataUtils.DELETE;
+            FileManagerApplication.getInstance().setOppatheList(files);
         } else if (mode == 1 || mode == 0)
-            new DeleteTask(null, mContext).execute((files));
+            new DeleteTask(null, context).execute((files));
         else {
-            Toast.makeText(mContext, R.string.not_allowed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.not_allowed, Toast.LENGTH_SHORT).show();
         }
     }
 
+    public static void rename(OpenMode mode, final String oldPath, final String newPath,
+                       final Activity context, boolean rootmode) {
+        final Toast toast = Toast.makeText(context, context.getString(R.string.rename),
+                Toast.LENGTH_SHORT);
+        toast.show();
 
-    public boolean Rename(FileInfo f, String newName) {
-        if (f == null || newName == null) {
-            return false;
-        }
-
-        File file = new File(f.filePath);
-        String newPath = FileUtils.makePath(
-                FileUtils.getPathFromFilepath(f.filePath), newName);
-        final boolean needScan = file.isFile();
-        try {
-            boolean ret = file.renameTo(new File(newPath));
-            if (ret) {
-                if (needScan) {
-                    moperationListener.onFileChanged(f.filePath);
-                }
-                moperationListener.onFileChanged(newPath);
-            }
-            return ret;
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
-    public void StartMove(ArrayList<FileInfo> files) {
-        if (mMoving)
-            return;
-
-        mMoving = true;
-        copyFileList(files);
-    }
-
-    public boolean isMoveState() {
-        return mMoving;
-    }
-
-
-    public boolean EndMove(String path) {
-        if (!mMoving)
-            return false;
-        mMoving = false;
-
-        if (TextUtils.isEmpty(path))
-            return false;
-
-        final String _path = path;
-        asnycExecute(new Runnable() {
+        FileUtil.rename(new FileInfo(mode, oldPath), new FileInfo(mode, newPath), rootmode, context, new FileUtil.ErrorCallBack() {
             @Override
-            public void run() {
-                for (FileInfo f : mCurFileNameList) {
-                    MoveFile(f, _path);
-                }
+            public void exists(FileInfo file) {
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (toast != null) toast.cancel();
+                        Toast.makeText(context, context.getString(R.string.file_exists),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
-//                moperationListener.onFileChanged(FileUtil.getSdDirectory());
+            @Override
+            public void launchSAF(FileInfo file) {
 
-                clear();
+            }
+
+            @Override
+            public void launchSAF(final FileInfo file, final FileInfo file1) {
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (toast != null) toast.cancel();
+
+                        FileManagerApplication.getInstance().setOppathe(file.getFilePath());
+                        FileManagerApplication.getInstance().setOppathe1(file1.getFilePath());
+                        FileManagerApplication.getInstance().setOperation(Operation.rename);
+                        FileUtil.guideDialogForLEXA(context, file1.getFilePath());
+                    }
+                });
+            }
+
+            @Override
+            public void done(FileInfo hFile, final boolean b) {
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (b) {
+                            ((FileListActivity) context).onRefresh();
+                        } else {
+                            Toast.makeText(context, context.getString(R.string.operationunsuccesful),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void invalidName(final FileInfo file) {
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (toast != null) toast.cancel();
+                        Toast.makeText(context, context.getString(R.string.invalid_name) + ": "
+                                + file.getName(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
-
-        return true;
     }
 
-
-    public boolean Paste(String path) {
-        if (mCurFileNameList.size() == 0)
-            return false;
-
-        final String _path = path;
-        asnycExecute(new Runnable() {
+    public static void mkDir(final FileInfo path, final Activity activity) {
+        final Toast toast = Toast.makeText(activity, activity.getString(R.string.create_new_folder),
+                Toast.LENGTH_SHORT);
+        toast.show();
+        FileUtil.mkdir(path, activity, false, new FileUtil.ErrorCallBack() {
             @Override
-            public void run() {
-                for (FileInfo f : mCurFileNameList) {
-                    CopyFile(f, _path);
-                }
+            public void exists(final FileInfo file) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (toast != null) toast.cancel();
+                        Toast.makeText(activity, activity.getString(R.string.file_exists),
+                                Toast.LENGTH_SHORT).show();
+                        if (activity != null) {
+                            // retry with dialog prompted again
+//                            mkdir(file.getMode(), file.getParent(), ma);
+                        }
+                    }
+                });
+            }
 
-//                moperationListener.onFileChanged(FileUtil.getSdDirectory());
+            @Override
+            public void launchSAF(FileInfo file) {
+                if (toast != null) toast.cancel();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FileManagerApplication.getInstance().setOppathe(path.getFilePath());
+                        FileManagerApplication.getInstance().setOperation(Operation.mkdir);
+                        FileUtil.guideDialogForLEXA(activity, path.getFilePath());
+                    }
+                });
 
-                clear();
+            }
+
+            @Override
+            public void launchSAF(FileInfo file, FileInfo file1) {
+
+            }
+
+            @Override
+            public void done(FileInfo hFile, final boolean b) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (b) {
+                            ((FileListActivity) activity).onRefresh();
+                        } else
+                            Toast.makeText(activity, activity.getString(R.string.operationunsuccesful),
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void invalidName(final FileInfo file) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (toast != null) toast.cancel();
+                        Toast.makeText(activity, activity.getString(R.string.invalid_name)
+                                + ": " + file.getName(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
-
-        return true;
-    }
-
-    public boolean canPaste() {
-        return mCurFileNameList.size() != 0;
-    }
-
-    private void CopyFile(FileInfo f, String dest) {
-        if (f == null || dest == null) {
-            return;
-        }
-
-        File file = new File(f.filePath);
-        if (file.isDirectory()) {
-
-//            // directory exists in destination, rename it
-//            String destPath = FileUtil.makePath(dest, f.fileName);
-//            File destFile = new File(destPath);
-//            int i = 1;
-//            while (destFile.exists()) {
-//                destPath = FileUtil.makePath(dest, f.fileName + " " + i++);
-//                destFile = new File(destPath);
-//            }
-//
-//            for (File child : file.listFiles(mFilter)) {
-//                if (!child.isHidden()
-//                        && FileUtil.isNormalFile(child.getAbsolutePath())) {
-//                    CopyFile(FileUtil.GetFileInfo(child, mFilter, false),
-//                            destPath);
-//                }
-//            }
-        } else {
-
-//            String destFile = FileUtil.copyFile(f.filePath, dest);
-//
-//            FileInfo destFileInfo = FileUtil.GetFileInfo(destFile);
-//            ops.add(ContentProviderOperation
-//                    .newInsert(
-//                            FileUtil.getMediaUriFromFilename(destFileInfo.fileName))
-//                    .withValue(FileColumns.TITLE, destFileInfo.fileName)
-//                    .withValue(FileColumns.DATA, destFileInfo.filePath)
-//                    .withValue(
-//                            FileColumns.MIME_TYPE,
-//                            FileUtil.getMimetypeFromFilename(destFileInfo.fileName))
-//                    .withValue(FileColumns.DATE_MODIFIED,
-//                            destFileInfo.ModifiedDate)
-//                    .withValue(FileColumns.SIZE, destFileInfo.fileSize).build());
-        }
-
     }
 
     private boolean MoveFile(FileInfo f, String dest) {
@@ -327,7 +275,7 @@ public class FileOperationHelper {
 
                 // On Android 5, trigger storage access framework.
                 if (!FileUtil.isWritableNormalOrSaf(folder, context)) {
-                    guideDialogForLEXA(context, folder.getPath());
+                    FileUtil.guideDialogForLEXA(context, folder.getPath());
                     return CAN_CREATE_FILES;
                 }
 
@@ -349,31 +297,5 @@ public class FileOperationHelper {
         }
     }
 
-    public static void guideDialogForLEXA(final Context context, String path) {
-        final MaterialDialog.Builder x = new MaterialDialog.Builder(context);
-        x.title(R.string.needsaccess);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.lexadrawer, null);
-        x.customView(view, true);
-        // textView
-        TextView textView = (TextView) view.findViewById(R.id.description);
-        textView.setText(context.getResources().getString(R.string.needsaccesssummary) + path + context.getResources().getString(R.string.needsaccesssummary1));
-        ((ImageView) view.findViewById(R.id.icon)).setImageResource(R.drawable.sd_operate_step);
-        x.positiveText(R.string.open);
-        x.negativeText(R.string.cancle);
-        x.callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog materialDialog) {
-//                triggerStorageAccessFramework();
-            }
-
-            @Override
-            public void onNegative(MaterialDialog materialDialog) {
-                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-            }
-        });
-        final MaterialDialog y = x.build();
-        y.show();
-    }
 
 }

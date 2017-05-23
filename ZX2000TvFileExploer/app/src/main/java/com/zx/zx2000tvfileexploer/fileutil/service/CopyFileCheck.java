@@ -16,7 +16,7 @@ import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.entity.OpenMode;
-import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.fileutil.ServiceWatcherUtil;
 import com.zx.zx2000tvfileexploer.interfaces.IOperationProgressListener;
@@ -271,7 +271,7 @@ public class CopyFileCheck extends AsyncTask<ArrayList<FileInfo>, String, CopyFi
                 // see MainActivity.onActivityResult()
                 FileManagerApplication.getInstance().getCopyHelper().oparrayListList = filesToCopyPerFolder;
                 FileManagerApplication.getInstance().getCopyHelper().oparrayList = null;
-                FileManagerApplication.getInstance().getCopyHelper().operation = move ? CopyHelper.Operation.Cut : CopyHelper.Operation.Copy;
+                FileManagerApplication.getInstance().getCopyHelper().operation = move ? Operation.Cut : Operation.Copy;
                 FileManagerApplication.getInstance().getCopyHelper().oppatheList = paths;
             } else {
                 if (!move) {

@@ -3,6 +3,7 @@ package com.zx.zx2000tvfileexploer.fileutil.service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.entity.OpenMode;
@@ -67,7 +68,7 @@ public class MoveFiles extends AsyncTask<ArrayList<String>, Void, Boolean> {
         if (movedCorrectly) {
             if (this.currentPath != null && this.currentPath.equals(paths.get(0))) {
                 Intent intent = new Intent("loadlist");
-                context.sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
 
             for (int i = 0; i < paths.size(); i++) {

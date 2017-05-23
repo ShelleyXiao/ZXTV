@@ -14,6 +14,8 @@ import com.zx.zx2000tvfileexploer.ui.base.BaseMenuDialogFragment;
 @SuppressWarnings("ValidFragment")
 public class NormalMenuDialogFragment extends BaseMenuDialogFragment {
 
+    private boolean normal = true;
+
     public NormalMenuDialogFragment(IMenuItemSelectListener listener) {
         super(listener);
     }
@@ -31,6 +33,7 @@ public class NormalMenuDialogFragment extends BaseMenuDialogFragment {
         mRootView.findViewById(R.id.menu_new_folder).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_new_file).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_cancle).setOnClickListener(this);
+        mRootView.findViewById(R.id.menu_rename).setOnClickListener(this);
 
         if(FileManagerApplication.getInstance().getCopyHelper().isCopying()) {
             mRootView.findViewById(R.id.normal_menu_paste).setVisibility(View.VISIBLE);
@@ -39,6 +42,14 @@ public class NormalMenuDialogFragment extends BaseMenuDialogFragment {
             mRootView.findViewById(R.id.normal_menu_copy_cancel).setOnClickListener(this);
         }
 
+        if(!normal) {
+            mRootView.findViewById(R.id.menu_new_folder).setVisibility(View.GONE);
+        }
+
+    }
+
+    public void setNormal(boolean normal) {
+        this.normal = normal;
     }
 
 }

@@ -2,9 +2,12 @@ package com.zx.zx2000tvfileexploer;
 
 import android.app.Application;
 
+import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
 import com.zx.zx2000tvfileexploer.utils.SDCardUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,13 +21,17 @@ public class FileManagerApplication extends Application {
     private SDCardUtils.StorageInfo usb;
     private SDCardUtils.StorageInfo tf;
 
+    private Operation mOperation;
+
+    private String mOppathe, oppathe1;
+    public ArrayList<FileInfo> oppatheList;
+
     private  static FileManagerApplication instance;
 
     public static FileManagerApplication getInstance() {
         return instance;
 
     }
-
 
     @Override
     public void onCreate() {
@@ -39,6 +46,38 @@ public class FileManagerApplication extends Application {
 
     public CopyHelper getCopyHelper(){
         return mCopyHelper;
+    }
+
+    public Operation getOperation() {
+        return mOperation;
+    }
+
+    public String getOppathe() {
+        return mOppathe;
+    }
+
+    public void setOppathe(String oppathe) {
+        mOppathe = oppathe;
+    }
+
+    public String getOppathe1() {
+        return oppathe1;
+    }
+
+    public void setOppathe1(String oppathe1) {
+        this.oppathe1 = oppathe1;
+    }
+
+    public void setOperation(Operation operation) {
+        mOperation = operation;
+    }
+
+    public ArrayList<FileInfo> getOppatheList() {
+        return oppatheList;
+    }
+
+    public void setOppatheList(ArrayList<FileInfo> oppatheList) {
+        this.oppatheList = oppatheList;
     }
 
     public void setStorageInfo() {

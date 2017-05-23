@@ -36,7 +36,7 @@ public class FileIconLoader implements Handler.Callback {
 
     private Context mContext;
 
-    private boolean mPaused;
+    private boolean mPaused = false;
     private boolean mLoadingRequested;
 
     private LoaderThread mLoaderThread;
@@ -95,6 +95,7 @@ public class FileIconLoader implements Handler.Callback {
         pause();
 
         if(mLoaderThread != null) {
+            mLoaderThread.getLooper().quit();
             mLoaderThread.quit();
             mLoaderThread = null;
         }

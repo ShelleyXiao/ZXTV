@@ -79,6 +79,18 @@
         android:textSize="@dimen/px44"/>
 
     <TextView
+        android:id="@+id/disk_writeable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/disk_total"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/px15"
+        android:text="@string/disk_size_total"
+        android:textColor="@color/primary_pink"
+        android:textSize="@dimen/px44"
+        android:visibility="gone"/>
+
+    <TextView
         android:id="@+id/disk_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

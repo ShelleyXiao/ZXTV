@@ -6,20 +6,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.zx.zx2000tvfileexploer.GlobalConsts;
+import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.interfaces.OnProgressUpdate;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +60,156 @@ public class FileUtil {
 
     private static final String FAT = "FAT";
 
+    public interface ErrorCallBack {
+
+        /**
+         * Callback fired when file being created in process already exists
+         *
+         * @param file
+         */
+        void exists(FileInfo file);
+
+        /**
+         * Callback fired when creating new file/directory and required storage access framework permission
+         * to access SD Card is not available
+         *
+         * @param file
+         */
+        void launchSAF(FileInfo file);
+
+        /**
+         * Callback fired when renaming file and required storage access framework permission to access
+         * SD Card is not available
+         *
+         * @param file
+         * @param file1
+         */
+        void launchSAF(FileInfo file, FileInfo file1);
+
+        /**
+         * Callback fired when we're done processing the operation
+         *
+         * @param hFile
+         * @param b     defines whether operation was successful
+         */
+        void done(FileInfo hFile, boolean b);
+
+        /**
+         * Callback fired when an invalid file name is found.
+         *
+         * @param file
+         */
+        void invalidName(FileInfo file);
+    }
+
+    /**
+     * Copy a file. The target file may even be on external SD card for Kitkat.
+     *
+     * @param source The source file
+     * @param target The target file
+     * @return true if the copying was successful.
+     */
+    @SuppressWarnings("null")
+    private static boolean copyFile(final File source, final File target, Context context) {
+        FileInputStream inStream = null;
+        OutputStream outStream = null;
+        FileChannel inChannel = null;
+        FileChannel outChannel = null;
+        try {
+            inStream = new FileInputStream(source);
+
+            // First try the normal way
+            if (isWritable(target)) {
+                // standard way
+                outStream = new FileOutputStream(target);
+                inChannel = inStream.getChannel();
+                outChannel = ((FileOutputStream) outStream).getChannel();
+                inChannel.transferTo(0, inChannel.size(), outChannel);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // Storage Access Framework
+                    DocumentFile targetDocument = getDocumentFile(target, false, context);
+                    outStream =
+                            context.getContentResolver().openOutputStream(targetDocument.getUri());
+                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                    // Workaround for Kitkat ext SD card
+                    Uri uri = MediaStoreHack.getUriFromFile(target.getAbsolutePath(), context);
+                    outStream = context.getContentResolver().openOutputStream(uri);
+                } else {
+                    return false;
+                }
+
+                if (outStream != null) {
+                    // Both for SAF and for Kitkat, write to output stream.
+                    byte[] buffer = new byte[16384]; // MAGIC_NUMBER
+                    int bytesRead;
+                    while ((bytesRead = inStream.read(buffer)) != -1) {
+                        outStream.write(buffer, 0, bytesRead);
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            Log.e("AmazeFileUtils",
+                    "Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath(), e);
+            return false;
+        } finally {
+            try {
+                inStream.close();
+            } catch (Exception e) {
+                // ignore exception
+            }
+
+            try {
+                outStream.close();
+            } catch (Exception e) {
+                // ignore exception
+            }
+
+            try {
+                inChannel.close();
+            } catch (Exception e) {
+                // ignore exception
+            }
+
+            try {
+                outChannel.close();
+            } catch (Exception e) {
+                // ignore exception
+            }
+        }
+        return true;
+    }
+
+    public static OutputStream getOutputStream(final File target, Context context) throws Exception {
+        return getOutputStream(target, context, 0);
+    }
+
+    public static OutputStream getOutputStream(final File target, Context context, long s) throws Exception {
+        OutputStream outStream = null;
+        try {
+            // First try the normal way
+            if (isWritable(target)) {
+                // standard way
+                outStream = new FileOutputStream(target);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // Storage Access Framework
+                    DocumentFile targetDocument = getDocumentFile(target, false, context);
+                    outStream = context.getContentResolver().openOutputStream(targetDocument.getUri());
+                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                    // Workaround for Kitkat ext SD card
+                    return MediaStoreHack.getOutputStream(context, target.getPath());
+                }
+            }
+        } catch (Exception e) {
+            Log.e("AmazeFileUtils",
+                    "Error when copying file from " + target.getAbsolutePath(), e);
+            throw new Exception();
+        }
+        return outStream;
+    }
+
     public static boolean deleteFile(@NonNull final File file, Context context) {
         // First try the normal deletion.
         if (file == null) return true;
@@ -66,7 +229,7 @@ public class FileUtil {
             ContentResolver resolver = context.getContentResolver();
 
             try {
-                Uri uri = FileUirUtils.getUriFromFile(file.getAbsolutePath(), context);
+                Uri uri = MediaStoreHack.getUriFromFile(file.getAbsolutePath(), context);
                 resolver.delete(uri, null, null);
                 return !file.exists();
             } catch (Exception e) {
@@ -175,6 +338,7 @@ public class FileUtil {
      */
     public static DocumentFile getDocumentFile(final File file, final boolean isDirectory, Context context) {
         String baseFolder = getExtSdCardFolder(file, context);
+        Logger.getLogger().d("getDocumentFile********baseFolder " + baseFolder);
         boolean originalDirectory = false;
         if (baseFolder == null) {
             return null;
@@ -323,6 +487,44 @@ public class FileUtil {
         }
     }
 
+
+    private static int checkFolder(final File folder, Context context) {
+        Logger.getLogger().d("folder name " + folder.getAbsolutePath());
+        boolean lol = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        if (lol) {
+
+            boolean ext = FileUtil.isOnExtSdCard(folder, context);
+            if (ext) {
+
+
+                if (!folder.exists() || !folder.isDirectory()) {
+                    Logger.getLogger().i("**************d* 0");
+                    return 0;
+                }
+
+                // On Android 5, trigger storage access framework.
+                if (!FileUtil.isWritableNormalOrSaf(folder, context)) {
+                    return 2;
+                }
+
+
+                return 1;
+            }
+        } else if (Build.VERSION.SDK_INT == 19) {
+            // Assume that Kitkat workaround works
+            if (FileUtil.isOnExtSdCard(folder, context)) return 1;
+
+        }
+
+        // file not on external sd card
+        if (FileUtil.isWritable(new File(folder, "DummyFile"))) {
+            return 1;
+        } else {
+            Logger.getLogger().i("*************** 0");
+            return 0;
+        }
+    }
+
     /**
      * Checks whether the target path exists or is writable
      *
@@ -337,15 +539,17 @@ public class FileUtil {
 
         File folder = new File(f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && FileUtil.isOnExtSdCard(folder, context)) {
+
+            if (FileUtil.isWritableNormalOrSaf(folder, context)) {
+                return 2;
+            }
+
             if (!folder.exists() || !folder.isDirectory()) {
                 return 0;
             }
 
             // On Android 5, trigger storage access framework.
-            if (FileUtil.isWritableNormalOrSaf(folder, context)) {
-                return 1;
 
-            }
         } else if (Build.VERSION.SDK_INT == 19 && FileUtil.isOnExtSdCard(folder, context)) {
             // Assume that Kitkat workaround works
             return 1;
@@ -417,6 +621,120 @@ public class FileUtil {
         return isSuccessful;
     }
 
+    public static void rename(final FileInfo oldFile, final FileInfo newFile, final boolean rootMode,
+                              final Context context, final ErrorCallBack errorCallBack) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                // check whether file names for new file are valid or recursion occurs
+                if (isNewDirectoryRecursive(newFile) ||
+                        !isFileNameValid(newFile.getName(context))) {
+                    errorCallBack.invalidName(newFile);
+                    return null;
+                }
+
+                if (newFile.exists()) {
+                    errorCallBack.exists(newFile);
+                    return null;
+                }
+
+                if (oldFile.isOtgFile()) {
+                    DocumentFile oldDocumentFile = RootHelper.getDocumentFile(oldFile.getFilePath(), context, false);
+                    DocumentFile newDocumentFile = RootHelper.getDocumentFile(newFile.getFilePath(), context, false);
+                    if (newDocumentFile != null) {
+                        errorCallBack.exists(newFile);
+                        return null;
+                    }
+                    errorCallBack.done(newFile, oldDocumentFile.renameTo(newFile.getName(context)));
+                    return null;
+                } else {
+
+                    File file = new File(oldFile.getFilePath());
+                    File file1 = new File(newFile.getFilePath());
+                    switch (oldFile.getMode()) {
+                        case FILE:
+                            int mode = checkFolder(file.getParentFile(), context);
+                            Logger.getLogger().d(">>>>>>>>>>>> mode " + mode);
+                            if (mode == 2) {
+                                errorCallBack.launchSAF(oldFile, newFile);
+                            } else if (mode == 1 || mode == 0) {
+                                try {
+                                    FileUtil.renameFolder(file, file1, context);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                boolean a = !file.exists() && file1.exists();
+                                errorCallBack.done(newFile, a);
+                                return null;
+                            }
+                            break;
+
+
+                    }
+                }
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
+    private static boolean rename(File f, String name, boolean root){
+        String newPath = f.getParent() + "/" + name;
+        if (f.getParentFile().canWrite()) {
+            return f.renameTo(new File(newPath));
+        }
+
+        return false;
+    }
+
+    static boolean renameFolder(@NonNull final File source, @NonNull final File target,
+                                Context context) {
+        // First try the normal rename.
+        if (rename(source, target.getName(), false)) {
+            return true;
+        }
+        if (target.exists()) {
+            return false;
+        }
+
+        // Try the Storage Access Framework if it is just a rename within the same parent folder.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && source.getParent().equals(target.getParent()) && FileUtil.isOnExtSdCard(source, context)) {
+            DocumentFile document = getDocumentFile(source, true, context);
+            if (document.renameTo(target.getName())) {
+                return true;
+            }
+        }
+
+        // Try the manual way, moving files individually.
+        if (!mkdir(target, context)) {
+            return false;
+        }
+
+        File[] sourceFiles = source.listFiles();
+
+        if (sourceFiles == null) {
+            return true;
+        }
+
+        for (File sourceFile : sourceFiles) {
+            String fileName = sourceFile.getName();
+            File targetFile = new File(target, fileName);
+            if (!copyFile(sourceFile, targetFile, context)) {
+                // stop on first error
+                return false;
+            }
+        }
+        // Only after successfully copying all files, delete files on source folder.
+        for (File sourceFile : sourceFiles) {
+            if (!deleteFile(sourceFile, context)) {
+                // stop on first error
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Validates file name
      * special reserved characters shall not be allowed in the file names on FAT filesystems
@@ -474,7 +792,92 @@ public class FileUtil {
     public static float readableFileSizeFloat(long size) {
         if (size <= 0)
             return 0;
-        float digitGroups = (float) (size / (1024*1024));
+        float digitGroups = (float) (size / (1024 * 1024));
         return digitGroups;
+    }
+
+    public static boolean isNewDirectoryRecursive(FileInfo file) {
+        return file.getName().equals(file.getParentName());
+    }
+
+    public static void mkdir(@NonNull final FileInfo file, final Context context, final boolean rootMode,
+                             @NonNull final ErrorCallBack errorCallBack) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                // checking whether filename is valid or a recursive call possible
+                if (isNewDirectoryRecursive(file) ||
+                        !isFileNameValid(file.getName(context))) {
+                    errorCallBack.invalidName(file);
+                    return null;
+                }
+
+                if (file.exists()) {
+                    errorCallBack.exists(file);
+                    return null;
+                }
+                if (file.isOtgFile()) {
+
+                    // first check whether new directory already exists
+                    DocumentFile directoryToCreate = RootHelper.getDocumentFile(file.getFilePath(), context, false);
+                    if (directoryToCreate != null) errorCallBack.exists(file);
+
+                    DocumentFile parentDirectory = RootHelper.getDocumentFile(file.getParent(context), context, false);
+                    if (parentDirectory.isDirectory()) {
+                        parentDirectory.createDirectory(file.getName(context));
+                        errorCallBack.done(file, true);
+                    } else errorCallBack.done(file, false);
+                    return null;
+                } else {
+                    if (file.isLocal()) {
+                        int mode = checkFolder(new File(file.getParent(context)), context);
+//                        int mode = checkFolder(file.getParentName(), context);
+                        Logger.getLogger().e("mode = " + mode);
+                        if (mode == 2) {
+                            errorCallBack.launchSAF(file);
+                            return null;
+                        }
+                        if (mode == 1 || mode == 0)
+                            FileUtil.mkdirs(context, file);
+
+                        errorCallBack.done(file, file.exists());
+                        return null;
+                    }
+
+                    errorCallBack.done(file, file.exists());
+                }
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+
+    public static void guideDialogForLEXA(final Context context, String path) {
+        final MaterialDialog.Builder x = new MaterialDialog.Builder(context);
+        x.title(R.string.needsaccess);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.lexadrawer, null);
+        x.customView(view, true);
+        // textView
+        TextView textView = (TextView) view.findViewById(R.id.description);
+        textView.setText(context.getResources().getString(R.string.needsaccesssummary) + path + context.getResources().getString(R.string.needsaccesssummary1));
+        ((ImageView) view.findViewById(R.id.icon)).setImageResource(R.drawable.sd_operate_step);
+        x.positiveText(R.string.open);
+        x.negativeText(R.string.cancle);
+        x.callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog materialDialog) {
+                Intent intent = new Intent(GlobalConsts.LAUNCHER_LEXA);
+                LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
+                manager.sendBroadcast(intent);
+            }
+
+            @Override
+            public void onNegative(MaterialDialog materialDialog) {
+                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+            }
+        });
+        final MaterialDialog y = x.build();
+        y.show();
     }
 }

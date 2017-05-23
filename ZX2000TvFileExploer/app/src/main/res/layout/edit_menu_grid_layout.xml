@@ -52,25 +52,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/menu_rename"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sel_focus"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/px15"
-                android:gravity="center"
-                android:text="@string/operation_rename"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/px36"
-                />
-
-        </LinearLayout>
 
 
         <LinearLayout
@@ -135,49 +117,6 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/menu_select_all"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sel_focus"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/px15"
-                android:gravity="center"
-                android:text="@string/operation_selectall"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/px36"
-                />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/menu_select_all_cancle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sel_focus"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/px15"
-                android:gravity="center"
-                android:text="@string/operation_selectall_cancle"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/px36"
-                />
-
-        </LinearLayout>
-
-
         <LinearLayout
             android:id="@+id/menu_paste"
             android:layout_width="match_parent"
@@ -233,6 +172,48 @@
                 android:layout_margin="@dimen/px15"
                 android:gravity="center"
                 android:text="@string/operation_move_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px36"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/menu_select_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_selectall"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px36"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/menu_select_all_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_selectall_cancle"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/px36"
                 />

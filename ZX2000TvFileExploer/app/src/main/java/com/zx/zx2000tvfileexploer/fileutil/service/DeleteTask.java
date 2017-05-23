@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.provider.DocumentFile;
 import android.widget.Toast;
 
+import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
 
 import java.util.ArrayList;
 
@@ -35,24 +39,21 @@ public class DeleteTask extends AsyncTask<ArrayList<FileInfo>, String, Boolean> 
         boolean b = true;
         if(files.size()==0)return true;
 
-//        if (files.get(0).isOtgFile()) {
-//            for (File a : files) {
-//                DocumentFile documentFile = RootHelper.getDocumentFile(a.getPath(), cd, false);
-//                b = documentFile.delete();
-//            }
-//        }  else {
-//
-//        }
-
-        for(FileInfo a : files) {
-            try {
-                (a).delete(cd);
-            } catch (Exception e) {
-                e.printStackTrace();
-                b = false;
+        if (files.get(0).isOtgFile()) {
+            for (FileInfo a : files) {
+                DocumentFile documentFile = RootHelper.getDocumentFile(a.getFilePath(), cd, false);
+                b = documentFile.delete();
+            }
+        }  else {
+            for(FileInfo a : files) {
+                try {
+                    (a).delete(cd);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    b = false;
+                }
             }
         }
-
 
 
 
@@ -62,11 +63,13 @@ public class DeleteTask extends AsyncTask<ArrayList<FileInfo>, String, Boolean> 
     @Override
     public void onPostExecute(Boolean b) {
         Intent intent = new Intent("loadlist");
-        cd.sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(cd).sendBroadcast(intent);
 
         if (!b) {
             Toast.makeText(cd, cd.getResources().getString(R.string.delete_failure), Toast.LENGTH_SHORT).show();
-
+        } else {
+            Toast.makeText(cd, cd.getResources().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+            FileManagerApplication.getInstance().setOppatheList(null);
         }
     }
 

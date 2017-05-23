@@ -96,4 +96,8 @@ public class FileIconHelper implements IconLoadFinishListener {
             imageFrames.remove(view);
         }
     }
+
+    public void stop() {
+        mFileIconLoader.stop();
+    }
 }

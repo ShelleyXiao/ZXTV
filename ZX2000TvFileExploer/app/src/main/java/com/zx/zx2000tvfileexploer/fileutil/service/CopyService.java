@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.Formatter;
 
 import com.zx.zx2000tvfileexploer.GlobalConsts;
@@ -177,14 +178,12 @@ public class CopyService extends Service {
         public void onPostExecute(Integer b) {
 
             super.onPostExecute(b);
-            //  publishResults(b, "", totalSourceFiles, totalSourceFiles, totalSize, totalSize, 0, true, move);
-            // stopping watcher if not yet finished
             watcherUtil.stopWatch();
             Logger.getLogger().e("copy.failedFOps " + copy.failedFOps.size());
             generateNotification(copy.failedFOps, move);
 
             Intent intent = new Intent("loadlist");
-            sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
             stopSelf();
         }
 

@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 
+import java.io.OutputStream;
+
 /**
  * User: ShaudXiao
  * Date: 2017-05-15
@@ -18,7 +20,7 @@ import android.provider.MediaStore;
  */
 
 
-public class FileUirUtils {
+public class MediaStoreHack {
 
     public static Uri getContentUriByCategory(FileCategoryHelper.FileCategory fc) {
         Uri uri;
@@ -64,6 +66,18 @@ public class FileUirUtils {
             filecursor.close();
             return uri;
         }
+    }
+
+    public static OutputStream getOutputStream(Context context, String str) {
+        OutputStream outputStream = null;
+        Uri fileUri = getUriFromFile(str, context);
+        if (fileUri != null) {
+            try {
+                outputStream = context.getContentResolver().openOutputStream(fileUri);
+            } catch (Throwable th) {
+            }
+        }
+        return outputStream;
     }
 
 }

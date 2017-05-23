@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.interfaces.IOperationProgressListener;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
 import com.zx.zx2000tvfileexploer.utils.Logger;
@@ -17,9 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zx.zx2000tvfileexploer.fileutil.CopyHelper.Operation.Copy;
-import static com.zx.zx2000tvfileexploer.fileutil.CopyHelper.Operation.Cut;
-import static com.zx.zx2000tvfileexploer.fileutil.CopyHelper.Operation.Unkonw;
+import static com.zx.zx2000tvfileexploer.entity.Operation.Copy;
+import static com.zx.zx2000tvfileexploer.entity.Operation.Cut;
+import static com.zx.zx2000tvfileexploer.entity.Operation.Unkonw;
 
 
 public class CopyHelper {
@@ -43,10 +44,6 @@ public class CopyHelper {
     public ArrayList<String> oppatheList;
 
 
-    public enum Operation {
-        Copy, Cut, Unkonw
-    }
-
     public CopyHelper(Context c) {
         mContext = c;
     }
@@ -57,7 +54,7 @@ public class CopyHelper {
     }
 
     public void copy(List<FileInfo> tbc) {
-        operation = Operation.Copy;
+        operation = Copy;
         mClipboard = tbc;
 //        mClipboard = new ArrayList<>(tbc);
 //        Logger.getLogger().d("mClipboard " + mClipboard.size());
@@ -70,7 +67,7 @@ public class CopyHelper {
     }
 
     public void cut(List<FileInfo> tbc) {
-        operation = Operation.Cut;
+        operation = Cut;
 
         mClipboard = tbc;
     }
@@ -92,7 +89,7 @@ public class CopyHelper {
     }
 
     public boolean isCoping() {
-        return operation == Operation.Copy || operation == Operation.Cut;
+        return operation == Copy || operation == Cut;
     }
 
     /**

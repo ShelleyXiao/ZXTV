@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,20 +19,14 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class SingleDeleteDialog extends DialogFragment {
-    private Context mContext;
     private ArrayList<FileInfo> destFiles = new ArrayList<>();
 
-    private FileOperationHelper mFileOperationHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 		FileInfo fileInfo = getArguments().getParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER);
         destFiles.add(fileInfo);
-        mContext = (FileListActivity) this.getActivity();
-
-        mFileOperationHelper = new FileOperationHelper(null, mContext);
     }
 
     @Override
@@ -45,7 +38,7 @@ public class SingleDeleteDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), getResources().getString(R.string.deleting), Toast.LENGTH_SHORT).show();
 
-                        mFileOperationHelper.deleteFiles(destFiles);
+                        FileOperationHelper.deleteFiles(getActivity(), destFiles);
                     }
                 })
 //				.setIcon(mFileHolder.getIcon())

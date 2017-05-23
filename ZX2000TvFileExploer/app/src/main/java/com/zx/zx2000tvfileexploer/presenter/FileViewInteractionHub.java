@@ -19,6 +19,7 @@ import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
@@ -142,6 +143,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 return true;
             }
         });
+
+
 
     }
 
@@ -439,7 +442,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             helper.MOVE_PATH = null;
 
             helper.COPY_PATH = copies;
-            helper.operation = CopyHelper.Operation.Copy;
+            helper.operation = Operation.Copy;
             for (int i = 0; i < helper.COPY_PATH.size(); i++) {
                 Logger.getLogger().i("helper.COPY_PATH  " + helper.COPY_PATH.get(i).getFilePath());
             }
@@ -499,7 +502,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
             helper.COPY_PATH = null;
             helper.MOVE_PATH = null;
-            helper.operation = CopyHelper.Operation.Unkonw;
+            helper.operation = Operation.Unkonw;
         }
     }
 
@@ -523,7 +526,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             helper.MOVE_PATH = copies;
 
             helper.COPY_PATH = null;
-            helper.operation = CopyHelper.Operation.Cut;
+            helper.operation = Operation.Cut;
             for (int i = 0; i < helper.MOVE_PATH.size(); i++) {
                 Logger.getLogger().i("helper.MOVE_PATH  " + helper.MOVE_PATH.get(i).getFilePath());
             }
@@ -541,15 +544,23 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
 
     public void onOperationRename() {
-        if (getSelectedFileList().size() > 1) {
-            Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_rename_msg), Toast.LENGTH_LONG).show();
-            return;
+//        if (getSelectedFileList().size() > 1) {
+//            Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_rename_msg), Toast.LENGTH_LONG).show();
+//            return;
+//        }
+
+        long index = mFileListView.getSelectedItemId();
+        FileInfo lFileInfo = mFileInteractionListener.getItem((int)index);
+        Logger.getLogger().d("Selected id = " + lFileInfo.getFilePath());
+        if(lFileInfo != null) {
+            DialogFragment dialog = new RenameDialog();
+            Bundle args = new Bundle();
+            args.putParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER, lFileInfo);
+            dialog.setArguments(args);
+            dialog.show(getActivity().getFragmentManager(), RenameDialog.class.getName());
         }
-        DialogFragment dialog = new RenameDialog();
-        Bundle args = new Bundle();
-        args.putParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER, getSelectedFileList().get(0));
-        dialog.setArguments(args);
-        dialog.show(getActivity().getFragmentManager(), RenameDialog.class.getName());
+
+
 
     }
 
@@ -600,7 +611,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     }
 
-    public void createFloder() {
+    public void onOperationCreateFloder() {
         CreateDirectoryDialog dialog = new CreateDirectoryDialog();
 //        dialog.setTargetFragment(this, 0);
         Bundle args = new Bundle();

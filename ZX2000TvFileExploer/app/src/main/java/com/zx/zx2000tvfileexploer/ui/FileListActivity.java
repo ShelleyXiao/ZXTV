@@ -9,9 +9,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.GridView;
@@ -26,16 +27,17 @@ import com.zx.zx2000tvfileexploer.adapter.FileListAdapter;
 import com.zx.zx2000tvfileexploer.adapter.FileListCursorAdapter;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.entity.OpenMode;
-import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
+import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
+import com.zx.zx2000tvfileexploer.fileutil.service.DeleteTask;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
-import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
 import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.EditMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.ui.dialog.NormalMenuDialogFragment;
@@ -79,12 +81,25 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
     public static OpenMode mOpenMode = OpenMode.UNKNOWN;
 
+    private LocalBroadcastManager mLocalBroadcastManager;
+
     private FilenameFilter hideFileFilter = new FilenameFilter() {
         @Override
         public boolean accept(File dir, String filename) {
             return !filename.startsWith(".");
         }
     };
+
+    private BroadcastReceiver receiver1 = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Logger.getLogger().w("receive: lexa");
+            Intent intent1 = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            startActivityForResult(intent1, 3);
+        }
+    };
+
 
     private BroadcastReceiver receiver2 = new BroadcastReceiver() {
 
@@ -110,17 +125,77 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     @Override
     public void onResume() {
         super.onResume();
-        registerReceiver(receiver2, new IntentFilter("loadlist"));
-        registerReceiver(receiver3, new IntentFilter(GlobalConsts.TAG_INTENT_FILTER_GENERAL));
+
+        mLocalBroadcastManager.registerReceiver(receiver1, new IntentFilter(GlobalConsts.LAUNCHER_LEXA));
+        mLocalBroadcastManager.registerReceiver(receiver2, new IntentFilter("loadlist"));
+        mLocalBroadcastManager.registerReceiver(receiver3, new IntentFilter(GlobalConsts.TAG_INTENT_FILTER_GENERAL));
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(receiver2);
-        unregisterReceiver(receiver3);
+        mLocalBroadcastManager.unregisterReceiver(receiver2);
+        mLocalBroadcastManager.unregisterReceiver(receiver3);
+
+//        mFileIconHelper.stop();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 3) {
+            Uri treeUri;
+            if (resultCode == Activity.RESULT_OK) {
+                // Get Uri from Storage Access Framework.
+                treeUri = intent.getData();
+                Logger.getLogger().d("Uri: " + treeUri.toString());
+                // Persist URI - this is required for verification of writability.
+                if (treeUri != null)
+                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                            .putString("URI", treeUri.toString()).commit();
+            } else {
+                // If not confirmed SAF, or if still not writable, then revert settings.
+                /* DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder_saf, false, currentFolder);
+                        ||!FileUtil.isWritableNormalOrSaf(currentFolder)*/
+                return;
+            }
+
+            // After confirmation, update stored value of folder.
+            // Persist access permissions.
+            final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
+            Operation operation = FileManagerApplication.getInstance().getOperation();
+            switch (operation) {
+                case delete://deletion
+                    new DeleteTask(null, this).execute(FileManagerApplication.getInstance().getOppatheList());
+                    break;
+                case Copy://copying
+                    //legacy compatibility
+
+                    break;
+                case Cut://moving
+                    //legacy compatibility
+
+                    break;
+                case mkdir://mkdir
+                    FileOperationHelper.mkDir(RootHelper.generateBaseFile(new File(FileManagerApplication.getInstance().getOppathe()), true), this);
+
+                    break;
+                case rename:
+                    FileOperationHelper.rename(mOpenMode,
+                            FileManagerApplication.getInstance().getOppathe(),
+                            FileManagerApplication.getInstance().getOppathe1(),
+                            this,
+                            false);
+                    break;
+
+            }
+            FileManagerApplication.getInstance().setOperation(Operation.Unkonw);
+        }
+    }
 
     @Override
     protected int getLayoutId() {
@@ -141,6 +216,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         initView();
 
         initData();
+
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 
     @Override
@@ -292,6 +369,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         Logger.getLogger().d(" onRefreshFileList**************path " + path);
         mFileSortHelper = sort;
 
+//        mFileIconHelper.stop();
+
         if (mCurrentCategory != FileCategoryHelper.FileCategory.All) {
 
             FileCategoryHelper.FileCategory curCategoryType = mFileCagetoryHelper
@@ -392,9 +471,11 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_rename:
                 mFileViewInteractionHub.onOperationRename();
+                FileManagerApplication.getInstance().setOperation(Operation.rename);
                 break;
             case R.id.menu_new_folder:
-                mFileViewInteractionHub.createFloder();
+                mFileViewInteractionHub.onOperationCreateFloder();
+                FileManagerApplication.getInstance().setOperation(Operation.mkdir);
                 break;
             case R.id.menu_select_all:
                 if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
@@ -414,7 +495,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
                     mFileViewInteractionHub.onOperationCopy();
                 }
-
+                FileManagerApplication.getInstance().setOperation(Operation.Copy);
                 break;
             case R.id.menu_copy_cancel:
                 mEditMenuDialog.setCopying(false);
@@ -442,6 +523,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_move:
                 mFileViewInteractionHub.onOperationMove();
+                FileManagerApplication.getInstance().setOperation(Operation.Cut);
                 break;
             case R.id.menu_move_cancel:
                 mEditMenuDialog.setMoveing(false);
@@ -450,6 +532,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_delete:
                 mFileViewInteractionHub.onOperationDelete();
+                FileManagerApplication.getInstance().setOperation(Operation.delete);
                 break;
 
         }
@@ -536,6 +619,11 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             mNormalMenuDialog = null;
         }
         mNormalMenuDialog = new NormalMenuDialogFragment(this);
+        if(mCurrentCategory != FileCategoryHelper.FileCategory.All) {
+            mNormalMenuDialog.setNormal(false);
+        } else {
+            mNormalMenuDialog.setNormal(true);
+        }
         mNormalMenuDialog.show(getFragmentManager(), NormalMenuDialogFragment.class.getSimpleName());
     }
 
@@ -548,16 +636,22 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         }
         mEditMenuDialog = new EditMenuDialogFragment(this);
         if (((FileManagerApplication) this.getApplication()).getCopyHelper().isCoping()) {
-            if (((FileManagerApplication) getApplication()).getCopyHelper().getOperationType() == CopyHelper.Operation.Copy) {
+            if (((FileManagerApplication) getApplication()).getCopyHelper().getOperationType() == Operation.Copy) {
                 mEditMenuDialog.setCopying(true);
                 Logger.getLogger().d(" showEditMenuDialog copy");
-            } else if (((FileManagerApplication) getApplication()).getCopyHelper().getOperationType() == CopyHelper.Operation.Cut) {
+            } else if (((FileManagerApplication) getApplication()).getCopyHelper().getOperationType() == Operation.Cut) {
                 mEditMenuDialog.setMoveing(true);
             }
 
         } else {
             mEditMenuDialog.setCopying(false);
             mEditMenuDialog.setMoveing(false);
+        }
+
+        if(mCurrentCategory != FileCategoryHelper.FileCategory.All) {
+            mEditMenuDialog.setNormal(false);
+        } else {
+            mEditMenuDialog.setNormal(true);
         }
         mEditMenuDialog.show(getFragmentManager(), EditMenuDialogFragment.class.getSimpleName());
 

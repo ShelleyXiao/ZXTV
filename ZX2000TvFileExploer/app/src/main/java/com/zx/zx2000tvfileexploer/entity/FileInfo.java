@@ -277,6 +277,15 @@ public class FileInfo implements Parcelable, Comparable<FileInfo> {
         return ext;
     }
 
+    public String getParentName() {
+        StringBuilder builder = new StringBuilder(filePath);
+        StringBuilder parentPath = new StringBuilder(builder.substring(0,
+                builder.length() - (getName().length() + 1)));
+        String parentName = parentPath.substring(parentPath.lastIndexOf("/") + 1,
+                parentPath.length());
+        return parentName;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "-" + getFileName();

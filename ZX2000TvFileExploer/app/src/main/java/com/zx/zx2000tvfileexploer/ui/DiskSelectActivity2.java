@@ -13,11 +13,13 @@ import com.open.androidtvwidget.view.LinearMainLayout;
 import com.open.androidtvwidget.view.MainUpView;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
+import com.zx.zx2000tvfileexploer.fileutil.FileUtil;
 import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.utils.SDCardUtils;
 import com.zx.zx2000tvfileexploer.view.RoundProgressBar;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -82,8 +84,8 @@ public class DiskSelectActivity2 extends BaseFileOperationActivity {
             if (info.isMounted()) {
                 View view = mLayoutInflater.inflate(R.layout.disk_item_layout, null);
 //                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int)getResources().getDimension(R.dimen.px400),
-                        (int)getResources().getDimension(R.dimen.px650));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.px400),
+                        (int) getResources().getDimension(R.dimen.px650));
                 params.setMargins(15, 30, 15, 30);
 
                 view.setFocusable(true);
@@ -144,6 +146,7 @@ public class DiskSelectActivity2 extends BaseFileOperationActivity {
         TextView tvTotalSpace = (TextView) layout.findViewById(R.id.disk_total);
         TextView tvUseSpace = (TextView) layout.findViewById(R.id.disk_use);
         TextView name = (TextView) layout.findViewById(R.id.disk_name);
+        TextView tvWriteable = (TextView) layout.findViewById(R.id.disk_writeable);
 
         if (info.isMounted()) {
             Logger.getLogger().d("Info: " + info.free + " " + info.total);
@@ -153,8 +156,14 @@ public class DiskSelectActivity2 extends BaseFileOperationActivity {
             name.setText(info.label);
         }
 
-    }
+        if (FileUtil.isWritableNormalOrSaf(new File(info.path), this)) {
+            tvWriteable.setVisibility(View.GONE);
+        } else {
+            tvWriteable.setVisibility(View.VISIBLE);
+            tvWriteable.setText(R.string.no_writeable);
+        }
 
+    }
 
     private void setProgress(RoundProgressBar bar, SDCardUtils.StorageInfo info) {
         if (null == bar) {
