@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class SingleDeleteDialog extends DialogFragment {
     private ArrayList<FileInfo> destFiles = new ArrayList<>();
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

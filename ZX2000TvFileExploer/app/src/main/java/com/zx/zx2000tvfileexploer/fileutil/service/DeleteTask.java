@@ -69,8 +69,8 @@ public class DeleteTask extends AsyncTask<ArrayList<FileInfo>, String, Boolean> 
             Toast.makeText(cd, cd.getResources().getString(R.string.delete_failure), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(cd, cd.getResources().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
-            FileManagerApplication.getInstance().setOppatheList(null);
         }
+        FileManagerApplication.getInstance().setOppatheList(null);
     }
 
     private void delete(final Context context, final String file) {

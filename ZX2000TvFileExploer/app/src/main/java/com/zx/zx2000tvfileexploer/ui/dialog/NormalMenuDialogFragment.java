@@ -27,7 +27,6 @@ public class NormalMenuDialogFragment extends BaseMenuDialogFragment {
 
     @Override
     public void init() {
-
         mRootView.findViewById(R.id.menu_refresh).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_select).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_new_folder).setOnClickListener(this);
@@ -35,11 +34,19 @@ public class NormalMenuDialogFragment extends BaseMenuDialogFragment {
         mRootView.findViewById(R.id.menu_cancle).setOnClickListener(this);
         mRootView.findViewById(R.id.menu_rename).setOnClickListener(this);
 
+        mRootView.findViewById(R.id.menu_copy).setOnClickListener(this);
+        mRootView.findViewById(R.id.menu_move).setOnClickListener(this);
+        mRootView.findViewById(R.id.menu_delete).setOnClickListener(this);
+
         if(FileManagerApplication.getInstance().getCopyHelper().isCopying()) {
             mRootView.findViewById(R.id.normal_menu_paste).setVisibility(View.VISIBLE);
             mRootView.findViewById(R.id.normal_menu_copy_cancel).setVisibility(View.VISIBLE);
             mRootView.findViewById(R.id.normal_menu_paste).setOnClickListener(this);
             mRootView.findViewById(R.id.normal_menu_copy_cancel).setOnClickListener(this);
+
+            mRootView.findViewById(R.id.menu_copy).setVisibility(View.GONE);
+            mRootView.findViewById(R.id.menu_move).setVisibility(View.GONE);
+            mRootView.findViewById(R.id.menu_delete).setVisibility(View.GONE);
         }
 
         if(!normal) {

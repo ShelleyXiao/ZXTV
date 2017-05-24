@@ -49,6 +49,9 @@ public class CopyHelper {
     }
 
     public boolean isCopying() {
+        if(COPY_PATH != null)
+        Logger.getLogger().i("COPY_PATH = " + COPY_PATH.size());
+
         return ((COPY_PATH != null && COPY_PATH.size() > 0) || (MOVE_PATH != null && MOVE_PATH.size() > 0))
                 && (operation == Copy || operation == Cut);
     }

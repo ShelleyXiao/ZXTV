@@ -35,6 +35,45 @@
             />
 
         <LinearLayout
+            android:id="@+id/menu_copy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/opearation_copy"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px42"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_move"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_move"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px42"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/normal_menu_paste"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +89,7 @@
                 android:gravity="center"
                 android:text="@string/operation_paste"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -71,7 +110,7 @@
                 android:gravity="center"
                 android:text="@string/operation_copy_cancel"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -98,7 +137,7 @@
                 android:gravity="center"
                 android:text="@string/operation_refresh"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -125,7 +164,7 @@
                 android:gravity="center"
                 android:text="@string/operatiion_select"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -152,7 +191,7 @@
                 android:gravity="center"
                 android:text="@string/operation_create_folder"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -180,7 +219,7 @@
                 android:gravity="center"
                 android:text="@string/operation_create_file"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -209,7 +248,7 @@
                 android:gravity="center"
                 android:text="@string/cancle"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -229,7 +268,27 @@
                 android:gravity="center"
                 android:text="@string/operation_rename"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/px48"
+                android:textSize="@dimen/px42"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sel_focus"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/px15"
+                android:gravity="center"
+                android:text="@string/operation_delete"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px42"
                 />
 
         </LinearLayout>
@@ -266,7 +325,7 @@
     <!--android:gravity="center"-->
     <!--android:text="@string/operatiion_select"-->
     <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/px48"-->
+    <!--android:textSize="@dimen/px42"-->
     <!--/>-->
 
     <!--</LinearLayout>-->

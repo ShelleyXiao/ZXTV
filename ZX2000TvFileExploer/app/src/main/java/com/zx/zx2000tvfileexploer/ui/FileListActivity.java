@@ -28,19 +28,24 @@ import com.zx.zx2000tvfileexploer.adapter.FileListCursorAdapter;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.entity.OpenMode;
 import com.zx.zx2000tvfileexploer.entity.Operation;
+import com.zx.zx2000tvfileexploer.fileutil.CopyHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileOperationHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
+import com.zx.zx2000tvfileexploer.fileutil.ServiceWatcherUtil;
+import com.zx.zx2000tvfileexploer.fileutil.service.CopyService;
 import com.zx.zx2000tvfileexploer.fileutil.service.DeleteTask;
+import com.zx.zx2000tvfileexploer.fileutil.service.MoveFiles;
 import com.zx.zx2000tvfileexploer.interfaces.IFileInteractionListener;
 import com.zx.zx2000tvfileexploer.interfaces.IMenuItemSelectListener;
 import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
 import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.EditMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.ui.dialog.NormalMenuDialogFragment;
+import com.zx.zx2000tvfileexploer.ui.dialog.ProgressUpdateDialog;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
@@ -52,6 +57,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static com.zx.zx2000tvfileexploer.GlobalConsts.TAG_INTENT_FILTER_FAILED_OPS;
+import static com.zx.zx2000tvfileexploer.R.dimen.px42;
 
 public class FileListActivity extends BaseFileOperationActivity implements IFileInteractionListener, IMenuItemSelectListener, DialogInterface.OnDismissListener {
 
@@ -106,6 +112,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         @Override
         public void onReceive(Context context, Intent intent) {
             Logger.getLogger().w("receive: loadlist");
+
+            clearCopyOpeartion();
             onRefresh();
         }
     };
@@ -118,6 +126,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 if (failedOps != null) {
                     showFailedOperationDialog(failedOps, i.getBooleanExtra("move", false), FileListActivity.this);
                 }
+                clearCopyOpeartion();
             }
         }
     };
@@ -174,15 +183,42 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                     break;
                 case Copy://copying
                     //legacy compatibility
-
+                    CopyHelper helper = FileManagerApplication.getInstance().getCopyHelper();
+                    if(helper.oparrayList != null && helper.oparrayList.size() != 0) {
+                        helper.oparrayListList = new ArrayList<>();
+                        helper.oparrayListList.add(helper.oparrayList);
+                        helper.oparrayList = null;
+                        helper.oppatheList = new ArrayList<>();
+                        helper.oppatheList.add(helper.oppathe);
+                        helper.oppathe = "";
+                    }
+                    for (int i = 0; i < helper.oparrayListList.size(); i++) {
+                        Intent intent1 = new Intent(getContext(), CopyService.class);
+                        intent1.putExtra(CopyService.TAG_COPY_SOURCES, helper.oparrayList.get(i));
+                        intent1.putExtra(CopyService.TAG_COPY_TARGET, helper.oppatheList.get(i));
+                        ServiceWatcherUtil.runService(this, intent1);
+                    }
                     break;
                 case Cut://moving
                     //legacy compatibility
+                    CopyHelper helper1 = FileManagerApplication.getInstance().getCopyHelper();
+                    if(helper1.oparrayList != null && helper1.oparrayList.size() != 0) {
+                        helper1.oparrayListList = new ArrayList<>();
+                        helper1.oparrayListList.add(helper1.oparrayList);
+                        helper1.oparrayList = null;
+                        helper1.oppatheList = new ArrayList<>();
+                        helper1.oppatheList.add(helper1.oppathe);
+                        helper1.oppathe = "";
+                    }
+                    Logger.getLogger().i("************** " +
+                            helper1.oparrayListList.get(0).get(0));
 
+                    new MoveFiles(helper1.oparrayListList, getContext(),
+                            OpenMode.FILE, mFileViewInteractionHub.getCurrentPath(), null)
+                            .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, helper1.oppatheList);
                     break;
                 case mkdir://mkdir
                     FileOperationHelper.mkDir(RootHelper.generateBaseFile(new File(FileManagerApplication.getInstance().getOppathe()), true), this);
-
                     break;
                 case rename:
                     FileOperationHelper.rename(mOpenMode,
@@ -467,7 +503,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_select:
                 mFileViewInteractionHub.setMode(FileViewInteractionHub.Mode.Pick);
-                mFileViewInteractionHub.refreshFileList();
+                notifyUpdateListUI();
+
                 break;
             case R.id.menu_rename:
                 mFileViewInteractionHub.onOperationRename();
@@ -493,8 +530,10 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 break;
             case R.id.menu_copy:
                 if (mFileViewInteractionHub.getMode() == FileViewInteractionHub.Mode.Pick) {
-                    mFileViewInteractionHub.onOperationCopy();
+//                    mFileViewInteractionHub.onOperationCopy();
                 }
+
+                mFileViewInteractionHub.onOperationCopy();
                 FileManagerApplication.getInstance().setOperation(Operation.Copy);
                 break;
             case R.id.menu_copy_cancel:
@@ -549,6 +588,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Logger.getLogger().i("keyCode " + keyCode);
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
             if (mFileViewInteractionHub == null) {
@@ -683,9 +723,16 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
     public void showFailedOperationDialog(ArrayList<FileInfo> failedOps, boolean move,
                                           Context contextc) {
-        MaterialDialog.Builder mat=new MaterialDialog.Builder(contextc);
+        FragmentTransaction mFragTransaction = getFragmentManager().beginTransaction();
+        ProgressUpdateDialog dialog = (ProgressUpdateDialog) getFragmentManager().findFragmentByTag(ProgressUpdateDialog.class.getName());
+        if(null != dialog) {
+            dialog.dismiss();
+            mFragTransaction.remove(dialog);
+        }
+
+        MaterialDialog.Builder mat = new MaterialDialog.Builder(contextc);
         mat.title(contextc.getString(R.string.operationunsuccesful));
-        mat.positiveColor(getColor(R.color.primary_pink));
+        mat.positiveColor(getResources().getColor(R.color.primary_pink));
         mat.positiveText(R.string.cancle);
         String content = contextc.getResources().getString(R.string.operation_fail_following);
         int k=1;
@@ -695,6 +742,19 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         }
         mat.content(content);
         mat.build().show();
+    }
+
+    //防止出错后影响下步操作
+    private void clearCopyOpeartion() {
+        CopyHelper helper = FileManagerApplication.getInstance().getCopyHelper();
+        if(helper.isCoping()) {
+            helper.operation = Operation.Unkonw;
+            helper.MOVE_PATH = null;
+            helper.COPY_PATH = null;
+        }
+
+        helper.oparrayList = null;
+        helper.oparrayListList = null;
     }
 
     public class refreshFileAsyncTask extends AsyncTask<File, Void, Integer> {

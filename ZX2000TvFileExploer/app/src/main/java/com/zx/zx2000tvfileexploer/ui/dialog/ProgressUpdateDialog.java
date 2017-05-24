@@ -3,6 +3,7 @@ package com.zx.zx2000tvfileexploer.ui.dialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.DataPackage;
 import com.zx.zx2000tvfileexploer.fileutil.service.CopyService;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,42 +47,33 @@ public class ProgressUpdateDialog extends DialogFragment {
             mProgressBytesText, mProgressFileText, mProgressSpeedText, mProgressTimer;
     private ProgressBar mProgressBar;
 
-    private long time = 0L;
-
     private int accentColor;
+    private String written;
+    private String processingFile;
+    private String currentSpeed;
+    private String outOf;
+    private String of;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-//    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//
-//        accentColor = getResources().getColor(R.color.primary_pink);
-//
-//        LayoutInflater inflater = LayoutInflater.from(getActivity());
-//        rootView = inflater.inflate(R.layout.dialog_progress, null);
-//        mCancelButton = (Button) rootView.findViewById(R.id.delete_button);
-//        mProgressTypeText = (TextView) rootView.findViewById(R.id.text_view_progress_type);
-//        mProgressFileNameText = (TextView) rootView.findViewById(R.id.text_view_progress_file_name);
-//        mProgressBytesText = (TextView) rootView.findViewById(R.id.text_view_progress_bytes);
-//        mProgressFileText = (TextView) rootView.findViewById(R.id.text_view_progress_file);
-//        mProgressSpeedText = (TextView) rootView.findViewById(R.id.text_view_progress_speed);
-//        mProgressTimer = (TextView) rootView.findViewById(R.id.text_view_progress_timer);
-//        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress);
-//
-//        mCancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                cancelBroadcast(new Intent(CopyService.TAG_BROADCAST_COPY_CANCEL));
-//            }
-//        });
-//
-//        return new AlertDialog.Builder(getActivity())
-//                .setView(rootView)
-//                .create();
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        written = getActivity().getResources().getString(R.string.written);
+        processingFile=  getActivity().getResources().getString(R.string.processing_file);
+        currentSpeed = getActivity().getResources().getString(R.string.current_speed);
+        outOf = getResources().getString(R.string.out_of);
+        of = getResources().getString(R.string.of);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,12 +154,11 @@ public class ProgressUpdateDialog extends DialogFragment {
             copyService.setProgressListener(new CopyService.ProgressListener() {
                 @Override
                 public void onUpdate(final DataPackage dataPackage) {
-//                    if (getActivity() == null || getActivity().getFragmentManager().
-//                            findFragmentByTag(GlobalConsts.KEY_INTENT_PROCESS_VIEWER) == null) {
-//                        // callback called when we're not inside the app
-//                        return;
-//                    }
-
+                    if (getActivity() == null || getActivity().getFragmentManager().
+                            findFragmentByTag(ProgressUpdateDialog.class.getName()) == null) {
+                        Logger.getLogger().w("********callback called when we're not inside the app*********** ");
+                        return;
+                    }
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -178,6 +170,7 @@ public class ProgressUpdateDialog extends DialogFragment {
 
                 @Override
                 public void refresh() {
+                    Logger.getLogger().i("********refresh*********** ");
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -209,19 +202,19 @@ public class ProgressUpdateDialog extends DialogFragment {
 
             mProgressFileNameText.setText(name);
 
-            Spanned bytesText = Html.fromHtml(getResources().getString(R.string.written)
+            Spanned bytesText = Html.fromHtml(written
                     + " <font color='" + accentColor + "'><i>" + Formatter.formatFileSize(getActivity(), doneBytes)
-                    + " </font></i>" + getResources().getString(R.string.out_of) + " <i>"
+                    + " </font></i>" +  outOf + " <i>"
                     + Formatter.formatFileSize(getActivity(), total) + "</i>");
             mProgressBytesText.setText(bytesText);
 
-            Spanned fileProcessedSpan = Html.fromHtml(getResources().getString(R.string.processing_file)
+            Spanned fileProcessedSpan = Html.fromHtml(processingFile
                     + " <font color='" + accentColor + "'><i>" + (dataPackage.getSourceProgress())
-                    + " </font></i>" + getResources().getString(R.string.of) + " <i>"
+                    + " </font></i>" +  of + " <i>"
                     + dataPackage.getSourceFiles() + "</i>");
             mProgressFileText.setText(fileProcessedSpan);
 
-            Spanned speedSpan = Html.fromHtml(getResources().getString(R.string.current_speed)
+            Spanned speedSpan = Html.fromHtml(currentSpeed
                     + ": <font color='" + accentColor + "'><i>"
                     + Formatter.formatFileSize(getActivity(), dataPackage.getSpeedRaw())
                     + "/s</font></i>");

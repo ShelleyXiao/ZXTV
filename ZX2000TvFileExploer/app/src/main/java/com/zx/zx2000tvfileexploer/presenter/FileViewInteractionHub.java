@@ -143,9 +143,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 return true;
             }
         });
-
-
-
     }
 
 
@@ -410,11 +407,19 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 selectedFileList);
         DialogFragment dialog = null;
         Bundle args = new Bundle();
+        if(mCurrentMode == Mode.View) {
+            long index = mFileListView.getSelectedItemId();
+            FileInfo fileInfo = mFileInteractionListener.getItem((int)index);
+            selectedFiles.add(fileInfo);
+        }
+
         if (selectedFiles.size() == 0) {
             Toast.makeText(mContext, R.string.nothing_to_delete, Toast.LENGTH_LONG).show();
             return;
         }
-        if (selectedFileList.size() > 1) {
+        Logger.getLogger().d("selectedFiles size = " + selectedFiles.size()
+            + " " + selectedFiles.get(0).getFilePath());
+        if (selectedFiles.size() > 1) {
 
             dialog = new MultiDeleteDialog();
 
@@ -422,61 +427,64 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             dialog.setArguments(args);
             dialog.show(getActivity().getFragmentManager(), MultiDeleteDialog.class.getName());
 
-        } else if (selectedFileList.size() == 1) {
+        } else if (selectedFiles.size() == 1) {
             dialog = new SingleDeleteDialog();
-            args.putParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER, getSelectedFileList().get(0));
+            args.putParcelable(GlobalConsts.EXTRA_DIALOG_FILE_HOLDER, selectedFiles.get(0));
             dialog.setArguments(args);
             dialog.show(getActivity().getFragmentManager(), SingleDeleteDialog.class.getName());
         }
+
 
         setMode(Mode.View);
         clearSelection();
     }
 
     public void onOperationCopy() {
-        final ArrayList<FileInfo> copies = getSelectedFileList();
-        mCheckedFileNameList.clear();
+        CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+        if(mCurrentMode == Mode.View) {
 
-        if (copies.size() > 0) {
-            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+            long index = mFileListView.getSelectedItemId();
+            FileInfo fileInfo = mFileInteractionListener.getItem((int)index);
+            ArrayList<FileInfo> selects = new ArrayList<>();
+            selects.add(fileInfo);
+
             helper.MOVE_PATH = null;
-
-            helper.COPY_PATH = copies;
+            helper.COPY_PATH = selects;
             helper.operation = Operation.Copy;
-            for (int i = 0; i < helper.COPY_PATH.size(); i++) {
-                Logger.getLogger().i("helper.COPY_PATH  " + helper.COPY_PATH.get(i).getFilePath());
-            }
-            Logger.getLogger().i("helper.COPY_PATH " + helper.COPY_PATH.size());
+
+            Logger.getLogger().i("***********onOperationCopy***********" + fileInfo.getFilePath());
+
+        } else {
+            final ArrayList<FileInfo> copies = getSelectedFileList();
+            mCheckedFileNameList.clear();
+
+            if (copies.size() > 0) {
+                helper.MOVE_PATH = null;
+                helper.COPY_PATH = copies;
+                helper.operation = Operation.Copy;
+
+                for (int i = 0; i < helper.COPY_PATH.size(); i++) {
+                    Logger.getLogger().i("helper.COPY_PATH  " + helper.COPY_PATH.get(i).getFilePath());
+                }
+                Logger.getLogger().i("helper.COPY_PATH " + helper.COPY_PATH.size());
 
 //            ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(copies);
 
-        } else {
-            Toast.makeText(mContext, mContext.getString(R.string.copy_no_selection_msg), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(mContext, mContext.getString(R.string.copy_no_selection_msg), Toast.LENGTH_LONG).show();
+            }
+
+            setMode(Mode.View);
+            clearSelection();
         }
 
-        setMode(Mode.View);
-        clearSelection();
     }
 
     public void onOperationPaste() {
         CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
 
         if (helper.isCopying()) {
-//            helper.paste(new File(mCurrentPath), new IOperationProgressListener() {
-//                @Override
-//                public void onOperationFinish(boolean success) {
-//                    ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().clear();
-//                    clearSelection();
-//                    refreshFileList();
-////                    setMode(Mode.View);
-//                    Logger.getLogger().d("onOperationPaste finish ");
-//                }
-//
-//                @Override
-//                public void onFileChanged(String path) {
-//
-//                }
-//            });
+
             Logger.getLogger().i("paster start *************");
             String path = mCurrentPath;
             ArrayList<FileInfo> arrayList = helper.COPY_PATH != null ? helper.COPY_PATH : helper.MOVE_PATH;
@@ -507,22 +515,20 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onOperationMove() {
-//        final ArrayList<FileInfo> copyListData = getSelectedFileList();
-//        if (copyListData.size() > 0) {
-//            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
-//            helper.operation = CopyHelper.Operation.Cut;
-//
-//            helper.cut(copyListData);
-//
-//        } else {
-//            Toast.makeText(mContext, mContext.getString(R.string.move_no_selection_msg), Toast.LENGTH_LONG).show();
-//        }
 
-        final ArrayList<FileInfo> copies = getSelectedFileList();
+        ArrayList<FileInfo> copies = null;
+        CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
+        if(mCurrentMode == Mode.View) {
+            copies = new ArrayList<>();
+            long index = mFileListView.getSelectedItemId();
+            FileInfo fileInfo = mFileInteractionListener.getItem((int)index);
+            copies.add(fileInfo);
+        } else {
+            copies = getSelectedFileList();
+        }
+
         mCheckedFileNameList.clear();
-
         if (copies.size() > 0) {
-            CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
             helper.MOVE_PATH = copies;
 
             helper.COPY_PATH = null;

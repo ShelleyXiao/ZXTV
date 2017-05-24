@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
-import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.utils.OtherUtil;
 
 public class FileListItem {
@@ -47,7 +46,6 @@ public class FileListItem {
         } else {
             view.setBackgroundResource(fileInteractionHub.canShowSelectBg() ? R.drawable.grid_select_bg : R.drawable.grid_item_bg);
             checkboxImageView.setVisibility(View.VISIBLE);
-            Logger.getLogger().d(" " + fileInfo.getName() + " selected = " + fileInfo.Selected);
             checkboxImageView
                     .setImageResource(fileInfo.Selected ? R.drawable.checked
                             : R.drawable.check);

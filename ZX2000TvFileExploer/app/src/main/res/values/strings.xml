@@ -63,7 +63,7 @@
     <string name="operation_send">发送</string>
     <string name="operation_rename">重命名</string>
     <string name="operation_compress">压缩</string>
-    <string name="operation_delete">删除选择项</string>
+    <string name="operation_delete">删除</string>
     <string name="operation_info">详情</string>
     <string name="operation_cancel">取消</string>
     <string name="operation_refresh">刷新</string>

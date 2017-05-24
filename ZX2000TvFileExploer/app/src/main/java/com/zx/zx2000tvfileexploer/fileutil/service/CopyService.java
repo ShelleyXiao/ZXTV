@@ -166,7 +166,6 @@ public class CopyService extends Service {
 
             if (copy.failedFOps.size() == 0) {
 
-                // adding/updating new encrypted db entry if any encrypted file was copied/moved
                 for (FileInfo sourceFile : sourceFiles) {
 //                    findAndReplaceEncryptedEntry(sourceFile);
                 }
@@ -184,6 +183,11 @@ public class CopyService extends Service {
 
             Intent intent = new Intent("loadlist");
             LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
+
+            if (progressListener != null) {
+                progressListener.refresh();
+            }
+
             stopSelf();
         }
 
@@ -355,7 +359,7 @@ public class CopyService extends Service {
         intent.putExtra(GlobalConsts.TAG_INTENT_FILTER_FAILED_OPS, failedOps);
         intent.putExtra(TAG_COPY_MOVE, move);
 
-        sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(c).sendBroadcast(intent);
     }
 
     /**

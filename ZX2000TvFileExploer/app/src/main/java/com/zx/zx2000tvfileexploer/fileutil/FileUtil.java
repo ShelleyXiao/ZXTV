@@ -20,9 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.interfaces.OnProgressUpdate;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
@@ -498,7 +500,6 @@ public class FileUtil {
 
 
                 if (!folder.exists() || !folder.isDirectory()) {
-                    Logger.getLogger().i("**************d* 0");
                     return 0;
                 }
 
@@ -520,7 +521,6 @@ public class FileUtil {
         if (FileUtil.isWritable(new File(folder, "DummyFile"))) {
             return 1;
         } else {
-            Logger.getLogger().i("*************** 0");
             return 0;
         }
     }
@@ -875,6 +875,12 @@ public class FileUtil {
             @Override
             public void onNegative(MaterialDialog materialDialog) {
                 Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                CopyHelper helper = FileManagerApplication.getInstance().getCopyHelper();
+                if(helper.isCoping()) {
+                    helper.operation = Operation.Unkonw;
+                    helper.MOVE_PATH = null;
+                    helper.COPY_PATH = null;
+                }
             }
         });
         final MaterialDialog y = x.build();

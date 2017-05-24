@@ -25,6 +25,7 @@ public class FileManagerApplication extends Application {
 
     private String mOppathe, oppathe1;
     public ArrayList<FileInfo> oppatheList;
+    public ArrayList<ArrayList<FileInfo>> oparrayListList;
 
     private  static FileManagerApplication instance;
 
@@ -78,6 +79,14 @@ public class FileManagerApplication extends Application {
 
     public void setOppatheList(ArrayList<FileInfo> oppatheList) {
         this.oppatheList = oppatheList;
+    }
+
+    public ArrayList<ArrayList<FileInfo>> getOparrayListList() {
+        return oparrayListList;
+    }
+
+    public void setOparrayListList(ArrayList<ArrayList<FileInfo>> oparrayListList) {
+        this.oparrayListList = oparrayListList;
     }
 
     public void setStorageInfo() {
