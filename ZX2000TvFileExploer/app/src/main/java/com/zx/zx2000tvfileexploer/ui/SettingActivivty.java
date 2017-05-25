@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
-import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
+import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 
 /**
  * User: ShaudXiao
@@ -21,7 +22,7 @@ import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
  * FIXME
  */
 
-public class SettingActivivty extends BaseActivity implements View.OnFocusChangeListener {
+public class SettingActivivty extends BaseFileOperationActivity implements View.OnFocusChangeListener {
 
 
     private RadioGroup mRadioGroup;
@@ -31,12 +32,14 @@ public class SettingActivivty extends BaseActivity implements View.OnFocusChange
     private FileSettingsHelper mFileSettingsHelper;
 
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutId() {
         return R.layout.setting_activity;
     }
 
     @Override
-    public void init() {
+    protected void setupViews() {
+        super.setupViews();
+
         setCurPath(getString(R.string.settting_title));
 
         mRadioGroup = (RadioGroup) findViewById(R.id.setting_sort_type);
@@ -54,6 +57,11 @@ public class SettingActivivty extends BaseActivity implements View.OnFocusChange
         setUpViews();
 
         findViewById(R.id.sort_name).requestFocus();
+    }
+
+    @Override
+    protected void initialized() {
+        super.initialized();
     }
 
     @Override
@@ -125,12 +133,27 @@ public class SettingActivivty extends BaseActivity implements View.OnFocusChange
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
+                    Logger.getLogger().d("***************mShowHideCheck**checked**** ");
                     mFileSettingsHelper.putBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, true);
                 } else {
+                    Logger.getLogger().d("***************mShowHideCheck****** ");
                     mFileSettingsHelper.putBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false);
                 }
 
             }
         });
+
+//        mShowHideCheck.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                if(mShowHideCheck.isChecked()) {
+////                    mShowHideCheck.setChecked(false);
+////                } else {
+////                    mShowHideCheck.setChecked(true);
+////                }
+//                Logger.getLogger().d("************** click");
+//                mShowHideCheck.toggle();
+//            }
+//        });
     }
 }

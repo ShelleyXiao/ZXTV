@@ -9,15 +9,19 @@ import android.widget.CursorAdapter;
 
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.OpenMode;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
+import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
 import com.zx.zx2000tvfileexploer.presenter.FileListItem;
 import com.zx.zx2000tvfileexploer.presenter.FileViewInteractionHub;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ShaudXiao on 2016/7/15.
@@ -34,12 +38,16 @@ public class FileListCursorAdapter extends CursorAdapter {
 
     private FileViewInteractionHub mFileViewInteractionHub;
 
-    public FileListCursorAdapter(Context context, Cursor cursor, FileViewInteractionHub fHub, FileIconHelper fileIconHelper) {
+    private OpenMode mOpenMode;
+
+
+    public FileListCursorAdapter(Context context, Cursor cursor, FileViewInteractionHub fHub, FileIconHelper fileIconHelper, OpenMode mode) {
         super(context, cursor, false /* auto-requery */);
         this.mContext = context;
         this.mFileIconHelper = fileIconHelper;
         this.mFileViewInteractionHub = fHub;
         this.mLayoutInflater = LayoutInflater.from(context);
+        this.mOpenMode = mode;
     }
 
     @Override
@@ -69,26 +77,34 @@ public class FileListCursorAdapter extends CursorAdapter {
         super.changeCursor(cursor);
     }
 
-    public Collection<FileInfo> getAllFiles() {
-        if(mFileNameList.size() == getCount()) {
-            return mFileNameList.values();
-        }
-
+    public List<FileInfo> getAllFiles() {
+//        if(mFileNameList.size() == getCount()) {
+//            return mFileNameList.values();
+//        }
+        Logger.getLogger().i("mFileNameList = " + mFileNameList.size() + " " + getCount());
+        mFileNameList.clear();
+        ArrayList<FileInfo> dataList = new ArrayList<>();
         Cursor cursor = getCursor();
-        if(cursor.moveToNext()) {
+
+        if(cursor.moveToFirst()) {
             do {
                 Integer position = Integer.valueOf(cursor.getPosition());
-                if(mFileNameList.containsKey(position)) {
-                    continue;
-                }
+//                if(mFileNameList.containsKey(position)) {
+//                    continue;
+//                }
                 FileInfo fileInfo = getFileInfo(cursor);
                 if(null != fileInfo) {
                     mFileNameList.put(position, fileInfo);
+                    Logger.getLogger().i("mFileNameList = " + fileInfo.getFilePath()
+                    + "position = " + cursor.getPosition());
+                    dataList.add(fileInfo);
                 }
+
             } while(cursor.moveToNext());
         }
-
-        return mFileNameList.values();
+        Logger.getLogger().i("mFileNameList = " + mFileNameList.size());
+//        return mFileNameList.values();
+        return dataList;
     }
 
     public FileInfo getFileItem(int pos) {
@@ -111,6 +127,6 @@ public class FileListCursorAdapter extends CursorAdapter {
 
     private FileInfo getFileInfo(Cursor cursor) {
         return (cursor == null || cursor.getCount() == 0) ? null :
-                FileUtils.getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+                RootHelper.getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), mOpenMode, FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
     }
 }

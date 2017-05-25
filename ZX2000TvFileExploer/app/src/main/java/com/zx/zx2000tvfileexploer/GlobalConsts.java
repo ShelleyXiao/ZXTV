@@ -50,4 +50,5 @@ public interface GlobalConsts {
     public static final String TAG_INTENT_FILTER_GENERAL = "general_communications";
     public static final String ARGS_KEY_LOADER = "loader_cloud_args_service";
     public static final String LAUNCHER_LEXA= "lexa";
+    public static final String LOAD_LIST= "loadlist";
 }

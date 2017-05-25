@@ -10,9 +10,13 @@ import android.util.Log;
 import com.zx.zx2000tvfileexploer.GlobalConsts;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.entity.OpenMode;
+import com.zx.zx2000tvfileexploer.utils.FileUtils;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
+
+import static com.zx.zx2000tvfileexploer.utils.OtherUtil.getNameFromFilepath;
 
 /**
  * User: ShaudXiao
@@ -219,6 +223,84 @@ public class RootHelper {
             return (baseFile);
         }
         return null;
+    }
+
+    public static FileInfo getFileInfo(String filePath, OpenMode mode,  boolean showHidden) {
+        File lFile = new File(filePath);
+        if (!lFile.exists())
+            return null;
+
+        FileInfo lFileInfo = new FileInfo();
+        lFileInfo.canRead = lFile.canRead();
+        lFileInfo.canWrite = lFile.canWrite();
+        lFileInfo.isHidden = lFile.isHidden();
+        lFileInfo.fileName = getNameFromFilepath(filePath);
+        lFileInfo.ModifiedDate = lFile.lastModified();
+        lFileInfo.IsDir = lFile.isDirectory();
+        lFileInfo.filePath = filePath;
+        lFileInfo.fileSize = lFile.length();
+        lFileInfo.mode = mode;
+        lFileInfo.permission = RootHelper.parseFilePermission(lFile);
+
+        String[] list = null;
+        FilenameFilter filenameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                return !filename.startsWith(".");
+            }
+        };
+
+        if (showHidden) {
+            list = lFile.list();
+        } else {
+            list = lFile.list(filenameFilter);
+        }
+        lFileInfo.Count = list == null ? 0 : list.length;
+
+        return lFileInfo;
+    }
+
+    public static FileInfo getFileInfo(File f, /*FilenameFilter filter,*/ boolean showHidden) {
+        FileInfo lFileInfo = new FileInfo();
+        String filePath = f.getPath();
+        File lFile = new File(filePath);
+        lFileInfo.canRead = lFile.canRead();
+        lFileInfo.canWrite = lFile.canWrite();
+        lFileInfo.isHidden = lFile.isHidden();
+        lFileInfo.fileName = f.getName();
+        lFileInfo.ModifiedDate = lFile.lastModified();
+        lFileInfo.IsDir = lFile.isDirectory();
+        lFileInfo.filePath = filePath;
+
+        lFileInfo.mode = OpenMode.FILE;
+        lFileInfo.permission = RootHelper.parseFilePermission(lFile);
+
+        if (lFileInfo.IsDir) {
+            int lCount = 0;
+            File[] files = lFile.listFiles();
+
+            // null means we cannot access this dir
+            if (files == null) {
+                return null;
+            }
+
+            for (File child : files) {
+                if ((!child.isHidden() || showHidden)
+                        && FileUtils.isNormalFile(child.getAbsolutePath())) {
+                    lCount++;
+                }
+            }
+            lFileInfo.Count = lCount;
+
+        } else {
+
+            lFileInfo.fileSize = lFile.length();
+
+        }
+
+        lFileInfo.Count = 0;
+        lFileInfo.fileSize = lFile.length();
+        return lFileInfo;
     }
 
 }

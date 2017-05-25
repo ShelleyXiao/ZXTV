@@ -56,10 +56,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <LinearLayout android:id="@+id/device_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/name"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
                 <RelativeLayout
                     android:id="@+id/local_device"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -105,7 +114,8 @@
                     android:id="@+id/tf_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/local_device">
+                    android:layout_below="@+id/local_device"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -154,7 +164,8 @@
                     android:id="@+id/usb_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tf_device">
+                    android:layout_below="@+id/tf_device"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -200,7 +211,7 @@
                 </RelativeLayout>
 
 
-                <TextView
+                <TextView android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
@@ -434,7 +445,7 @@
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            app:isReflect="true"
+            app:isReflect="false"
             app:isShape="true">
 
             <RelativeLayout

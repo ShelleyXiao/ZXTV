@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.zx.zx2000tvfileexploer.FileManagerApplication;
@@ -49,15 +50,12 @@ import com.zx.zx2000tvfileexploer.ui.dialog.ProgressUpdateDialog;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 
 import static com.zx.zx2000tvfileexploer.GlobalConsts.TAG_INTENT_FILTER_FAILED_OPS;
-import static com.zx.zx2000tvfileexploer.R.dimen.px42;
 
 public class FileListActivity extends BaseFileOperationActivity implements IFileInteractionListener, IMenuItemSelectListener, DialogInterface.OnDismissListener {
 
@@ -83,18 +81,9 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     private NormalMenuDialogFragment mNormalMenuDialog;
     private EditMenuDialogFragment mEditMenuDialog;
 
-    private HashMap<String, FileCategoryHelper.FileCategory> filterTypeMap = new HashMap<String, FileCategoryHelper.FileCategory>();
-
     public static OpenMode mOpenMode = OpenMode.UNKNOWN;
 
     private LocalBroadcastManager mLocalBroadcastManager;
-
-    private FilenameFilter hideFileFilter = new FilenameFilter() {
-        @Override
-        public boolean accept(File dir, String filename) {
-            return !filename.startsWith(".");
-        }
-    };
 
     private BroadcastReceiver receiver1 = new BroadcastReceiver() {
 
@@ -136,7 +125,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         super.onResume();
 
         mLocalBroadcastManager.registerReceiver(receiver1, new IntentFilter(GlobalConsts.LAUNCHER_LEXA));
-        mLocalBroadcastManager.registerReceiver(receiver2, new IntentFilter("loadlist"));
+        mLocalBroadcastManager.registerReceiver(receiver2, new IntentFilter(GlobalConsts.LOAD_LIST));
         mLocalBroadcastManager.registerReceiver(receiver3, new IntentFilter(GlobalConsts.TAG_INTENT_FILTER_GENERAL));
 
     }
@@ -144,6 +133,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     @Override
     public void onPause() {
         super.onPause();
+        mLocalBroadcastManager.unregisterReceiver(receiver1);
         mLocalBroadcastManager.unregisterReceiver(receiver2);
         mLocalBroadcastManager.unregisterReceiver(receiver3);
 
@@ -184,7 +174,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 case Copy://copying
                     //legacy compatibility
                     CopyHelper helper = FileManagerApplication.getInstance().getCopyHelper();
-                    if(helper.oparrayList != null && helper.oparrayList.size() != 0) {
+                    if (helper.oparrayList != null && helper.oparrayList.size() != 0) {
                         helper.oparrayListList = new ArrayList<>();
                         helper.oparrayListList.add(helper.oparrayList);
                         helper.oparrayList = null;
@@ -202,7 +192,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                 case Cut://moving
                     //legacy compatibility
                     CopyHelper helper1 = FileManagerApplication.getInstance().getCopyHelper();
-                    if(helper1.oparrayList != null && helper1.oparrayList.size() != 0) {
+                    if (helper1.oparrayList != null && helper1.oparrayList.size() != 0) {
                         helper1.oparrayListList = new ArrayList<>();
                         helper1.oparrayListList.add(helper1.oparrayList);
                         helper1.oparrayList = null;
@@ -278,7 +268,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         mFileCagetoryHelper = new FileCategoryHelper(this);
         mFileIconHelper = new FileIconHelper(this);
         if (mCurrentCategory != FileCategoryHelper.FileCategory.All) {
-            mFileListCursorAdapter = new FileListCursorAdapter(this, null, mFileViewInteractionHub, mFileIconHelper);
+            mFileListCursorAdapter = new FileListCursorAdapter(this, null, mFileViewInteractionHub, mFileIconHelper, OpenMode.CUSTOM);
             mFilePathGridView.setAdapter(mFileListCursorAdapter);
         } else {
             mFileListNormalAdapter = new FileListAdapter(this, R.layout.list_grid_item_layout, mFileNameList, mFileViewInteractionHub, mFileIconHelper);
@@ -359,9 +349,13 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             }
             return mFileNameList.get(pos);
         } else {
-            Object[] datas = getAllFiles().toArray();
+//            Object[] datas = getAllFiles().toArray();
+            List<FileInfo> datas = getAllFiles();
+            if (pos < 0 || pos > datas.size() - 1) {
+                return null;
+            }
 
-            return (FileInfo) datas[pos];
+            return datas.get(pos);
         }
 
     }
@@ -402,7 +396,8 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
     @Override
     public boolean onRefreshFileList(String path, FileSortHelper sort) {
-        Logger.getLogger().d(" onRefreshFileList**************path " + path);
+        Logger.getLogger().d(" onRefreshFileList**************path " + path + " mCurrentCategory "
+                + mCurrentCategory);
         mFileSortHelper = sort;
 
 //        mFileIconHelper.stop();
@@ -418,7 +413,6 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
 
             setFileNums(String.valueOf(c.getCount()));
             showEmptyView(c == null || c.getCount() == 0);
-//            showProgressBar(false);
             mRefreshProgress.setVisibility(View.GONE);
 
             mFileListCursorAdapter.changeCursor(c);
@@ -445,7 +439,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     }
 
     @Override
-    public Collection<FileInfo> getAllFiles() {
+    public List<FileInfo> getAllFiles() {
         if (mCurrentCategory != FileCategoryHelper.FileCategory.All) {
             return mFileListCursorAdapter.getAllFiles();
         } else {
@@ -659,7 +653,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             mNormalMenuDialog = null;
         }
         mNormalMenuDialog = new NormalMenuDialogFragment(this);
-        if(mCurrentCategory != FileCategoryHelper.FileCategory.All) {
+        if (mCurrentCategory != FileCategoryHelper.FileCategory.All) {
             mNormalMenuDialog.setNormal(false);
         } else {
             mNormalMenuDialog.setNormal(true);
@@ -688,7 +682,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             mEditMenuDialog.setMoveing(false);
         }
 
-        if(mCurrentCategory != FileCategoryHelper.FileCategory.All) {
+        if (mCurrentCategory != FileCategoryHelper.FileCategory.All) {
             mEditMenuDialog.setNormal(false);
         } else {
             mEditMenuDialog.setNormal(true);
@@ -725,7 +719,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
                                           Context contextc) {
         FragmentTransaction mFragTransaction = getFragmentManager().beginTransaction();
         ProgressUpdateDialog dialog = (ProgressUpdateDialog) getFragmentManager().findFragmentByTag(ProgressUpdateDialog.class.getName());
-        if(null != dialog) {
+        if (null != dialog) {
             dialog.dismiss();
             mFragTransaction.remove(dialog);
         }
@@ -735,9 +729,9 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
         mat.positiveColor(getResources().getColor(R.color.primary_pink));
         mat.positiveText(R.string.cancle);
         String content = contextc.getResources().getString(R.string.operation_fail_following);
-        int k=1;
-        for(FileInfo s:failedOps){
-            content=content+ "\n" + (k) + ". " + s.getName();
+        int k = 1;
+        for (FileInfo s : failedOps) {
+            content = content + "\n" + (k) + ". " + s.getName();
             k++;
         }
         mat.content(content);
@@ -747,7 +741,7 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
     //防止出错后影响下步操作
     private void clearCopyOpeartion() {
         CopyHelper helper = FileManagerApplication.getInstance().getCopyHelper();
-        if(helper.isCoping()) {
+        if (helper.isCoping()) {
             helper.operation = Operation.Unkonw;
             helper.MOVE_PATH = null;
             helper.COPY_PATH = null;
@@ -808,7 +802,6 @@ public class FileListActivity extends BaseFileOperationActivity implements IFile
             showProgressBar(false);
         }
     }
-
 
 
 }

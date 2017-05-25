@@ -26,7 +26,8 @@ import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileExtFilter;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
-import com.zx.zx2000tvfileexploer.ui.base.BaseActivity;
+import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
+import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
@@ -42,7 +43,7 @@ import java.util.ArrayList;
  * FIXME
  */
 
-public class PhotoViewActivity extends BaseActivity implements RecyclerViewTV.OnItemListener {
+public class PhotoViewActivity extends BaseFileOperationActivity implements RecyclerViewTV.OnItemListener {
 
     private Context mContext;
     private RecyclerViewTV mThumbRecyclerView;
@@ -70,13 +71,22 @@ public class PhotoViewActivity extends BaseActivity implements RecyclerViewTV.On
     private GeneralAdapter mPhotoAdapter;
     private RefreshFileAsyncTask mRefreshFileAsyncTask;
 
+
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutId() {
         return R.layout.activity_photoview_layout;
     }
 
     @Override
-    public void init() {
+    protected void setupViews() {
+        super.setupViews();
+
+    }
+
+    @Override
+    protected void initialized() {
+        super.initialized();
+
         mContext = PhotoViewActivity.this;
         mFileCagetoryHelper = new FileCategoryHelper(this);
         mFileSortHelper = FileSortHelper.getInstance(FileSettingsHelper.getInstance(mContext));
@@ -256,7 +266,7 @@ public class PhotoViewActivity extends BaseActivity implements RecyclerViewTV.On
             for (File child : listFiles) {
                 String absolutePath = child.getAbsolutePath();
                 if (FileUtils.isNormalFile(absolutePath)) {
-                    FileInfo lFileInfo = FileUtils.getFileInfo(child,/*
+                    FileInfo lFileInfo = RootHelper.getFileInfo(child,/*
                             mFileCagetoryHelper.getFilter(), */FileSettingsHelper.getInstance(getContext()).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
                     if (lFileInfo != null) {
                         fileList.add(lFileInfo);

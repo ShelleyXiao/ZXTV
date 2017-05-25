@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,12 +71,9 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public enum Mode {
         View, Pick
-    }
-
-    ;
+    };
 
     private Mode mCurrentMode;
-
 
     public FileViewInteractionHub(IFileInteractionListener fileInteractionListener) {
         assert (fileInteractionListener != null);
@@ -290,7 +288,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 clearSelection();
                 refreshFileList();
             }
@@ -303,29 +300,17 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     private void notifyFileSystemChanged(String path) {
-        if (path == null)
+        if (path == null) {
             return;
-
-        // MediaScannerConnection.scanFile(mContext, new String[] { path },
-        // null, new OnScanCompletedListener() {
-        //
-        // @Override
-        // public void onScanCompleted(String path, Uri uri) {
-        // // TODO Auto-generated method stub
-        // //mFileInteractionListener.updateMediaData();
-        // Logger.getLogger.d(LOG_TAG, "notifyFileSystemChanged");
-        // }
-        // });
+        }
 
         final File f = new File(path);
         final Intent intent;
         if (f.isDirectory()) {
             intent = new Intent(GlobalConsts.FILEUPDATEBROADCAST);
-
         } else {
             intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             intent.setData(Uri.fromFile(new File(path)));
-
         }
         mContext.sendBroadcast(intent);
     }
@@ -408,7 +393,14 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         DialogFragment dialog = null;
         Bundle args = new Bundle();
         if(mCurrentMode == Mode.View) {
-            long index = mFileListView.getSelectedItemId();
+//            long index = mFileListView.getSelectedItemId();
+            long index = mFileListView.getSelectedItemPosition();
+            Object info = mFileListView.getSelectedItem();
+            if(info instanceof Cursor) {
+                Logger.getLogger().d("seelct item is cursro****************");
+            }
+
+            Logger.getLogger().d("selected Info " + mFileListView.getSelectedItemPosition());
             FileInfo fileInfo = mFileInteractionListener.getItem((int)index);
             selectedFiles.add(fileInfo);
         }
@@ -417,8 +409,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             Toast.makeText(mContext, R.string.nothing_to_delete, Toast.LENGTH_LONG).show();
             return;
         }
-        Logger.getLogger().d("selectedFiles size = " + selectedFiles.size()
-            + " " + selectedFiles.get(0).getFilePath());
         if (selectedFiles.size() > 1) {
 
             dialog = new MultiDeleteDialog();
@@ -443,7 +433,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
         if(mCurrentMode == Mode.View) {
 
-            long index = mFileListView.getSelectedItemId();
+            //            long index = mFileListView.getSelectedItemId();
+            long index = mFileListView.getSelectedItemPosition();
             FileInfo fileInfo = mFileInteractionListener.getItem((int)index);
             ArrayList<FileInfo> selects = new ArrayList<>();
             selects.add(fileInfo);
@@ -520,7 +511,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         CopyHelper helper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
         if(mCurrentMode == Mode.View) {
             copies = new ArrayList<>();
-            long index = mFileListView.getSelectedItemId();
+            //            long index = mFileListView.getSelectedItemId();
+            long index = mFileListView.getSelectedItemPosition();
             FileInfo fileInfo = mFileInteractionListener.getItem((int)index);
             copies.add(fileInfo);
         } else {
@@ -548,16 +540,12 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         clearSelection();
     }
 
-
     public void onOperationRename() {
-//        if (getSelectedFileList().size() > 1) {
-//            Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_rename_msg), Toast.LENGTH_LONG).show();
-//            return;
-//        }
-
-        long index = mFileListView.getSelectedItemId();
+//        long index = mFileListView.getSelectedItemId();
+        long index = mFileListView.getSelectedItemPosition();
+        Logger.getLogger().d("Selected index = " + index);
         FileInfo lFileInfo = mFileInteractionListener.getItem((int)index);
-        Logger.getLogger().d("Selected id = " + lFileInfo.getFilePath());
+        Logger.getLogger().d("Selected item = " + lFileInfo.getFilePath());
         if(lFileInfo != null) {
             DialogFragment dialog = new RenameDialog();
             Bundle args = new Bundle();
@@ -565,56 +553,6 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             dialog.setArguments(args);
             dialog.show(getActivity().getFragmentManager(), RenameDialog.class.getName());
         }
-
-
-
-    }
-
-    public void onOperationNewFile() {
-
-//        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-//        View view = layoutInflater.inflate(R.layout.dialog_list_layout, null);
-//        ListView fileListView = (ListView) view.findViewById(R.id.listView);
-//
-//        List<FileIcon> fileIconList = new ArrayList<FileIcon>();
-//        FileIcon fileIcon1 = new FileIcon("�ļ���", R.drawable.ic_folder_new);
-//        fileIconList.add(fileIcon1);
-//        FileIcon fileIcon2 = new FileIcon("����", R.drawable.ic_takephoto_new);
-//        fileIconList.add(fileIcon2);
-//
-//        ArrayAdapter<FileIcon> fileAdapter = new CreateFileListAdater(mContext,
-//                R.layout.create_file_list_item, fileIconList);
-//        fileListView.setAdapter(fileAdapter);
-//
-//        final Dialog dialog = new CustomDialog.Builder(mContext)
-//                .setTitle(R.string.create).setContentView(view)
-//                .setNegativeButton(R.string.cancel, new OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // TODO Auto-generated method stub
-//                        dialog.dismiss();
-//                    }
-//                }).create();
-//        dialog.show();
-//
-//        fileListView.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                // TODO Auto-generated method stub
-//                dialog.dismiss();
-//                if (position == 0) {
-//                    // �����ļ���
-//                    createFloder();
-//                } else if (position == 1) {
-//                    // ����
-//                    createTakePhoto();
-//                }
-//            }
-//        });
-
     }
 
     public void onOperationCreateFloder() {

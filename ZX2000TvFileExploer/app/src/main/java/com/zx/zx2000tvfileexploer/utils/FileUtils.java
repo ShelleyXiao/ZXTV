@@ -16,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -609,77 +608,6 @@ public class FileUtils {
         return !fullName.equals(ANDROID_SECURE);
     }
 
-    public static FileInfo getFileInfo(String filePath, boolean showHidden) {
-        File lFile = new File(filePath);
-        if (!lFile.exists())
-            return null;
-
-        FileInfo lFileInfo = new FileInfo();
-        lFileInfo.canRead = lFile.canRead();
-        lFileInfo.canWrite = lFile.canWrite();
-        lFileInfo.isHidden = lFile.isHidden();
-        lFileInfo.fileName = OtherUtil.getNameFromFilepath(filePath);
-        lFileInfo.ModifiedDate = lFile.lastModified();
-        lFileInfo.IsDir = lFile.isDirectory();
-        lFileInfo.filePath = filePath;
-        lFileInfo.fileSize = lFile.length();
-
-        String[] list = null;
-        FilenameFilter filenameFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String filename) {
-                return !filename.startsWith(".");
-            }
-        };
-
-        if (showHidden) {
-            list = lFile.list();
-        } else {
-            list = lFile.list(filenameFilter);
-        }
-        lFileInfo.Count = list == null ? 0 : list.length;
-
-        return lFileInfo;
-    }
-
-    public static FileInfo getFileInfo(File f, /*FilenameFilter filter,*/ boolean showHidden) {
-        FileInfo lFileInfo = new FileInfo();
-        String filePath = f.getPath();
-        File lFile = new File(filePath);
-        lFileInfo.canRead = lFile.canRead();
-        lFileInfo.canWrite = lFile.canWrite();
-        lFileInfo.isHidden = lFile.isHidden();
-        lFileInfo.fileName = f.getName();
-        lFileInfo.ModifiedDate = lFile.lastModified();
-        lFileInfo.IsDir = lFile.isDirectory();
-        lFileInfo.filePath = filePath;
-        if (lFileInfo.IsDir) {
-            int lCount = 0;
-            File[] files = lFile.listFiles();
-
-            // null means we cannot access this dir
-            if (files == null) {
-                return null;
-            }
-
-            for (File child : files) {
-                if ((!child.isHidden() || showHidden)
-                        && FileUtils.isNormalFile(child.getAbsolutePath())) {
-                    lCount++;
-                }
-            }
-            lFileInfo.Count = lCount;
-
-        } else {
-
-            lFileInfo.fileSize = lFile.length();
-
-        }
-
-        lFileInfo.Count = 0;
-        lFileInfo.fileSize = lFile.length();
-        return lFileInfo;
-    }
 
     public static long getFolderSize(File file) {
 

@@ -171,6 +171,11 @@ public class ProgressUpdateDialog extends DialogFragment {
                 @Override
                 public void refresh() {
                     Logger.getLogger().i("********refresh*********** ");
+                    if (getActivity() == null || getActivity().getFragmentManager().
+                            findFragmentByTag(ProgressUpdateDialog.class.getName()) == null) {
+                        Logger.getLogger().w("********callback called when we're not inside the app*********** ");
+                        return;
+                    }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

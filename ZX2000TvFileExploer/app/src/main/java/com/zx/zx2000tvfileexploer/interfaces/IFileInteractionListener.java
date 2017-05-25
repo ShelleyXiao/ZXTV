@@ -8,7 +8,7 @@ import com.zx.zx2000tvfileexploer.entity.FileInfo;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSortHelper;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IFileInteractionListener {
 
@@ -28,7 +28,7 @@ public interface IFileInteractionListener {
 
 	public boolean onRefreshFileList(String path, FileSortHelper sort);
 
-	public Collection<FileInfo> getAllFiles();
+	public List<FileInfo> getAllFiles();
 
 	public void startActivity(Intent intent);
 

@@ -13,7 +13,9 @@ import android.widget.Toast;
 import com.zx.zx2000tvfileexploer.FileManagerApplication;
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.fileutil.FileUtil;
 import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
+import com.zx.zx2000tvfileexploer.utils.Logger;
 
 import java.util.ArrayList;
 
@@ -47,6 +49,7 @@ public class DeleteTask extends AsyncTask<ArrayList<FileInfo>, String, Boolean> 
         }  else {
             for(FileInfo a : files) {
                 try {
+                    Logger.getLogger().d("delete file  = " + a.getFilePath());
                     (a).delete(cd);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -55,7 +58,15 @@ public class DeleteTask extends AsyncTask<ArrayList<FileInfo>, String, Boolean> 
             }
         }
 
-
+        try {
+            for (FileInfo f : files) {
+                delete(cd,f.getFilePath());
+            }
+        } catch (Exception e) {
+            for (FileInfo f : files) {
+                FileUtil.scanFile(f.getFilePath(), cd);
+            }
+        }
 
         return b;
     }

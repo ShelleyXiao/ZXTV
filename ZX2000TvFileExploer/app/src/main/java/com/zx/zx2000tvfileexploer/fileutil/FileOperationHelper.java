@@ -14,7 +14,6 @@ import com.zx.zx2000tvfileexploer.entity.Operation;
 import com.zx.zx2000tvfileexploer.fileutil.service.DeleteTask;
 import com.zx.zx2000tvfileexploer.interfaces.IOperationProgressListener;
 import com.zx.zx2000tvfileexploer.ui.FileListActivity;
-import com.zx.zx2000tvfileexploer.utils.FileUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -196,69 +195,69 @@ public class FileOperationHelper {
         });
     }
 
-    private boolean MoveFile(FileInfo f, String dest) {
-
-        if (f == null || dest == null) {
-            return false;
-        }
-
-        File file = new File(f.filePath);
-        String newPath = FileUtils.makePath(dest, f.fileName);
-        try {
-
-            File destFile = new File(newPath);
-
-            if (file.renameTo(destFile)) {
-                MoveFileToDB(destFile, file, destFile);
-                return true;
-            }
-
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private void MoveFileToDB(File destFile, File srcFile, File rootFile) {
-
-        if (destFile.isDirectory()) {
-            for (File child : destFile.listFiles(mFilter)) {
-                if (!child.isHidden()
-                        && FileUtils.isNormalFile(child.getAbsolutePath())) {
-                    MoveFileToDB(destFile, srcFile, rootFile);
-                }
-            }
-        } else {
-            int pos = -1;
-            String destFilePath = destFile.getAbsolutePath();
-            String srcFilePath = srcFile.getAbsolutePath();
-            String rootFilePath = rootFile.getAbsolutePath();
-            if (srcFile.isDirectory()
-                    && (pos = destFilePath.indexOf(rootFilePath)) != -1) {
-                srcFilePath = srcFilePath
-                        + destFilePath.substring(rootFilePath.length(),
-                        destFilePath.length());
-            }
-
-            FileInfo desFileInfo = FileUtils.getFileInfo(destFilePath, FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
-            ops.add(ContentProviderOperation
-                    .newUpdate(
-                            FileUtils.getMediaUriFromFilename(desFileInfo.fileName))
-                    .withSelection("_data = ?",
-                            new String[]{srcFilePath})
-                    .withValue("_data", destFilePath).build());
-        }
-
-    }
-
-    private void copyFileList(ArrayList<FileInfo> files) {
-        synchronized (mCurFileNameList) {
-            mCurFileNameList.clear();
-            for (FileInfo f : files) {
-                mCurFileNameList.add(f);
-            }
-        }
-    }
+//    private boolean MoveFile(FileInfo f, String dest) {
+//
+//        if (f == null || dest == null) {
+//            return false;
+//        }
+//
+//        File file = new File(f.filePath);
+//        String newPath = FileUtils.makePath(dest, f.fileName);
+//        try {
+//
+//            File destFile = new File(newPath);
+//
+//            if (file.renameTo(destFile)) {
+//                MoveFileToDB(destFile, file, destFile);
+//                return true;
+//            }
+//
+//        } catch (SecurityException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+//
+//    private void MoveFileToDB(File destFile, File srcFile, File rootFile) {
+//
+//        if (destFile.isDirectory()) {
+//            for (File child : destFile.listFiles(mFilter)) {
+//                if (!child.isHidden()
+//                        && FileUtils.isNormalFile(child.getAbsolutePath())) {
+//                    MoveFileToDB(destFile, srcFile, rootFile);
+//                }
+//            }
+//        } else {
+//            int pos = -1;
+//            String destFilePath = destFile.getAbsolutePath();
+//            String srcFilePath = srcFile.getAbsolutePath();
+//            String rootFilePath = rootFile.getAbsolutePath();
+//            if (srcFile.isDirectory()
+//                    && (pos = destFilePath.indexOf(rootFilePath)) != -1) {
+//                srcFilePath = srcFilePath
+//                        + destFilePath.substring(rootFilePath.length(),
+//                        destFilePath.length());
+//            }
+//
+//            FileInfo desFileInfo = RootHelper.getFileInfo(destFilePath, FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+//            ops.add(ContentProviderOperation
+//                    .newUpdate(
+//                            FileUtils.getMediaUriFromFilename(desFileInfo.fileName))
+//                    .withSelection("_data = ?",
+//                            new String[]{srcFilePath})
+//                    .withValue("_data", destFilePath).build());
+//        }
+//
+//    }
+//
+//    private void copyFileList(ArrayList<FileInfo> files) {
+//        synchronized (mCurFileNameList) {
+//            mCurFileNameList.clear();
+//            for (FileInfo f : files) {
+//                mCurFileNameList.add(f);
+//            }
+//        }
+//    }
 
 
     public static final int DOESNT_EXIST = 0; // 不存在

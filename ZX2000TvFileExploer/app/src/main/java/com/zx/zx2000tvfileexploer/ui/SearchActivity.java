@@ -33,8 +33,8 @@ import com.zx.zx2000tvfileexploer.ui.base.BaseFileOperationActivity;
 import com.zx.zx2000tvfileexploer.ui.dialog.SearchMenuDialogFragment;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ShaudXiao on 2016/7/27.
@@ -268,6 +268,8 @@ public class SearchActivity extends BaseFileOperationActivity implements Adapter
         }
     }
 
+
+
     @Override
     public View getViewById(int id) {
         return null;
@@ -304,7 +306,7 @@ public class SearchActivity extends BaseFileOperationActivity implements Adapter
     }
 
     @Override
-    public Collection<FileInfo> getAllFiles() {
+    public List<FileInfo> getAllFiles() {
         return null;
     }
 

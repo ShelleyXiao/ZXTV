@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 
+import java.io.File;
 import java.io.OutputStream;
 
 /**
@@ -78,6 +79,26 @@ public class MediaStoreHack {
             }
         }
         return outputStream;
+    }
+
+    public static boolean delete(final Context context, final File file) {
+        final String where = MediaStore.MediaColumns.DATA + "=?";
+        final String[] selectionArgs = new String[]{
+                file.getAbsolutePath()
+        };
+        final ContentResolver contentResolver = context.getContentResolver();
+        final Uri filesUri = MediaStore.Files.getContentUri("external");
+        // Delete the entry from the media database. This will actually delete media files.
+        contentResolver.delete(filesUri, where, selectionArgs);
+        // If the file is not a media file, create a new entry.
+        if (file.exists()) {
+            final ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            // Delete the created entry, such that content provider will delete the file.
+            contentResolver.delete(filesUri, where, selectionArgs);
+        }
+        return !file.exists();
     }
 
 }

@@ -8,9 +8,11 @@ import android.widget.ImageView;
 
 import com.zx.zx2000tvfileexploer.R;
 import com.zx.zx2000tvfileexploer.entity.FileInfo;
+import com.zx.zx2000tvfileexploer.entity.OpenMode;
 import com.zx.zx2000tvfileexploer.fileutil.FileCategoryHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileIconHelper;
 import com.zx.zx2000tvfileexploer.fileutil.FileSettingsHelper;
+import com.zx.zx2000tvfileexploer.fileutil.RootHelper;
 import com.zx.zx2000tvfileexploer.utils.FileUtils;
 import com.zx.zx2000tvfileexploer.utils.Logger;
 import com.zx.zx2000tvfileexploer.view.RecyclerViewCursorAdapter;
@@ -103,7 +105,7 @@ public class PhotoViewByCursorAdapter extends RecyclerViewCursorAdapter<PhotoVie
 
     private FileInfo getFileInfo(Cursor cursor) {
         return (cursor == null || cursor.getCount() == 0) ? null :
-                FileUtils.getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
+                RootHelper.getFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH), OpenMode.CUSTOM, FileSettingsHelper.getInstance(mContext).getBoolean(FileSettingsHelper.KEY_SHOW_HIDEFILE, false));
     }
 
 

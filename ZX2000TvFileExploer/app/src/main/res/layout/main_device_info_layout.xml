@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px25"
+        android:layout_marginRight="@dimen/px25"
+        android:layout_marginTop="@dimen/px50"
+        android:text="@string/main_all_local_device"
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/device_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/px25"
+        android:layout_marginTop="@dimen/px50"
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
+
+
+    <!-- -->
+    <ProgressBar
+        android:id="@+id/device_size_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px25"
+        android:layout_below="@+id/device_size"
+        android:layout_marginLeft="@dimen/px25"
+        android:layout_marginRight="@dimen/px25"
+        android:indeterminate="false"
+        android:indeterminateOnly="false"
+        android:maxHeight="@dimen/px25"
+        android:minHeight="@dimen/px25"
+        android:background="@drawable/device_space_size_progress"
+
+        />
+
+</RelativeLayout>

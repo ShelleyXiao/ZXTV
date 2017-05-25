@@ -2,7 +2,7 @@ package com.zx.zx2000tvfileexploer.fileutil;
 
 /**
  * Created by vishal on 4/1/17.
- *
+ * <p>
  * Helper class providing helper methods to manage Service startup and it's progress
  * Be advised - this class can only handle progress with one object at a time. Hence, class also provides
  * convenience methods to serialize the service startup.
@@ -35,7 +35,7 @@ public class ServiceWatcherUtil {
 
     private static int HAULT_COUNTER = -1;
 
-    public static final int ID_NOTIFICATION_WAIT =  9248;
+    public static final int ID_NOTIFICATION_WAIT = 9248;
 
     /**
      *
@@ -63,7 +63,7 @@ public class ServiceWatcherUtil {
             public void run() {
 
                 // we don't have a file name yet, wait for service to set
-                if (progressHandler.getFileName()==null) handler.postDelayed(this, 1000);
+                if (progressHandler.getFileName() == null) handler.postDelayed(this, 1000);
 
                 progressHandler.addWrittenLength(POSITION);
 
@@ -78,7 +78,7 @@ public class ServiceWatcherUtil {
                 if (POSITION == progressHandler.getWrittenSize()) {
                     HAULT_COUNTER++;
 
-                    if (HAULT_COUNTER>10) {
+                    if (HAULT_COUNTER > 10) {
                         // we suspect the progress has been haulted for some reason, stop the watcher
 
                         // workaround for decryption when we have a length retreived by
@@ -124,21 +124,21 @@ public class ServiceWatcherUtil {
             // start the service directly
 
             *//**
-             * We can actually end up racing at this point with the {@link HandlerThread} started
-             * in {@link #init(Context)}. If older service has returned, we already have the runnable
-             * waiting to execute in #init, and user is in app, and starts another service, and
-             * as this block executes the {@link android.app.Service#onStartCommand(Intent, int, int)}
-             * we end up with a context switch to 'service_startup_watcher' in #init, it also starts
-             * a new service (as {@link #progressHandler} is not alive yet).
-             * Though chances are very slim, but even if this condition occurs, only the progress will
-             * be flawed, but the actual operation will go fine, due to android's native serial service
-             * execution. #nough' said!
-             *//*
+         * We can actually end up racing at this point with the {@link HandlerThread} started
+         * in {@link #init(Context)}. If older service has returned, we already have the runnable
+         * waiting to execute in #init, and user is in app, and starts another service, and
+         * as this block executes the {@link android.app.Service#onStartCommand(Intent, int, int)}
+         * we end up with a context switch to 'service_startup_watcher' in #init, it also starts
+         * a new service (as {@link #progressHandler} is not alive yet).
+         * Though chances are very slim, but even if this condition occurs, only the progress will
+         * be flawed, but the actual operation will go fine, due to android's native serial service
+         * execution. #nough' said!
+         *//*
             context.startService(intent);
             return;
         }*/
         Logger.getLogger().i(">>>>>>>>>>>>> runService " + pendingIntents.size());
-        if (pendingIntents.size()==0) {
+        if (pendingIntents.size() == 0) {
             init(context);
         }
         pendingIntents.add(intent);
@@ -158,7 +158,7 @@ public class ServiceWatcherUtil {
         final Handler handler = new Handler(waitingThread.getLooper());
         final NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
-        final NotificationCompat.Builder mBuilder=new NotificationCompat.Builder(context);
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setContentTitle(context.getString(R.string.waiting_title));
         mBuilder.setContentText(context.getString(R.string.waiting_content));
         mBuilder.setAutoCancel(false);
@@ -168,16 +168,17 @@ public class ServiceWatcherUtil {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (handlerThread==null || !handlerThread.isAlive()) {
+                if (handlerThread == null || !handlerThread.isAlive()) {
 
                     // service is been finished, let's start this one
 
                     // pop recent intent from pendingIntents
                     Logger.getLogger().i(">>>>>>>>>>>>> runService runnable ");
+                    if (pendingIntents.size() > 0) {
+                        context.startService(pendingIntents.remove(pendingIntents.size() - 1));
+                    }
 
-                    context.startService(pendingIntents.remove(pendingIntents.size()-1));
-
-                    if (pendingIntents.size()==0) {
+                    if (pendingIntents.size() == 0) {
                         // we've done all the work, free up resources (if not already killed by system)
                         notificationManager.cancel(ID_NOTIFICATION_WAIT);
                         handler.removeCallbacks(this);
